@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+.env.*
+!.env.example
+workspace/
+traces/
+.runtime/
+web/node_modules/
+web/dist/
+
+# 本地记忆库与沙箱诊断产物，不提交、不清理
+.dsh-meow/
+.acl-recovery/
+*.sqlite3
+*.sqlite
+*.db
+*.accounts.json
+**/discovery-media/
+*.log
+
