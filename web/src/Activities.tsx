@@ -39,9 +39,8 @@ export function ActivitiesPage({query,user}:{query:URLSearchParams;user:User|nul
     <p className="muted">认定标签和说明由活动方公布，报名成功不代表正式认定或学分到账。</p></>;
 }
 
-export function PublishActivityPage({user}:{user:User}) {
+export function PublishActivityPage() {
   const [busy,setBusy]=useState(false),[error,setError]=useState('');
-  if(!user.can_publish_activities)return <div className="state"><strong>你没有发布活动的权限</strong><a className="button secondary" href="#/tasks/new">重新选择发布种类</a></div>;
   async function submit(event:FormEvent<HTMLFormElement>) {
     event.preventDefault();const form=new FormData(event.currentTarget),payload:Record<string,unknown>={};
     const text=(key:string)=>String(form.get(key)||'').trim();
@@ -55,7 +54,7 @@ export function PublishActivityPage({user}:{user:User}) {
     try {const created=await request<Activity>('/api/activities',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});window.location.hash=`#/activities/${created.id}?published=1`;}
     catch(reason){setError(reason instanceof Error?reason.message:'发布失败');}finally{setBusy(false);}
   }
-  return <><a className="back-link" href="#/tasks/new">← 重新选择发布种类</a><div className="page-heading"><div><h1>发布综素活动</h1><p className="subheading">当前为测试活动负责人权限。发布后时间、名额与报名方式固定。</p></div></div>
+  return <><a className="back-link" href="#/tasks/new">← 重新选择发布种类</a><div className="page-heading"><div><h1>发布综素活动</h1><p className="subheading">所有登录用户均可发布。认定说明由发布者填写，学校正式认定尚未对接；发布后时间、名额与报名方式固定。</p></div></div>
     <form className="publish-form panel" onSubmit={submit}><div className="form-row"><label className="grow">活动标题 *<input name="title" required maxLength={100}/></label><label className="grow">组织方 *<input name="organization_name" required maxLength={200}/></label></div>
       <label>活动说明 *<textarea name="description" required rows={4} maxLength={4000}/></label><label>地点 *<input name="location" required maxLength={200}/></label><label>参与条件 *<textarea name="participation_requirements" required rows={2} maxLength={2000}/></label>
       <div className="form-section separated"><h2>时间与报名</h2><p>所有时间均为北京时间。</p></div><div className="form-row"><label className="grow">报名开放 *<input name="opens_at" required type="datetime-local"/></label><label className="grow">报名截止 *<input name="closes_at" required type="datetime-local"/></label></div><div className="form-row"><label className="grow">活动开始 *<input name="starts_at" required type="datetime-local"/></label><label className="grow">活动结束 *<input name="ends_at" required type="datetime-local"/></label></div>
@@ -119,9 +118,9 @@ export function ActivityDetailPage({id,user,published}:{id:string;user:User|null
 
 export function MySpacePage({user,path,query}:{user:User;path:string;query:URLSearchParams}) {
   const volunteer=query.get('type')==='volunteer';
-  return <><div className="my-tabs space-tabs"><a className={path==='/mine'?'selected':''} href="#/mine">普通任务</a><a className={path==='/mine/registrations'?'selected':''} href="#/mine/registrations">我的报名</a><a className={path==='/mine/volunteer-records'?'selected':''} href="#/mine/volunteer-records">我的志愿记录</a><a className={path==='/mine/discoveries'?'selected':''} href="#/mine/discoveries">我的发现</a>{user.can_publish_activities&&<a className={path==='/mine/activities'?'selected':''} href="#/mine/activities">我发布的活动</a>}</div>
+  return <><div className="my-tabs space-tabs"><a className={path==='/mine'?'selected':''} href="#/mine">普通任务</a><a className={path==='/mine/registrations'?'selected':''} href="#/mine/registrations">我的报名</a><a className={path==='/mine/volunteer-records'?'selected':''} href="#/mine/volunteer-records">我的志愿记录</a><a className={path==='/mine/discoveries'?'selected':''} href="#/mine/discoveries">我的发现</a><a className={path==='/mine/activities'?'selected':''} href="#/mine/activities">我发布的活动</a></div>
     {(path==='/mine/registrations'||path==='/mine/activities')&&<div className="content-type-tabs"><a className={!volunteer?'selected':''} href={`#${path}`}>综素活动</a><a className={volunteer?'selected':''} href={`#${path}?type=volunteer`}>志愿服务</a></div>}
-    {path==='/mine/discoveries'?<DiscoveriesPage mine query={query}/>:path==='/mine'?<MyTasksPage user={user}/>:path==='/mine/volunteer-records'?<VolunteerPersonalPage kind="records"/>:path==='/mine/registrations'?volunteer?<VolunteerPersonalPage kind="registrations"/>:<MyRegistrationsPage/>:user.can_publish_activities?volunteer?<VolunteerPersonalPage kind="activities"/>:<MyActivitiesPage/>:<div className="state">你没有活动负责人权限。</div>}</>;
+    {path==='/mine/discoveries'?<DiscoveriesPage mine query={query}/>:path==='/mine'?<MyTasksPage user={user}/>:path==='/mine/volunteer-records'?<VolunteerPersonalPage kind="records"/>:path==='/mine/registrations'?volunteer?<VolunteerPersonalPage kind="registrations"/>:<MyRegistrationsPage/>:volunteer?<VolunteerPersonalPage kind="activities"/>:<MyActivitiesPage/>}</>;
 }
 function MyRegistrationsPage() {
   const resource=useLiveResource<Collection>('/api/me/registrations');

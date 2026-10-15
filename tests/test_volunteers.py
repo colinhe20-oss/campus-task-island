@@ -44,15 +44,23 @@ class VolunteerTests(unittest.TestCase):
             p=self.payload();p['jobs'][0].update(change)
             with self.subTest(change=change),self.assertRaises(ValidationError):VolunteerCreate.model_validate(p)
 
-    def test_publish_capability_and_no_edit_endpoint(self):
+    def test_any_active_account_can_publish_and_no_edit_endpoint(self):
+        token,user=self.auth.register('ordinary.volunteer','普通账号','secret12')
+        self.client.cookies.set('campus_session',token)
+        response=self.client.post('/api/volunteers',json=self.payload())
+        self.assertEqual(response.status_code,201,response.text)
+        self.assertEqual(response.json()['owner_id'],user.id)
         self.login('helper')
-        self.assertFalse(self.client.get('/api/auth/me').json()['can_publish_volunteers'])
-        self.assertEqual(self.client.post('/api/volunteers',json=self.payload()).status_code,403)
+        self.assertTrue(self.client.get('/api/auth/me').json()['can_publish_volunteers'])
+        self.assertEqual(self.client.post('/api/volunteers',json=self.payload()).status_code,201)
         self.login()
         self.assertTrue(self.client.get('/api/auth/me').json()['can_publish_volunteers'])
         a=self.client.post('/api/volunteers',json=self.payload()).json()
         self.assertEqual(len(a['jobs']),2)
         self.assertEqual(self.client.patch('/api/volunteers/'+a['id'],json={'capacity':3}).status_code,405)
+        with self.assertRaises(AppError) as caught:
+            self.vol.create(VolunteerCreate.model_validate(self.payload()),'missing-user')
+        self.assertEqual(caught.exception.status_code,403)
 
     def test_open_cutoff_and_server_time(self):
         a=self.create(opens_at=(self.now+timedelta(minutes=1)).isoformat())

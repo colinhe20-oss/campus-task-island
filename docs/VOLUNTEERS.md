@@ -6,7 +6,7 @@
 
 “我的空间 → 我的报名”可切换综素活动与志愿服务，志愿报名每场展示最新结果，可展开旧岗位申请及操作历史。“我的志愿记录”展示已进入服务阶段的参与记录与最新小时合计；未来岗位的预计时段和分钟数在“我的志愿报名”查看。负责人在“我发布的活动”中切换志愿服务，进入详情管理名单和核验。
 
-发布权限沿用数据库 `activity_permissions`，`publisher` 是本地测试活动负责人，不代表学校认证。登录信息新增 `can_publish_volunteers`，与 `can_publish_activities` 同源，撤销现有发布权限会同时取消两类发布能力。已有活动管理仍按活动 owner_id 鉴权。负责人不能报名自己发布的活动。
+所有有效登录账号都可发布志愿活动；`can_publish_volunteers` 对有效账号返回 `true`。服务层发布接口校验账号有效，活动管理仍按活动 `owner_id` 鉴权。发布者不能报名自己发布的活动。活动方确认的服务小时不代表学校正式认定。
 
 ## 活动、岗位与报名
 
@@ -43,7 +43,7 @@ API 时间必须带时区，数据库统一 UTC，网页填写及显示北京时
 
 | 方法与路径 | 用途 |
 |---|---|
-| GET/POST `/api/volunteers` | 公开关键词搜索与分页／有权限负责人发布含岗位的活动 |
+| GET/POST `/api/volunteers` | 公开关键词搜索与分页／有效登录账号发布含岗位的活动 |
 | GET `/api/volunteers/{id}` | 公开详情、岗位名额及服务端时间；登录时仅附本人最新报名 |
 | POST `/api/volunteer-jobs/{id}/registrations` | 报名，body `{ "application_note": "说明" }` |
 | POST `/api/volunteer-registrations/{id}/review` | 所属活动负责人审核，body `{ "decision": "approve或reject", "reason": "理由" }` |

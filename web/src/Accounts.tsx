@@ -22,14 +22,14 @@ export function RegisterPage({onRegister}:{onRegister:(user:User)=>void}){
     }catch(reason){setError(reason instanceof Error?reason.message:'注册失败，请重试。');}
     finally{setBusy(false);}
   }
-  return <><a className="back-link" href="#/login">← 返回登录</a><div className="page-heading"><div><p className="eyebrow">加入校园协作</p><h1>创建普通账号</h1><p className="subheading">注册后即可参与任务、报名活动和补充校园发现。</p></div></div>
+  return <><a className="back-link" href="#/login">← 返回登录</a><div className="page-heading"><div><p className="eyebrow">加入校园协作</p><h1>创建普通账号</h1><p className="subheading">注册后即可发布和参与普通任务、综素活动、志愿服务与校园发现。</p></div></div>
     <form className="panel publish-form login-form" onSubmit={submit}>
       <label>账号名 *<input name="username" required minLength={3} maxLength={32} pattern="[A-Za-z0-9._-]{3,32}" autoComplete="username" placeholder="3–32 位字母、数字、点、下划线或连字符"/><small>账号名会统一转换为小写，注销后不能再次使用。</small></label>
       <label>昵称 *<input name="display_name" required minLength={1} maxLength={40} autoComplete="nickname" placeholder="其他同学看到的名称"/></label>
       <label>密码 *<input name="password" type={showPassword?'text':'password'} required minLength={6} maxLength={128} autoComplete="new-password"/><small>至少 6 个字符；系统不会保存明文密码。</small></label>
       <label>再次输入密码 *<input name="password_confirmation" type={showPassword?'text':'password'} required minLength={6} maxLength={128} autoComplete="new-password"/></label>
       <button type="button" className="button secondary password-visibility" aria-pressed={showPassword} onClick={()=>setShowPassword(value=>!value)}>{showPassword?'隐藏密码':'显示密码'}</button>
-      <p className="muted">这是普通账号，不包含综素活动或志愿服务发布权限。当前没有公开密码找回功能；忘记密码请联系服务主机管理员。</p>
+      <p className="muted">所有登录账号都可以发布综素活动和志愿服务；认定说明及小时为活动方记录，学校正式认定尚未对接。当前没有公开密码找回功能；忘记密码请联系服务主机管理员。</p>
       {error&&<div className="form-error" role="alert">{error}</div>}
       <div className="form-actions"><a className="button secondary" href="#/login">已有账号</a><button className="button" disabled={busy}>{busy?'正在创建…':'创建账号'}</button></div>
     </form>

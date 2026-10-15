@@ -39,7 +39,7 @@ class AuthService:
                 accounts[username] = {'display_name': display_name, 'password': password}
                 changed = True
             publisher = connection.execute("SELECT id FROM users WHERE username='publisher'").fetchone()
-            # 只初始化一次测试权限；之后撤销权限不会因重启重新授予。
+            # 保留旧权限记录供历史数据库兼容；发布能力现由有效账号状态决定。
             if not connection.execute("SELECT 1 FROM activity_bootstrap WHERE name='demo_publisher'").fetchone():
                 connection.execute('INSERT OR IGNORE INTO activity_permissions VALUES (?,1)', (publisher['id'],))
                 connection.execute('INSERT INTO activity_bootstrap VALUES (?,?)', ('demo_publisher', datetime.now(timezone.utc).isoformat()))
@@ -60,8 +60,7 @@ class AuthService:
             connection.execute('DELETE FROM sessions WHERE expires_at<=?', (time.time(),))
             connection.execute('INSERT INTO sessions VALUES (?,?,?)',
                 (hashlib.sha256(token.encode()).hexdigest(), row['id'], time.time() + SESSION_SECONDS))
-            allowed = connection.execute('SELECT 1 FROM activity_permissions WHERE user_id=? AND can_publish=1', (row['id'],)).fetchone() is not None
-        return token, UserRead(id=row['id'], username=row['username'], display_name=row['display_name'], can_publish_activities=allowed, can_publish_volunteers=allowed)
+        return token, UserRead(id=row['id'], username=row['username'], display_name=row['display_name'], can_publish_activities=True, can_publish_volunteers=True)
 
     def register(self, username: str, display_name: str, password: str) -> tuple[str, UserRead]:
         identifier = uuid4().hex
@@ -79,19 +78,18 @@ class AuthService:
             connection.execute('INSERT INTO sessions VALUES (?,?,?)',
                 (hashlib.sha256(token.encode()).hexdigest(), identifier, time.time() + SESSION_SECONDS))
         return token, UserRead(id=identifier, username=username, display_name=display_name,
-                               can_publish_activities=False, can_publish_volunteers=False)
+                               can_publish_activities=True, can_publish_volunteers=True)
 
     def current_user(self, token: str | None) -> UserRead:
         if not token:
             raise AppError('请先登录', 401)
         with self.database.connect() as connection:
-            row = connection.execute('''SELECT u.id,u.username,u.display_name,
-                EXISTS(SELECT 1 FROM activity_permissions p WHERE p.user_id=u.id AND p.can_publish=1) AS can_publish_activities FROM sessions s
+            row = connection.execute('''SELECT u.id,u.username,u.display_name FROM sessions s
                 JOIN users u ON u.id=s.user_id WHERE s.token_hash=? AND s.expires_at>? AND u.account_status='active' ''',
                 (hashlib.sha256(token.encode()).hexdigest(), time.time())).fetchone()
         if row is None:
             raise AppError('登录已失效，请重新登录', 401)
-        return UserRead.model_validate(dict(row) | {'can_publish_volunteers':bool(row['can_publish_activities'])})
+        return UserRead.model_validate(dict(row) | {'can_publish_activities':True,'can_publish_volunteers':True})
 
     def logout(self, token: str | None) -> None:
         if token:

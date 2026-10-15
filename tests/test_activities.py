@@ -54,23 +54,30 @@ class ActivityTests(unittest.TestCase):
             with self.subTest(fields=fields), self.assertRaises(ValidationError):
                 ActivityCreate.model_validate(self.payload(**fields))
 
-    def test_publish_requires_persistent_capability(self):
+    def test_any_active_account_can_publish(self):
+        token, user = self.auth.register('ordinary.activity', '普通账号', 'secret12')
+        self.client.cookies.set('campus_session', token)
+        response = self.client.post('/api/activities', json=self.payload())
+        self.assertEqual(response.status_code, 201, response.text)
+        self.assertEqual(response.json()['owner_id'], user.id)
         self.login('helper')
-        self.assertEqual(self.client.post('/api/activities', json=self.payload()).status_code, 403)
-        self.assertFalse(self.client.get('/api/auth/me').json()['can_publish_activities'])
+        self.assertEqual(self.client.post('/api/activities', json=self.payload()).status_code, 201)
+        self.assertTrue(self.client.get('/api/auth/me').json()['can_publish_activities'])
         self.login('publisher')
         self.assertTrue(self.client.get('/api/auth/me').json()['can_publish_activities'])
         self.assertEqual(self.client.post('/api/activities', json=self.payload()).status_code, 201)
 
-    def test_permission_revocation_survives_restart_and_cannot_be_spoofed(self):
+    def test_legacy_permission_record_no_longer_controls_publishing(self):
         with self.service.database.connect() as conn:
             conn.execute('UPDATE activity_permissions SET can_publish=0 WHERE user_id=?', (self.owner,))
         self.auth.provision_demo_accounts()
         self.login('publisher')
-        self.assertFalse(self.client.get('/api/auth/me').json()['can_publish_activities'])
-        with self.assertRaises(AppError):
-            self.create()
+        self.assertTrue(self.client.get('/api/auth/me').json()['can_publish_activities'])
+        self.create()
         self.assertEqual(self.client.post('/api/activities', json=self.payload(can_publish_activities=True)).status_code, 422)
+        with self.assertRaises(AppError) as caught:
+            self.service.create(ActivityCreate.model_validate(self.payload()), 'missing-user')
+        self.assertEqual(caught.exception.status_code, 403)
 
     def test_owner_cannot_register_own_activity(self):
         activity = self.create()

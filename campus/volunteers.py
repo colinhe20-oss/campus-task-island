@@ -142,8 +142,8 @@ class VolunteerService:
     def create(self, body:VolunteerCreate, user_id):
         with self.database.connect() as conn:
             conn.execute('BEGIN IMMEDIATE'); now=self.now()
-            if not conn.execute('SELECT 1 FROM activity_permissions WHERE user_id=? AND can_publish=1',(user_id,)).fetchone():
-                raise AppError('你没有发布志愿活动的权限',403)
+            if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'",(user_id,)).fetchone():
+                raise AppError('请使用有效账号发布志愿活动',403)
             if body.starts_at <= now:
                 raise AppError('活动开始必须晚于当前时间',422)
             fields=body.model_dump(mode='json',exclude={'jobs'})

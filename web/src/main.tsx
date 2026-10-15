@@ -201,14 +201,14 @@ function App() {
   else if (route.path === '/home'||route.path==='/') page=<HomePage key={auth.user?.id||'guest'} user={auth.user}/>;
   else if (route.path === '/messages') page=<MessagesPage key={auth.user?.id||'guest'} user={auth.user}/>;
   else if (accountPage) page=<AccountPage key={auth.user?.id||'guest'} user={auth.user} onClosed={()=>{auth.setUser(null);window.location.hash='/login?closed=1';}}/>;
-  else if (route.path === '/tasks/new') page = !auth.user?<LoginRequired/>:route.query.get('type')==='ordinary'?<PublishPage copyId={route.query.get('copy')||undefined}/>:route.query.get('type')==='activity'?<PublishActivityPage user={auth.user}/>:route.query.get('type')==='volunteer'?<PublishVolunteerPage user={auth.user}/>:route.query.get('type')==='discovery'?<PublishDiscoveryPage/>:<PublishChoicePage user={auth.user}/>;
+  else if (route.path === '/tasks/new') page = !auth.user?<LoginRequired/>:route.query.get('type')==='ordinary'?<PublishPage copyId={route.query.get('copy')||undefined}/>:route.query.get('type')==='activity'?<PublishActivityPage/>:route.query.get('type')==='volunteer'?<PublishVolunteerPage/>:route.query.get('type')==='discovery'?<PublishDiscoveryPage/>:<PublishChoicePage/>;
   else if (mine) page=auth.user?<MySpacePage key={auth.user.id} user={auth.user} path={route.path} query={route.query}/>:<LoginRequired/>;
   else if (route.path === '/discoveries') page=<DiscoveriesPage key={auth.user?.id||'guest'} query={route.query}/>;
   else if (discoveryDetail) page=<DiscoveryDetailPage key={discoveryDetail[1]+(auth.user?.id||'guest')} id={discoveryDetail[1]} user={auth.user} published={route.query.get('published')==='1'}/>;
   else if (route.path === '/volunteers') page=<VolunteerListPage key={auth.user?.id||'guest'} query={route.query}/>;
   else if (volunteerDetail) page=<VolunteerDetailPage key={volunteerDetail[1]+(auth.user?.id||'guest')} id={volunteerDetail[1]} user={auth.user} published={route.query.get('published')==='1'}/>;
   else if (route.path === '/activities') page=<ActivitiesPage key={auth.user?.id||'guest'} query={route.query} user={auth.user}/>;
-  else if (route.path === '/activities/new') page=auth.user?<PublishActivityPage user={auth.user}/>:<LoginRequired/>;
+  else if (route.path === '/activities/new') page=auth.user?<PublishActivityPage/>:<LoginRequired/>;
   else if (activityDetail) page=<ActivityDetailPage key={activityDetail[1]+(auth.user?.id||'guest')} id={activityDetail[1]} user={auth.user} published={route.query.get('published')==='1'}/>;
   else if (route.path === '/guide') page=auth.user?<GuidePage key={auth.user.id} user={auth.user}/>:<LoginRequired/>;
   else if (route.path === '/tasks') page = <ListPage query={route.query}/>;
