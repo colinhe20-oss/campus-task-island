@@ -2,6 +2,7 @@ import {useEffect,useState,type FormEvent} from 'react';
 import {request,formatTime,type User} from './api';
 import {useLiveResource,LiveFeedback} from './live';
 import {LoginRequired} from './Collaboration';
+import {newClientId} from './ids';
 import './discoveries.css';
 
 export const discoveryCategories={facility:'公共设施问题',safety:'安全与通行提醒',interesting:'有趣发现',life:'校园生活分享'} as const;
@@ -32,7 +33,7 @@ function usePictures(initial:string[]=[]){
     try{if(!item.file)throw new Error('请选择图片');if(item.file.size>5*1024*1024)throw new Error('单张图片不能超过5 MiB');const form=new FormData();form.append('file',item.file);const image=await request<{id:string}>('/api/discovery-images',{method:'POST',body:form});setItems(previous=>previous.map(i=>i.key===item.key?{...i,id:image.id,busy:false,error:''}:i));}
     catch(reason){setItems(previous=>previous.map(i=>i.key===item.key?{...i,busy:false,error:reason instanceof Error?reason.message:'图片上传失败'}:i));}
   }
-  function select(files:FileList|null){if(!files)return;setError('');if(items.length+files.length>3){setError('每条内容最多3张图片，请先移除多余图片。');return;}const added=Array.from(files).map(file=>({key:crypto.randomUUID(),file,busy:true,error:''}));setItems(previous=>[...previous,...added]);for(const item of added)void upload(item);}
+  function select(files:FileList|null){if(!files)return;setError('');if(items.length+files.length>3){setError('每条内容最多3张图片，请先移除多余图片。');return;}const added=Array.from(files).map(file=>({key:newClientId(),file,busy:true,error:''}));setItems(previous=>[...previous,...added]);for(const item of added)void upload(item);}
   return {items,error,select,retry:upload,remove:(key:string)=>setItems(previous=>previous.filter(i=>i.key!==key)),ids:items.flatMap(i=>i.id?[i.id]:[]),busy:items.some(i=>i.busy),invalid:items.some(i=>!!i.error)};
 }
 function PicturePicker({pictures,disabled=false}:{pictures:ReturnType<typeof usePictures>;disabled?:boolean}){return <div className="picture-picker"><label>可选图片（最多3张）<input type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={disabled||pictures.busy||pictures.items.length>=3} onChange={e=>{pictures.select(e.target.files);e.target.value='';}}/></label><p className="muted">JPEG、PNG、WebP，单张最多5 MiB，不接受动画。上传成功后仍需提交正文或评论。</p><ErrorMessage error={pictures.error}/><div className="picture-previews">{pictures.items.map(item=><div className="picture-preview" key={item.key}>{item.id&&<img src={imageUrl(item.id)} alt="已选配图"/>}<span>{item.file?.name||'已保存配图'}</span>{item.busy&&<p role="status">正在上传…</p>}<ErrorMessage error={item.error}/>{item.error&&<button className="text-button" type="button" disabled={disabled||item.busy} onClick={()=>void pictures.retry(item)}>重试上传</button>}<button className="text-button" type="button" disabled={disabled||item.busy} onClick={()=>pictures.remove(item.key)}>移除图片</button></div>)}</div></div>;}

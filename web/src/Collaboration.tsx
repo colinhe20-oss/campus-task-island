@@ -3,6 +3,7 @@ import {useEffect,useState,type FormEvent} from 'react';
 import {applicationLabels,type ApplicationRequirements,request,statusNames,formatTime,type User,type Task,type Workspace,type MyTasks} from './api';
 import {useResource} from './hooks';
 import {StagesPanel} from './Stages';
+import {newClientId} from './ids';
 
 export function useAuth() {
   const [user,setUser]=useState<User|null>(null);
@@ -52,7 +53,7 @@ function useAction(onSuccess:()=>void,onFailure?:()=>void) {
 export function CollaborationPanel({task,user,onChange}:{task:Task;user:User|null;onChange:()=>void}) {
   const workspace=useResource<Workspace>(user?`/api/tasks/${task.id}/workspace`:null,true);
   const [notice,setNotice]=useState('');
-  const [requestId,setRequestId]=useState(()=>crypto.randomUUID());
+  const [requestId,setRequestId]=useState(newClientId);
   const action=useAction(()=>{setNotice('操作成功，协作进度已更新。');workspace.retry();onChange();},()=>{workspace.retry();onChange();});
   const owner=user?.id===task.publisher_id;
   const assignee=user?.id===task.assignee_id;
@@ -63,7 +64,7 @@ export function CollaborationPanel({task,user,onChange}:{task:Task;user:User|nul
     for(const [key,label] of Object.entries(applicationLabels)) {
       if(task.application_requirements[key as keyof ApplicationRequirements]==='required'&&!String(form.get(key)||'').trim()){action.setError(`请填写${label}`);return;}
     }
-    void action.perform(`/api/tasks/${task.id}/${task.acceptance_mode==='direct'?'claim':'applications'}`,{...Object.fromEntries(Object.keys(applicationLabels).map(key=>[key,String(form.get(key)||'').trim()])),...(task.acceptance_mode==='direct'?{confirmed:form.get('confirmed')==='on'}:{request_id:requestId})}).then(ok=>{if(ok)setRequestId(crypto.randomUUID());});}
+    void action.perform(`/api/tasks/${task.id}/${task.acceptance_mode==='direct'?'claim':'applications'}`,{...Object.fromEntries(Object.keys(applicationLabels).map(key=>[key,String(form.get(key)||'').trim()])),...(task.acceptance_mode==='direct'?{confirmed:form.get('confirmed')==='on'}:{request_id:requestId})}).then(ok=>{if(ok)setRequestId(newClientId());});}
   function submit(event:FormEvent<HTMLFormElement>) {event.preventDefault();const form=new FormData(event.currentTarget);
     void action.perform(`/api/tasks/${task.id}/submissions`,{summary:String(form.get('summary')||'').trim(),collaboration_version:task.collaboration_version});}
   function review(event:FormEvent<HTMLFormElement>) {event.preventDefault();const form=new FormData(event.currentTarget);
