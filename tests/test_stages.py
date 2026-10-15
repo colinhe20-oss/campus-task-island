@@ -298,7 +298,10 @@ class StageTests(unittest.TestCase):
         response=self.client.post('/api/guide/runs',json={'purpose':'stage_plan','task_id':self.task.id,'message':'建议阶段'})
         run_id=response.json()['run_id']
         try:
-            self.assertTrue(entered.wait(3))
+            # GitHub's Windows runner can take longer to schedule the nested
+            # guide run under the full suite; this is a synchronization wait,
+            # not a product timeout.
+            self.assertTrue(entered.wait(15))
             self.assertEqual(self.client.post('/api/guide/runs/'+run_id+'/cancel').json()['status'],'cancelling')
         finally:release.set()
         for _ in range(100):
