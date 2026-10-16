@@ -144,7 +144,7 @@ class CoreTests(unittest.TestCase):
         captured = []
         def handler(request):
             captured.append(request)
-            return httpx.Response(200, json={"choices": [{"message": {"content": None,
+            return httpx.Response(200, json={"choices": [{"finish_reason": "tool_calls", "message": {"content": None,
                 "tool_calls": [{"id": "test-id", "function": {"name": "read", "arguments": "{bad"}}]}}],
                 "usage": {"prompt_tokens": 5}})
         client = ChatBackend(api_key="test-only", base_url="https://example.test/v1", model="test-model")

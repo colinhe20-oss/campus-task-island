@@ -178,6 +178,36 @@ class VolunteerService:
                     'SELECT name,description,requirements,location FROM volunteer_jobs WHERE activity_id=?',(r['id'],)))).casefold()]
             return self._collection([self._read(conn,r,now) for r in rows[offset:offset+limit]],now)|dict(total=len(rows),limit=limit,offset=offset)
 
+    def search_jobs(self, keyword='', limit=5, offset=0, *, user_id=None):
+        """Search and paginate jobs, with capacity and own registration from one snapshot."""
+        with self.database.connect() as conn:
+            conn.execute('BEGIN')
+            now = self.now()
+            needle = keyword.casefold()
+            fields = ('title', 'activity_description', 'organization_name',
+                      'name', 'description', 'requirements', 'location')
+            candidates = conn.execute('''SELECT a.id AS activity_id, j.id AS job_id,
+                a.title, a.description AS activity_description, a.organization_name,
+                j.name, j.description, j.requirements, j.location
+                FROM volunteer_activities a JOIN volunteer_jobs j ON j.activity_id=a.id
+                WHERE a.cancelled_at IS NULL AND a.ends_at>?
+                ORDER BY a.starts_at,a.id,j.position,j.id''', (now.isoformat(),))
+            # Keep Python's Unicode casefold semantics; count every matching job
+            # before slicing. Only current-page activities need detailed reads.
+            matches = [(row['activity_id'], row['job_id']) for row in candidates
+                       if not needle or needle in ' '.join(row[field] for field in fields).casefold()]
+            details, items = {}, []
+            for activity_id, job_id in matches[offset:offset+limit]:
+                if activity_id not in details:
+                    activity = self._read(conn, self._get(conn, 'volunteer_activities', activity_id), now, user_id)
+                    details[activity_id] = (activity, {job['id']: job for job in activity['jobs']})
+                activity, jobs = details[activity_id]
+                items.append(dict(jobs[job_id]) | {
+                    'title': activity['title'], 'activity_status': activity['status'],
+                    'my_registration': activity['my_registration'], 'next_boundary': activity['next_boundary'],
+                })
+            return self._collection(items, now) | dict(total=len(matches), limit=limit, offset=offset)
+
     def register(self, job_id, user_id, note=''):
         with self.database.connect() as conn:
             conn.execute('BEGIN IMMEDIATE'); now=self.now()

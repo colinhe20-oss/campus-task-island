@@ -67,59 +67,111 @@ class AccountLifecycleTests(unittest.TestCase):
         self.assertEqual(response.status_code, 201, response.text)
         self.assertEqual(self.login('sixchar', 'abc123').status_code, 200)
 
-    def test_closure_requires_password_and_confirmation_and_cannot_target_other_user(self):
-        self.register()
-        self.assertEqual(self.client.post('/api/me/account/close', json={
-            'password': 'correct-horse-battery', 'confirmed': True, 'user_id': 'publisher',
-        }).status_code, 422)
-        self.assertEqual(self.client.post('/api/me/account/close', json={
-            'password': 'wrong-password', 'confirmed': True,
-        }).status_code, 403)
-        self.assertEqual(self.client.post('/api/me/account/close', json={
-            'password': 'correct-horse-battery', 'confirmed': False,
-        }).status_code, 422)
-        self.assertEqual(self.client.get('/api/me/account').status_code, 200)
+    def test_account_profile_has_no_closure_actions(self):
+        user_id = self.register().json()['id']
+        info = self.client.get('/api/me/account')
+        self.assertEqual(info.status_code, 200)
+        self.assertEqual(info.json(), {'id': user_id, 'username': 'new.user', 'display_name': '新同学'})
+        schema = self.client.get('/openapi.json').json()
+        self.assertNotIn('/api/me/account/close', schema['paths'])
+        self.assertNotIn('CloseAccountInput', schema['components']['schemas'])
+        for logged_in in (True, False):
+            if not logged_in:
+                self.client.post('/api/auth/logout')
+            response = self.client.post('/api/me/account/close', json={
+                'password': 'correct-horse-battery', 'confirmed': True,
+            })
+            self.assertEqual(response.status_code, 404)
+        self.assertEqual(self.login('new.user', 'correct-horse-battery').status_code, 200)
 
-    def test_closure_anonymizes_and_revokes_sessions_but_keeps_username_reserved(self):
-        user_id = self.register('closer').json()['id']
-        with self.client.app.state.task_service.database.connect() as connection:
-            connection.execute('INSERT INTO activity_permissions(user_id,can_publish) VALUES (?,1)', (user_id,))
-            connection.execute("INSERT INTO notifications(recipient_id,event_key,content_type,resource_id,title,summary,created_at) VALUES (?,'e1','task','t1','title','summary','2026-01-01')", (user_id,))
-        self.client.post('/api/auth/login', json={
-            'username': 'closer', 'password': 'correct-horse-battery',
-        })
-        # Create private Guide data to ensure closure clears content without deleting the account's business identity.
-        with self.client.app.state.task_service.database.connect() as connection:
-            connection.execute("INSERT INTO guide_conversations(user_id,history,updated_at) VALUES (?,'[\\\"private\\\"]','2026-01-01')", (user_id,))
-        closed = self.client.post('/api/me/account/close', json={
-            'password': 'correct-horse-battery', 'confirmed': True,
-        })
-        self.assertEqual(closed.status_code, 200, closed.text)
-        self.assertEqual(self.client.get('/api/auth/me').status_code, 401)
-        self.assertEqual(self.login('closer', 'correct-horse-battery').status_code, 401)
-        self.assertEqual(self.register('CLOSER').status_code, 409)
-        with self.client.app.state.task_service.database.connect() as connection:
-            row = connection.execute('SELECT display_name,account_status,closed_at FROM users WHERE id=?', (user_id,)).fetchone()
-            self.assertEqual(row['display_name'], '已注销用户')
-            self.assertEqual(row['account_status'], 'closed')
-            self.assertTrue(row['closed_at'])
-            self.assertEqual(connection.execute('SELECT can_publish FROM activity_permissions WHERE user_id=?', (user_id,)).fetchone()['can_publish'], 0)
-            self.assertEqual(connection.execute('SELECT COUNT(*) FROM sessions WHERE user_id=?', (user_id,)).fetchone()[0], 0)
-            self.assertEqual(connection.execute('SELECT COUNT(*) FROM notifications WHERE recipient_id=?', (user_id,)).fetchone()[0], 0)
-            self.assertEqual(connection.execute('SELECT history FROM guide_conversations WHERE user_id=?', (user_id,)).fetchone()['history'], '[]')
+    def test_logout_revokes_only_current_session_and_allows_relogin(self):
+        registered = self.register().json()
+        current_token = self.client.cookies.get('campus_session')
+        auth = self.client.app.state.auth_service
+        other_token, _ = auth.login('new.user', 'correct-horse-battery')
+        response = self.client.post('/api/auth/logout')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(self.client.cookies.get('campus_session'))
+        self.assertEqual(self.client.get('/api/me/account').status_code, 401)
+        with self.assertRaises(AppError):
+            auth.current_user(current_token)
+        self.assertEqual(auth.current_user(other_token).id, registered['id'])
+        self.assertEqual(self.client.post('/api/auth/logout').status_code, 200)
+        logged_in = self.login('new.user', 'correct-horse-battery')
+        self.assertEqual(logged_in.status_code, 200)
+        self.assertEqual(logged_in.json()['id'], registered['id'])
+        self.assertEqual(logged_in.json()['display_name'], registered['display_name'])
 
-    def test_unfinished_task_blocks_closure_with_link(self):
-        publisher = self.login('publisher').json()['id']
+    def test_logout_preserves_unfinished_business_settlement_and_private_history(self):
+        from datetime import datetime, timedelta, timezone
+        from backend.fake_backend import FakeBackend
+        from campus.schemas import TaskCreate, TASK_CREATE_EXAMPLE
+        from campus.volunteer_schemas import VolunteerCreate
+        user = self.register().json()
+        app = self.client.app
+        service, auth = app.state.task_service, app.state.auth_service
+        _, helper = auth.login('helper', self.accounts['helper']['password'])
+        at = datetime.now(timezone.utc)
+        fields = TASK_CREATE_EXAMPLE | {'deadline': (at+timedelta(days=1)).isoformat(),
+                                        'reward_type': 'paid', 'reward_amount_fen': 2550, 'reward': '线下结算'}
+        unfinished = service.create_task(TaskCreate.model_validate(fields), user['id'])
+        completed = service.create_task(TaskCreate.model_validate(fields), user['id'])
+        application = service.apply(completed.id, helper.id, '可以完成')
+        service.accept_application(application.id, user['id'])
+        service.submit(completed.id, helper.id, '完成内容')
+        service.review(completed.id, user['id'], 'accept', '')
+        self.assertFalse(service.terms.settlement(completed.id, user['id'])['both_confirmed'])
+        stamp = lambda hours: (at+timedelta(hours=hours)).isoformat()
+        volunteer = app.state.volunteer_service
+        volunteer.clock = lambda: at
+        activity = volunteer.create(VolunteerCreate.model_validate(dict(
+            title='待核验服务', description='测试服务', organization_name='测试组织',
+            information_source='测试公告', contact='测试联系', recognition_conditions='实际参与',
+            starts_at=stamp(1), ends_at=stamp(2), opens_at=stamp(-1), closes_at=stamp(.5),
+            registration_mode='direct', jobs=[dict(name='测试岗位', description='协助', requirements='按时到场',
+                location='校园', starts_at=stamp(1), ends_at=stamp(2), capacity=1,
+                estimated_minutes=60, estimated_hours_description='按实际参与确认')],
+        )), user['id'])
+        volunteer.register(activity['jobs'][0]['id'], helper.id)
+        volunteer.clock = lambda: at+timedelta(hours=3)
+        app.state.guide_service.backend_factory = lambda: FakeBackend([
+            {'tool_calls': [{'name': 'update_task_draft', 'arguments': {'title': '保留草稿'}}]},
+            {'content': '请补充其他信息'},
+        ])
+        reply = self.client.post('/api/guide/chat', json={'message': '帮我整理草稿'})
+        self.assertEqual(reply.status_code, 200, reply.text)
+        conversation_id = reply.json()['conversation_id']
+
+        def snapshot():
+            with service.database.connect() as connection:
+                tables = [row[0] for row in connection.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name!='sessions'")]
+                return {table: [tuple(row) for row in connection.execute(f'SELECT * FROM "{table}"')]
+                        for table in tables}
+
+        before = snapshot()
+        self.assertTrue(before['notifications'])
+        self.assertTrue(before['guide_task_drafts'])
+        self.assertTrue(before['guide_runs'])
+        self.assertEqual(self.client.post('/api/auth/logout').status_code, 200)
+        self.assertEqual(before, snapshot())
+        self.assertEqual(self.login('new.user', 'correct-horse-battery').status_code, 200)
+        self.assertEqual(self.client.get(f'/api/tasks/{unfinished.id}').json()['status'], 'published')
+        history = self.client.get(f'/api/guide/conversations/{conversation_id}')
+        self.assertEqual(history.status_code, 200)
+        self.assertEqual(history.json()['draft']['fields']['title'], '保留草稿')
+        self.assertEqual(before, snapshot())
+
+    def test_legacy_closed_accounts_are_not_automatically_restored(self):
+        user_id = self.register('legacy.closed').json()['id']
         with self.client.app.state.task_service.database.connect() as connection:
-            connection.execute("INSERT INTO tasks(id,title,description,completion_criteria,category,location,deadline,reward,status,publisher_id,is_listed,created_at) VALUES ('unfinished','未完成','说明','完成标准','daily','地点','2099-01-01T00:00:00+00:00','互助','published',?,1,'2026-01-01')", (publisher,))
-        response = self.client.get('/api/me/account')
-        self.assertEqual(response.status_code, 200, response.text)
-        self.assertFalse(response.json()['can_close'])
-        self.assertTrue(any(item['href'] == '#/tasks/unfinished' for item in response.json()['blockers']))
-        blocked = self.client.post('/api/me/account/close', json={
-            'password': self.accounts['publisher']['password'], 'confirmed': True,
-        })
-        self.assertEqual(blocked.status_code, 409)
+            connection.execute("UPDATE users SET account_status='closed',closed_at='2026-01-01',display_name='历史账号' WHERE id=?", (user_id,))
+        self.client.app.state.task_service.initialize()
+        self.assertEqual(self.login('legacy.closed', 'correct-horse-battery').status_code, 401)
+        self.assertEqual(self.client.get('/api/me/account').status_code, 401)
+        with self.client.app.state.task_service.database.connect() as connection:
+            row = connection.execute('SELECT account_status,closed_at,display_name FROM users WHERE id=?', (user_id,)).fetchone()
+        self.assertEqual(tuple(row), ('closed', '2026-01-01', '历史账号'))
 
     def test_password_reset_changes_only_active_account_and_revokes_sessions(self):
         response = self.register('reset.me')

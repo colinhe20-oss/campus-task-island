@@ -185,19 +185,6 @@ class RegisterInput(BaseModel):
         return value
 
 
-class CloseAccountInput(BaseModel):
-    model_config = ConfigDict(extra='forbid')
-    password: str = Field(min_length=1, max_length=200)
-    confirmed: Literal[True]
-
-    @field_validator('confirmed', mode='before')
-    @classmethod
-    def strict_confirmation(cls, value):
-        if value is not True:
-            raise ValueError('请确认永久注销本人账号')
-        return value
-
-
 class ApplicationInput(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
     reason: str = Field(default='', max_length=2000)

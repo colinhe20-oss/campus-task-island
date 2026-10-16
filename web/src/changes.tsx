@@ -6,12 +6,13 @@ type Difference={stage_title?:string;field:string;before:unknown;after:unknown};
 type Agreement={deadline:string;description:string;completion_criteria:string;reward_type:string;reward_amount_fen:number|null;reward:string|null;stages:unknown[]};
 type ChangeStage={id:string;title:string;version:number;status:string;deadline:string;completion_criteria:string};
 export type ChangeState={server_time:string;next_boundary:string|null;terms_version:number;agreement:Agreement;stages:ChangeStage[];items:{id:string;requester_id:string;terms_version:number;collaboration_version:number|null;kind:string;reason:string;status:string;version:number;review_reason:string;created_at:string;differences:Difference[]}[]};
-const labels:Record<string,string>={deadline:'整体截止时间',description:'工作范围',completion_criteria:'整项完成标准',reward_type:'回报类型',reward_amount_fen:'固定报酬',reward:'回报说明',initial_stages:'首次阶段安排',collaboration_action:'协作状态'};
+const labels:Record<string,string>={deadline:'整体截止时间',description:'工作范围',completion_criteria:'整项完成标准',reward_type:'回报类型',reward_amount_fen:'固定报酬',cancellation_settlement_fen:'取消结算金额',reward:'回报说明',initial_stages:'首次阶段安排',collaboration_action:'协作状态'};
 const local=(s:string|null)=>s?new Date(Date.parse(s)+8*3600000).toISOString().slice(0,16):'';
 function value(field:string,v:unknown):string{
   if(v===null||v===undefined||v==='')return '无';
   if(field.endsWith('deadline'))return formatTime(String(v));
   if(field==='reward_amount_fen')return formatMoney(Number(v));
+  if(field==='cancellation_settlement_fen')return formatMoney(Number(v))+(Number(v)===0?'（无需结算）':'');
   if(field==='reward_type')return ({mutual:'无偿互助',paid:'有偿任务',legacy:'历史回报未分类'} as Record<string,string>)[String(v)]||String(v);
   if(field==='collaboration_action')return ({published:'待接取',in_progress:'协作中',pending_review:'待验收',paused:'协作暂停',cancel:'已取消',pause:'暂停协作',resume:'恢复协作'} as Record<string,string>)[String(v)]||String(v);
   if(Array.isArray(v))return v.map((s,i)=>{const row=s as Record<string,string>;return `${i+1}. ${row.title} · ${row.responsible_role==='publisher'?'发布者':'接取者'}负责 · ${formatTime(row.deadline)}\n${row.completion_criteria}`;}).join('\n');

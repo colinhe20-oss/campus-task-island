@@ -79,6 +79,7 @@ class Database:
                 salt TEXT NOT NULL, password_hash TEXT NOT NULL,
                 account_status TEXT NOT NULL DEFAULT 'active' CHECK(account_status IN ('active','closed')),
                 closed_at TEXT)''')
+            # Retain legacy account status columns without restoring closed accounts.
             user_columns = {row['name'] for row in connection.execute('PRAGMA table_info(users)')}
             if 'account_status' not in user_columns:
                 connection.execute("ALTER TABLE users ADD COLUMN account_status TEXT NOT NULL DEFAULT 'active' CHECK(account_status IN ('active','closed'))")

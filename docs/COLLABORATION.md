@@ -80,7 +80,7 @@ schema 13 扩展任务状态与申请历史约束，保留旧任务及申请 ID�
 |---|---|
 | POST /api/auth/login | 账号密码登录，设置 HttpOnly 会话 Cookie |
 | GET /api/auth/me | 当前用户 |
-| POST /api/auth/logout | 注销当前会话 |
+| POST /api/auth/logout | 退出当前登录会话，保留账号和业务记录 |
 | GET /api/me/tasks | 我的发布、接取、申请 |
 | GET /api/tasks/{id}/workspace | 本人有权限查看的申请与成果 |
 | POST /api/tasks/{id}/applications | 提交 reason |

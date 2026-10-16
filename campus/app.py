@@ -5,7 +5,6 @@ from .home_api import home_router
 from contextlib import asynccontextmanager
 import asyncio
 import json
-import threading
 from pathlib import Path
 from typing import Annotated
 
@@ -33,7 +32,7 @@ from .todos import personal_state
 from .schemas import PersonalState, GuideInput, GuideReply, DraftActionInput, GuideConversationRead
 from .schemas import (UserRead, LoginInput, ClaimInput, ApplicationInput, ApplicationRead,
                       SubmissionInput, SubmissionRead, ReviewInput, WorkspaceRead, MyTasks, TaskStatus,
-                      RegisterInput, CloseAccountInput)
+                      RegisterInput)
 
 
 def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None, activity_clock=None, volunteer_clock=None, discovery_clock=None, task_clock=None) -> FastAPI:
@@ -45,7 +44,7 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
     discoveries = DiscoveryService(service.database, discovery_clock)
     messages=NotificationService(service.database)
     home=HomeService(service,activities,volunteers)
-    accounts=AccountService(service.database,auth,discoveries)
+    accounts=AccountService(service.database)
     guide = GuideService(service,guide_backend_factory,activities=activities,
         volunteers=volunteers,discoveries=discoveries,home=home)
 
@@ -82,11 +81,6 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
     application.state.account_service=accounts
     application.add_middleware(ImageUploadLimit)
 
-    # A per-user write lock makes account closure atomic with other requests in this
-    # single-process deployment: writes already in progress finish first; later writes
-    # revalidate the session after closure and are rejected.
-    user_write_locks: dict[str, threading.Lock] = {}
-
     @application.exception_handler(AppError)
     async def app_error(request: Request, exc: AppError):
         return JSONResponse(status_code=exc.status_code,content={'detail':str(exc)})
@@ -98,24 +92,6 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
         if request.method not in {'GET','HEAD','OPTIONS'} and origin and origin not in allowed:
             return JSONResponse(status_code=403,content={'detail':'请求来源不允许'})
         return await call_next(request)
-
-    @application.middleware('http')
-    async def serialize_user_writes(request: Request, call_next):
-        if request.method in {'GET','HEAD','OPTIONS'}:
-            return await call_next(request)
-        token=request.cookies.get('campus_session')
-        if not token:
-            return await call_next(request)
-        try:
-            user=auth.current_user(token)
-        except AppError:
-            return await call_next(request)
-        lock=user_write_locks.setdefault(user.id,threading.Lock())
-        await asyncio.to_thread(lock.acquire)
-        try:
-            return await call_next(request)
-        finally:
-            lock.release()
 
     def current_user(request: Request) -> UserRead:
         return auth.current_user(request.cookies.get('campus_session'))
@@ -143,15 +119,9 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
     def me(user: UserRead = Depends(current_user)):
         return user
 
-    @application.get('/api/me/account',tags=['用户'],summary='读取本人账号状态及注销前置事项')
+    @application.get('/api/me/account',tags=['用户'],summary='读取本人账号资料')
     def my_account(user: UserRead = Depends(current_user)):
         return accounts.read(user.id)
-
-    @application.post('/api/me/account/close',tags=['用户'],summary='确认并注销当前登录账号')
-    def close_my_account(body: CloseAccountInput,response: Response,user: UserRead = Depends(current_user)):
-        result=accounts.close(user.id,body.password)
-        response.delete_cookie('campus_session')
-        return result
 
     @application.post('/api/auth/logout',tags=['用户'],summary='退出登录')
     def logout(request: Request,response: Response):

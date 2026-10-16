@@ -70,7 +70,7 @@ def personal_state(service: TaskService, user_id: str, *, include_completed: boo
             pending=pending_extensions.get(task.id)
             if pending and (owner or assignee):
                 own=pending['requester_id']==user_id
-                todos.append(TodoItem(task_id=task.id,title=task.title,role='publisher' if owner else 'assignee',task_status=task.status,
+                (waiting if own else todos).append(TodoItem(task_id=task.id,title=task.title,role='publisher' if owner else 'assignee',task_status=task.status,
                     action='wait_for_change' if own else 'review_change',action_label='等待对方处理协作申请' if own else '确认或拒绝协作申请',href=task_href(task.id)))
             continue
         if owner:

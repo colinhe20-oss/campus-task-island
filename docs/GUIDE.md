@@ -79,6 +79,8 @@ $env:CAMPUS_DB_PATH = Join-Path (Get-Location) '.runtime\campus.sqlite3'
 
 ## 工具与权限
 
+模型响应只有以`stop`或`tool_calls`正常终止后，才交给Agent处理。非流式完整响应若被截断、过滤、缺少终止原因或包含未知终止原因，同步接口返回502；流式中间片段可以暂时没有终止原因，但整条流须正常终止。异常响应中的工具调用不执行；此前轮次仅在内存中暂存的草稿、阶段建议和本轮对话不提交，原有已保存数据保留，失败运行记录仍可查看。正常回答和正常工具调用继续沿用原流程，失败后可以重新提问。
+
 | 工具 | 作用 | 参数 |
 | --- | --- | --- |
 | search_tasks | 搜索待接取任务 | keyword、category、limit（1–5）、offset |
@@ -86,12 +88,14 @@ $env:CAMPUS_DB_PATH = Join-Path (Get-Location) '.runtime\campus.sqlite3'
 | get_task_detail | 任务详情及本人可见的申请、成果 | task_id |
 | search_activities / get_activity_detail | 搜索综素活动、读取详情和本人报名结果 | keyword、recognition_tag、分页 / activity_id |
 | get_my_activity_registrations | 当前用户综素报名结果与重试历史 | limit、offset |
-| search_volunteer_jobs / get_volunteer_detail | 搜索志愿岗位、读取岗位名额与本人报名 | keyword、分页 / activity_id |
+| search_volunteer_jobs / get_volunteer_detail | 按岗位搜索与分页、读取岗位名额与本人报名 | keyword、limit（1–5）、offset / activity_id |
 | get_my_volunteer_registrations / get_my_volunteer_records | 本人志愿报名、参与记录与活动方确认分钟 | limit、offset |
 | search_discoveries / get_discovery_detail | 搜索当前可见发现、读取详情和状态来源 | keyword、分类、状态、分页 / discovery_id |
 | get_my_overview | 跨板块行动待办与等待事项、完成和未读摘要 | limit（1–5） |
 | get_task_draft | 读取当前对话的发布草稿 | 无 |
 | update_task_draft | 合并用户提供的草稿字段，不创建任务 | title、category、description、completion_criteria、location、deadline、reward 的部分字段 |
+
+`search_volunteer_jobs` 的 `items`、`total`、`limit`、`offset` 全部以岗位为单位：先匹配关键词，再计数和分页，`total` 为全部匹配岗位数，越界页仍保留该总数。活动标题、介绍或组织名称匹配时返回该活动的所有岗位；仅岗位名称、说明、要求或地点匹配时只返回匹配岗位。按活动开始时间、活动ID、岗位顺序、岗位ID稳定排序。一次查询使用同一只读快照和服务端时间，名额与本人报名状态复用现有规则；未取消且未结束的活动可被搜索，满额、报名截止或尚未开放不额外隐藏。网页志愿活动列表仍按活动分页。
 
 用户 ID 由服务端 Cookie 会话绑定，不接受前端或模型传入。全量个人待办接口不受工具分页限制；工具返回每组总数，offset 分别作用于每组。详情的申请最多取三条、成果最多取两条，并截取长材料，提供 record_totals 与 collaboration_preview 标识。旁观者只能看到公开任务内容和自己的申请，不能看到其他申请或成果。聊天注册表不包含文件、Shell、接取或验收写工具。
 

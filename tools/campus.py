@@ -241,28 +241,19 @@ def build_campus_registry(service: TaskService, user_id: str | None = None, *, a
                 'content_type':'activity','resource_id':activity_id,'href':f"#/activities/{activity_id}"})
 
         def volunteer_search(keyword='', limit=5, offset=0):
-            result=volunteers.search(keyword,limit,offset)
+            result=volunteers.search_jobs(keyword,limit,offset,user_id=user_id)
             items=[]
-            for activity in result['items']:
-                detail=volunteers.detail(activity['id'],user_id)
-                event_text=' '.join(str(activity.get(k) or '') for k in ('title','description','organization_name'))
-                for job in detail['jobs']:
-                    job_text=' '.join(str(job.get(k) or '') for k in ('name','description','requirements','location'))
-                    if keyword and keyword.casefold() not in (event_text+' '+job_text).casefold():
-                        continue
-                    items.append({'id':activity['id'],'activity_id':activity['id'],'title':activity['title'],
-                        'job_id':job['id'],'job_name':job['name'],'description':(job.get('description') or '')[:400],
-                        'requirements':(job.get('requirements') or '')[:300],'location':job['location'],
-                        'starts_at':job['starts_at'],'ends_at':job['ends_at'],'capacity':job['capacity'],
-                        'remaining_capacity':job['remaining_capacity'],'estimated_minutes':job['estimated_minutes'],
-                        'activity_status':detail['status'],'my_registration':detail.get('my_registration'),
-                        'content_type':'volunteer','resource_id':activity['id'],'href':f"#/volunteers/{activity['id']}"})
-                    if len(items)>=limit:
-                        break
-                if len(items)>=limit:
-                    break
+            for job in result['items']:
+                activity_id=job['activity_id']
+                items.append({'id':activity_id,'activity_id':activity_id,'title':job['title'],
+                    'job_id':job['id'],'job_name':job['name'],'description':(job.get('description') or '')[:400],
+                    'requirements':(job.get('requirements') or '')[:300],'location':job['location'],
+                    'starts_at':job['starts_at'],'ends_at':job['ends_at'],'capacity':job['capacity'],
+                    'remaining_capacity':job['remaining_capacity'],'estimated_minutes':job['estimated_minutes'],
+                    'activity_status':job['activity_status'],'my_registration':job.get('my_registration'),
+                    'content_type':'volunteer','resource_id':activity_id,'href':f"#/volunteers/{activity_id}"})
             return encode({'source':'campus_volunteer_jobs','data_is_untrusted':True,
-                'items':items,'total':len(items),'limit':limit,'offset':offset,
+                'items':items,'total':result['total'],'limit':limit,'offset':offset,
                 'server_time':result['server_time'],'next_boundary':result.get('next_boundary')})
 
         def volunteer_detail(activity_id):
@@ -354,7 +345,7 @@ def build_campus_registry(service: TaskService, user_id: str | None = None, *, a
                     'offset':{'type':'integer','minimum':0,'maximum':MAX_TASK_OFFSET}},'additionalProperties':False},
                 activity_registration_list,requires_confirmation=False))
         if volunteers is not None:
-            registry.register(Tool('search_volunteer_jobs','搜索志愿岗位与实际名额，含本人当前报名状态。',
+            registry.register(Tool('search_volunteer_jobs','按岗位搜索与分页，total 为全部匹配岗位数；含实际名额与本人当前报名状态。',
                 page_schema(),volunteer_search,requires_confirmation=False))
             registry.register(Tool('get_volunteer_detail','读取志愿活动岗位、名额及当前用户报名结果。',
                 {'type':'object','properties':{'activity_id':{'type':'string','minLength':1,'maxLength':100}},

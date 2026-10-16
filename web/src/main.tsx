@@ -11,6 +11,7 @@ import {VolunteerListPage,VolunteerDetailPage,PublishVolunteerPage} from './Volu
 import {DiscoveriesPage,PublishDiscoveryPage,DiscoveryDetailPage} from './Discoveries';
 import {HomePage,MessagesPage,MessageBadge} from './Home';
 import {GuidePage} from './Guide';
+import {clearAccountSessionCache} from './session';
 import {AccountPage,RegisterPage} from './Accounts';
 import './styles.css';
 import './collaboration.css';
@@ -183,7 +184,7 @@ function App() {
   const [logoutBusy,setLogoutBusy]=useState(false);
   async function logout() {
     setLogoutBusy(true);setLogoutError('');
-    try {await request('/api/auth/logout',{method:'POST'});auth.setUser(null);window.location.hash='/home';}
+    try {await request('/api/auth/logout',{method:'POST'});if(auth.user)clearAccountSessionCache(auth.user.id);auth.setUser(null);window.location.hash='/home';}
     catch(reason){setLogoutError(reason instanceof Error?reason.message:'退出失败');}
     finally{setLogoutBusy(false);}
   }
@@ -195,12 +196,12 @@ function App() {
   const accountPage=route.path==='/mine/account';
   const publishing = route.path==='/tasks/new'||route.path==='/activities/new';
   let page;
-  if (route.path === '/login') page=<LoginPage onLogin={auth.setUser} next={route.query.get('next')||'/home'} closed={route.query.get('closed')==='1'}/>;
+  if (route.path === '/login') page=<LoginPage onLogin={auth.setUser} next={route.query.get('next')||'/home'}/>;
   else if (route.path === '/register') page=<RegisterPage onRegister={auth.setUser}/>;
   else if (auth.loading&&(route.path==='/tasks/new'||mine||accountPage||route.path==='/guide'||route.path==='/home'||route.path==='/messages'||route.path.startsWith('/activities')||route.path.startsWith('/volunteers')||route.path.startsWith('/discoveries'))) page=<div className="state" role="status">正在确认登录状态…</div>;
   else if (route.path === '/home'||route.path==='/') page=<HomePage key={auth.user?.id||'guest'} user={auth.user}/>;
   else if (route.path === '/messages') page=<MessagesPage key={auth.user?.id||'guest'} user={auth.user}/>;
-  else if (accountPage) page=<AccountPage key={auth.user?.id||'guest'} user={auth.user} onClosed={()=>{auth.setUser(null);window.location.hash='/login?closed=1';}}/>;
+  else if (accountPage) page=<AccountPage key={auth.user?.id||'guest'} user={auth.user}/>;
   else if (route.path === '/tasks/new') page = !auth.user?<LoginRequired/>:route.query.get('type')==='ordinary'?<PublishPage copyId={route.query.get('copy')||undefined}/>:route.query.get('type')==='activity'?<PublishActivityPage/>:route.query.get('type')==='volunteer'?<PublishVolunteerPage/>:route.query.get('type')==='discovery'?<PublishDiscoveryPage/>:<PublishChoicePage/>;
   else if (mine) page=auth.user?<MySpacePage key={auth.user.id} user={auth.user} path={route.path} query={route.query}/>:<LoginRequired/>;
   else if (route.path === '/discoveries') page=<DiscoveriesPage key={auth.user?.id||'guest'} query={route.query}/>;
@@ -221,7 +222,7 @@ function App() {
       <a className={route.path.startsWith('/discoveries')?'active':''} href="#/discoveries"><span>⌖</span> 校园发现</a>
       <a className={route.path==='/messages'?'active':''} href="#/messages"><span>◉</span> 消息{auth.user&&<MessageBadge key={auth.user.id}/>}</a>
       <a className={publishing?'active':''} href="#/tasks/new"><span>＋</span> 发布任务</a><a className={mine?'active':''} href="#/mine"><span>▤</span> 我的空间</a><a className={route.path==='/guide'?'active':''} href="#/guide"><span>✦</span> 引航员</a></nav>
-    <div className="account-box">{auth.loading?<span>正在确认登录状态…</span>:auth.user?<><strong>{auth.user.display_name}</strong><small>{auth.user.username}</small><a className="text-button" href="#/mine/account">账号与隐私</a><button className="text-button" onClick={()=>void logout()} disabled={logoutBusy}>{logoutBusy?'正在退出…':'退出登录'}</button></>:<><span>登录后开始协作</span><a href={`#/login?next=${encodeURIComponent(window.location.hash.slice(1)||'/home')}`} className="button secondary">登录</a></>} {logoutError&&<p role="alert">{logoutError}</p>}</div>
+    <div className="account-box">{auth.loading?<span>正在确认登录状态…</span>:auth.user?<><strong>{auth.user.display_name}</strong><small>{auth.user.username}</small><a className="text-button" href="#/mine/account">账号信息</a><button className="text-button" onClick={()=>void logout()} disabled={logoutBusy}>{logoutBusy?'正在退出…':'退出登录'}</button></>:<><span>登录后开始协作</span><a href={`#/login?next=${encodeURIComponent(window.location.hash.slice(1)||'/home')}`} className="button secondary">登录</a></>} {logoutError&&<p role="alert">{logoutError}</p>}</div>
     <div className="sidebar-note"><span className="small-island">✦</span><strong>一点帮助，一次协作。</strong><p>从校园里的小需求开始。</p></div><div className="sidebar-footer">校园任务岛 · 初版</div></aside><main className={`main-content${route.path==='/home'||route.path==='/'?' home-content':''}`}><PageErrorBoundary resetKey={route.path}>{page}</PageErrorBoundary></main></div>;
 }
 

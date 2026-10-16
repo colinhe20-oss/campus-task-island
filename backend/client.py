@@ -34,9 +34,23 @@ class ChatBackend:
                                      headers={"Authorization": f"Bearer {self.api_key}"}, json=payload)
         response.raise_for_status()
         body = response.json()
-        result = self._normalize(body["choices"][0]["message"])
+        choices = body.get('choices') if isinstance(body, dict) else None
+        if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
+            raise ValueError('模型响应缺少有效候选结果')
+        choice = choices[0]
+        # Check before normalizing or handing any tool calls to the agent loop.
+        self._check_finish_reason(choice.get('finish_reason'))
+        message = choice.get('message')
+        if not isinstance(message, dict):
+            raise ValueError('模型响应缺少有效消息')
+        result = self._normalize(message)
         result["usage"] = body.get("usage", {})
         return result
+
+    @staticmethod
+    def _check_finish_reason(reason) -> None:
+        if reason not in ('stop', 'tool_calls'):
+            raise ValueError('模型输出未完整结束')
 
     def chat_stream(self, messages, tools=None, temperature=0.0, *, on_delta, cancel_event):
         """拼接真实 SSE 片段；工具参数完整返回后才交给主循环执行。"""
@@ -68,9 +82,8 @@ class ChatBackend:
                     if choice.get('index', 0) != 0:
                         continue
                     finish = choice.get('finish_reason')
-                    if finish:
-                        if finish not in ('stop', 'tool_calls'):
-                            raise ValueError('模型输出未完整结束')
+                    if finish is not None:
+                        self._check_finish_reason(finish)
                         finished = True
                     delta = choice.get('delta') or {}
                     if delta.get('content'):

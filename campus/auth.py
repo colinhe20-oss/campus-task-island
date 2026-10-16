@@ -104,6 +104,6 @@ class AuthService:
             connection.execute('BEGIN IMMEDIATE')
             row = connection.execute("SELECT id FROM users WHERE username=? AND account_status='active'", (username,)).fetchone()
             if row is None:
-                raise AppError('有效账号不存在；注销账号不会被重新启用', 404)
+                raise AppError('有效账号不存在', 404)
             connection.execute('UPDATE users SET salt=?,password_hash=? WHERE id=?', (salt, digest, row['id']))
             connection.execute('DELETE FROM sessions WHERE user_id=?', (row['id'],))

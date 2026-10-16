@@ -21,7 +21,7 @@ export function LoginRequired() {
   return <div className="state"><strong>登录后继续协作</strong><p>登录后可以参与任务协作、报名活动和查看个人记录。</p><a className="button" href={`#/login?next=${encodeURIComponent(window.location.hash.slice(1)||'/home')}`}>前往登录</a></div>;
 }
 
-export function LoginPage({onLogin,next,closed}:{onLogin:(user:User)=>void;next:string;closed?:boolean}) {
+export function LoginPage({onLogin,next}:{onLogin:(user:User)=>void;next:string}) {
   const [error,setError]=useState('');const [busy,setBusy]=useState(false);
   async function submit(event:FormEvent<HTMLFormElement>) {
     event.preventDefault();const form=new FormData(event.currentTarget);setBusy(true);setError('');
@@ -32,7 +32,6 @@ export function LoginPage({onLogin,next,closed}:{onLogin:(user:User)=>void;next:
     }catch(reason){setError(reason instanceof Error?reason.message:'登录失败');}finally{setBusy(false);}
   }
   return <><div className="page-heading"><div><p className="eyebrow">开启一次校园协作</p><h1>登录</h1><p className="subheading">登录后继续查看个人记录、参与活动或使用引航员。</p></div></div>
-    {closed&&<p className="success-notice">账号已注销，当前已退出登录。</p>}
     <form className="panel publish-form login-form" onSubmit={submit}><label>账号<input name="username" required maxLength={80} autoComplete="username" placeholder="例如：publisher"/></label>
       <label>密码<input name="password" type="password" required maxLength={200} autoComplete="current-password"/></label>
       {error&&<div className="form-error" role="alert">{error}</div>}<button className="button" disabled={busy}>{busy?'正在登录…':'登录'}</button>

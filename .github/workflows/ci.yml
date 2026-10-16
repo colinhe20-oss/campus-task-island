@@ -55,5 +55,11 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Check account UI and session cleanup
+        run: npm run test:accounts
+
+      - name: Check change and cancellation amount display
+        run: npm run test:changes
+
       - name: Type-check and build frontend
         run: npm run build
