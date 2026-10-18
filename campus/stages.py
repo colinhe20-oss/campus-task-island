@@ -119,7 +119,7 @@ class StageService:
                     VALUES (?,?,?,?,?,?,?,'not_started')''',(uuid4().hex,task_id,index,fields['title'],fields['completion_criteria'],fields['deadline'],fields['responsible_role']))
             conn.execute('INSERT INTO task_stage_plans VALUES (?,?) ON CONFLICT(task_id) DO UPDATE SET version=excluded.version',(task_id,version+1))
             conn.execute('INSERT INTO task_stage_plan_versions VALUES (?,?,?,?,?,?)',
-                         (task_id,version+1,json.dumps([s.model_dump(mode='json') for s in stages],ensure_ascii=False),user_id,now(),body.suggestion_id))
+                         (task_id,version+1,json.dumps([s.model_dump(mode='json') for s in stages],ensure_ascii=False),user_id,self.service.current_time().isoformat(),body.suggestion_id))
             conn.execute('UPDATE tasks SET terms_version=terms_version+1 WHERE id=?',(task_id,))
             snapshot(conn,self.service._task(conn,task_id),self.service.current_time().isoformat(),user_id)
             emit(conn,task['assignee_id'],f'plan:{task_id}:{version+1}','task',task_id,'阶段安排已更新',task['title'])
@@ -186,7 +186,7 @@ class StageService:
             if stage['status'] != 'submitted':
                 raise AppError('本阶段没有待验收的提交',409)
             conn.execute("UPDATE stage_submissions SET status=?,feedback=?,reviewed_at=?,reviewer_id=? WHERE stage_id=? AND status='submitted'",
-                         ('accepted' if body.decision=='accept' else 'changes_requested',body.feedback,now(),user_id,stage_id))
+                         ('accepted' if body.decision=='accept' else 'changes_requested',body.feedback,self.service.current_time().isoformat(),user_id,stage_id))
             conn.execute('UPDATE task_stages SET status=?,version=version+1 WHERE id=?',
                          ('confirmed' if body.decision=='accept' else 'changes_requested',stage_id))
             self._sync_task(conn,task_id)

@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 """独立志愿业务：按岗位排队，按报名记录核验，所有写操作在获取写锁后读时钟。"""
 import json
 from datetime import datetime, timezone
@@ -139,9 +140,10 @@ class VolunteerService:
                     result['registration_history'] = [read(r) for r in rows]
         return result
 
-    def create(self, body:VolunteerCreate, user_id):
-        with self.database.connect() as conn:
-            conn.execute('BEGIN IMMEDIATE'); now=self.now()
+    def create(self, body:VolunteerCreate, user_id, *, connection=None):
+        with (nullcontext(connection) if connection is not None else self.database.connect()) as conn:
+            if not conn.in_transaction: conn.execute('BEGIN IMMEDIATE')
+            now=self.now()
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'",(user_id,)).fetchone():
                 raise AppError('请使用有效账号发布志愿活动',403)
             if body.starts_at <= now:

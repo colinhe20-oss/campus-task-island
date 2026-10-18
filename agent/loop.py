@@ -7,7 +7,7 @@ import time
 import uuid
 from typing import Any, Callable
 
-from tools.base import ToolRegistry
+from tools.base import ToolRegistry,tool_diagnostic
 from .context import truncate_observation
 from .prompts import SYSTEM_PROMPT
 
@@ -28,7 +28,8 @@ class AgentLoop:
                  event_callback: Callable[[str, dict], None] | None = None,
                  cancel_event: threading.Event | None = None,
                  max_observation_chars: int = 12000,
-                 stream: bool = False):
+                 stream: bool = False,
+                 final_check: Callable[[], str | None] | None = None):
         if max_turns < 1 or max_observation_chars < 1:
             raise ValueError("轮数和结果长度上限必须为正数")
         self.backend = backend
@@ -40,6 +41,7 @@ class AgentLoop:
         self.event_callback = event_callback
         self.cancel_event = cancel_event or threading.Event()
         self.stream = stream
+        self.final_check = final_check
         self.max_observation_chars = max_observation_chars
         self.messages: list[dict[str, Any]] = []
 
@@ -106,6 +108,10 @@ class AgentLoop:
             self.messages.append(message)
             self._emit("assistant_message", step=step, content=content)
             if not calls:
+                feedback = self.final_check() if self.final_check else None
+                if feedback:
+                    self.messages.append({'role':'user','content':'[协调器校验] '+feedback})
+                    continue
                 self._emit("run_finished", answer=content)
                 return content
 
@@ -114,8 +120,9 @@ class AgentLoop:
                 name = call.get("name", "")
                 arguments = call.get("arguments", {})
                 started = time.monotonic()
-                self._emit("tool_started", step=step, tool=name, arguments=arguments)
+                self._emit("tool_started", step=step, tool=name, call_id=call["id"], arguments=arguments)
                 error_type = None
+                diagnostic = None
                 try:
                     if isinstance(arguments, str):
                         arguments = json.loads(arguments)
@@ -124,6 +131,7 @@ class AgentLoop:
                     tool = self.registry.get(name)
                     if tool is None:
                         raise ValueError(f"未知工具：{name}")
+                    arguments=tool.prepare(arguments)
                     # 在请求确认前校验，错误参数不能执行。
                     from jsonschema import Draft202012Validator
                     Draft202012Validator(tool.parameters).validate(arguments)
@@ -135,7 +143,9 @@ class AgentLoop:
                     observation = tool.invoke(arguments)
                 except Exception as exc:
                     error_type = type(exc).__name__
-                    observation = f"[工具错误] {name}: {type(exc).__name__}: {exc}"
+                    diagnostic=tool_diagnostic(exc)
+                    detail=(diagnostic['message']+'（'+diagnostic.get('path','输入')+'）') if diagnostic else str(exc)
+                    observation = f"[工具错误] {name}: {type(exc).__name__}: {detail}"
                 action = (name, json.dumps(arguments, ensure_ascii=False, sort_keys=True))
                 repeats = repeats + 1 if action == last_action else 1
                 last_action = action
@@ -144,8 +154,9 @@ class AgentLoop:
                 self.messages.append({"role": "tool", "name": name,
                                       "tool_call_id": call["id"],
                                       "content": truncate_observation(observation, self.max_observation_chars)})
-                self._emit("tool_finished", step=step, tool=name, result=observation,
+                self._emit("tool_finished", step=step, tool=name, call_id=call["id"], result=observation,
                            success=not observation.startswith('[工具错误]'),
                            error_type=error_type,
+                           diagnostic=diagnostic,
                            duration_ms=round((time.monotonic() - started) * 1000))
         raise StepLimitExceeded(f"已达到 {self.max_turns} 轮模型调用上限，任务未确认完成")

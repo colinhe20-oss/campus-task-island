@@ -8,6 +8,7 @@ from uuid import uuid4
 from .db import Database
 from .errors import AppError
 from .notifications import emit
+from .clock import utc_now
 from .schemas import (MAX_TASK_OFFSET, Category, TaskCreate, TaskList, TaskRead,
                       TaskStatus, ApplicationInput, ApplicationRead, SubmissionRead, WorkspaceRead, MyTasks)
 
@@ -16,7 +17,7 @@ TASK_SELECT = '''SELECT t.*, p.display_name publisher_name, a.display_name assig
 
 
 def now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return utc_now().isoformat()
 
 
 class TaskNotFound(AppError):
@@ -27,7 +28,7 @@ class TaskNotFound(AppError):
 class TaskService:
     def __init__(self, database: Database, clock=None):
         self.database = database
-        self.clock = clock or (lambda: datetime.now(timezone.utc))
+        self.clock = clock or utc_now
         from .terms import TaskTerms
         self.terms = TaskTerms(self)
 

@@ -8,7 +8,7 @@ from threading import Barrier, Event
 
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
-from campus.app import create_app
+from app_factory import create_app
 from campus.activity_schemas import ActivityCreate, RegistrationReview
 from campus.errors import AppError
 

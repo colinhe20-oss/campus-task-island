@@ -4,7 +4,7 @@ from datetime import datetime,timezone,timedelta
 from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import patch
 from fastapi.testclient import TestClient
-from campus.app import create_app
+from app_factory import create_app
 from campus.schemas import TASK_CREATE_EXAMPLE,DeadlineInput,ExtensionReviewInput,SettlementInput,StagePlanInput
 from campus.errors import AppError
 from campus.todos import personal_state

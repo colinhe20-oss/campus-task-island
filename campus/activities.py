@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 """站内活动报名。所有状态变更先获取 SQLite 写锁，再读取服务端时间。"""
 import json
 from datetime import datetime, timezone
@@ -7,6 +8,7 @@ from .activity_schemas import ActivityCreate, RegistrationReview
 from .db import Database
 from .errors import AppError
 from .notifications import registration_event
+from .clock import utc_now
 
 ACTIVE = ('pending', 'registered', 'waitlisted')
 
@@ -14,7 +16,7 @@ ACTIVE = ('pending', 'registered', 'waitlisted')
 class ActivityService:
     def __init__(self, database: Database, clock=None):
         self.database = database
-        self.clock = clock or (lambda: datetime.now(timezone.utc))
+        self.clock = clock or utc_now
 
     def now(self):
         value = self.clock()
@@ -130,9 +132,9 @@ class ActivityService:
                     result['can_register'] = False
         return result
 
-    def create(self, body: ActivityCreate, user_id):
-        with self.database.connect() as conn:
-            conn.execute('BEGIN IMMEDIATE')
+    def create(self, body: ActivityCreate, user_id, *, connection=None):
+        with (nullcontext(connection) if connection is not None else self.database.connect()) as conn:
+            if not conn.in_transaction: conn.execute('BEGIN IMMEDIATE')
             now = self.now()
             if not conn.execute("SELECT 1 FROM users WHERE id=? AND account_status='active'", (user_id,)).fetchone():
                 raise AppError('请使用有效账号发布活动', 403)

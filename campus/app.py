@@ -1,6 +1,7 @@
 """本地原型 API，启动后访问 /docs。"""
 from .home import HomeService
 from .notifications import NotificationService
+from .clock import business_time
 from .home_api import home_router
 from contextlib import asynccontextmanager
 import asyncio
@@ -35,7 +36,11 @@ from .schemas import (UserRead, LoginInput, ClaimInput, ApplicationInput, Applic
                       RegisterInput)
 
 
-def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None, activity_clock=None, volunteer_clock=None, discovery_clock=None, task_clock=None) -> FastAPI:
+def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None, activity_clock=None, volunteer_clock=None, discovery_clock=None, task_clock=None, business_clock=None, enable_semantics: bool = True) -> FastAPI:
+    task_clock = task_clock or business_clock
+    activity_clock = activity_clock or business_clock
+    volunteer_clock = volunteer_clock or business_clock
+    discovery_clock = discovery_clock or business_clock
     service = TaskService(Database(db_path if db_path is not None else configured_db_path()),task_clock)
     auth = AuthService(service.database)
     stages = StageService(service)
@@ -54,12 +59,16 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
         auth.provision_demo_accounts()
         discoveries.cleanup_images()
         guide.runs.recover()
+        guide.matching.start()
+        if enable_semantics:guide.semantics.start()
         try:
             yield
         finally:
+            await asyncio.to_thread(guide.semantics.stop)
+            await asyncio.to_thread(guide.matching.stop)
             await asyncio.to_thread(guide.shutdown)
 
-    application = FastAPI(title="校园任务岛 API", version="0.1.0", lifespan=lifespan,
+    application = FastAPI(title="引航岛 API", version="0.1.0", lifespan=lifespan,
                           description="发布任务请选择 POST /api/tasks，在 Request body 中提交 JSON。"
                                       "GET /api/tasks 用于查询，只有关键词、分类和分页参数。"
                                       "发布、申请、提交和验收需要先登录；已有本地测试账号。",
@@ -81,6 +90,12 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
     application.state.account_service=accounts
     application.add_middleware(ImageUploadLimit)
 
+    if business_clock is not None:
+        @application.middleware('http')
+        async def scoped_business_time(request: Request, call_next):
+            with business_time(business_clock):
+                return await call_next(request)
+
     @application.exception_handler(AppError)
     async def app_error(request: Request, exc: AppError):
         return JSONResponse(status_code=exc.status_code,content={'detail':str(exc)})
@@ -96,6 +111,8 @@ def create_app(db_path: str | Path | None = None, *, guide_backend_factory=None,
     def current_user(request: Request) -> UserRead:
         return auth.current_user(request.cookies.get('campus_session'))
 
+    from .assistance_api import assistance_router
+    application.include_router(assistance_router(guide,current_user))
     application.include_router(activity_router(activities, auth, current_user))
     application.include_router(volunteer_router(volunteers, auth, current_user))
     application.include_router(discovery_router(discoveries, auth, current_user))

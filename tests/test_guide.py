@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 from jsonschema import ValidationError
 
 from backend.fake_backend import FakeBackend
-from campus.app import create_app
+from app_factory import create_app
 from campus.errors import AppError
 from campus.guide import BudgetBackend, model_backend
 from campus.schemas import GuideInput, TaskCreate, TASK_CREATE_EXAMPLE
@@ -193,7 +193,7 @@ class GuideTests(unittest.TestCase):
         factories=[(lambda:Broken(httpx.ReadTimeout('timeout')),504),
                    (lambda:Broken(httpx.ConnectError('connection')),502),
                    (lambda:FakeBackend([{'content':'   '}]),502),
-                   (lambda:FakeBackend([calling()]*6),502)]
+                   (lambda:FakeBackend([calling()]*8),502)]
         for factory,code in factories:
             self.app.state.guide_service.backend_factory=factory
             self.assertEqual(self.client.post('/api/guide/chat',json={'message':'你好'}).status_code,code)

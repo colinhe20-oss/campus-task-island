@@ -20,5 +20,7 @@
 .run-table th { color: #526459; font-weight: 600; }
 .run-detail { margin-top: 16px; padding: 16px; background: #f5f8f5; border-radius: 12px; }
 .run-detail li { margin: 5px 0; font-size: 13px; }
-.run-answer { white-space: pre-wrap; }
+.run-answer { margin-top: 18px; }
 .streaming small { color: #64746a; }
+
+@media(max-width:1000px){.guide-layout{grid-template-columns:minmax(0,1fr)}.guide-chat,.guide-todos{min-width:0}}

@@ -10,6 +10,7 @@ from .activities import ActivityService
 from .discovery_schemas import DiscoveryFields,STATES,TERMINAL
 from .errors import AppError
 from .notifications import emit
+from .clock import utc_now
 
 MAX_IMAGE_BYTES=5*1024*1024
 MAX_IMAGE_PIXELS=20_000_000
@@ -18,7 +19,7 @@ MAX_IMAGE_PIXELS=20_000_000
 class DiscoveryService:
     def __init__(self,database,clock=None):
         self.database=database
-        self.clock=clock or (lambda:datetime.now(timezone.utc))
+        self.clock=clock or utc_now
         self.media_dir=database.path.parent/'discovery-media'
 
     now=ActivityService.now

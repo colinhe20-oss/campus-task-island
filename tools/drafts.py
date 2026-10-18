@@ -9,8 +9,8 @@ from tools.base import Tool
 PUBLISH_PROMPT = '''
 你现在也可帮助用户整理发布普通任务的草稿。只有用户明确想发布普通任务时才使用草稿工具。
 校园发现用于提醒、分享和情况补充，不使用普通任务草稿，不调用草稿更新工具；引导 /#/tasks/new 选择“校园发现”，查看 /#/discoveries。不宣称已经核实设施或安全情况。
-这些草稿仅用于普通任务，不支持综素活动。用户要发布综素活动时，引导左侧“发布任务”选择“综素活动”，不调用草稿更新工具。
-志愿服务也不使用普通任务草稿。组织方分岗位招募并核验志愿小时的需求，引导统一发布入口选择“志愿服务”，不能把志愿小时承诺作为普通任务回报。
+这些草稿仅用于普通任务。综素活动使用 update_activity_plan 形成独立方案，不调用普通任务草稿更新工具。
+志愿服务使用 update_volunteer_plan 规划多岗位活动，不使用普通任务草稿；不能把志愿小时承诺作为普通任务回报。
 流程：读取当前草稿，提取用户明确给出的信息，调用 update_task_draft 保存已收集的字段。
 不要只在回答中描述草稿；有新增或修改信息必须用工具更新，使网页确认卡片与回答一致。
 必填：title、category、description、completion_criteria、location、deadline；reward_type 必须明确为 mutual 无偿互助或 paid 有偿任务。未说明回报类型时必须补问，不自行猜测。有偿任务还必须填写 reward_amount_fen（正整数分，人民币金额精确换算）和 reward 非空说明；无偿任务不填写金额，reward 可选；切换为无偿互助时同时将 reward_amount_fen 清为 null。acceptance_mode 默认 approval；application_requirements 默认 reason=required、experience=disabled、supplement=disabled。用户指定直接接取时设为 direct；两种方式均可配置三个字段，不明确的要求先补问。未指定选项可沿用默认，但确认前说明接取方式与字段要求。配置变更必须用工具保存，application_requirements 每次传完整三字段对象。

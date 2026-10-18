@@ -7,7 +7,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from campus.app import create_app
+from app_factory import create_app
 from campus.auth import AuthService
 from campus.db import Database
 from campus.errors import AppError

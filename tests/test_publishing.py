@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 
 import test_guide as helpers
 from backend.fake_backend import FakeBackend
-from campus.app import create_app
+from app_factory import create_app
 from campus.drafts import DraftBuffer
 from campus.errors import AppError
 from campus.schemas import TASK_CREATE_EXAMPLE
@@ -215,7 +215,8 @@ class PublishingTests(unittest.TestCase):
         self.assertEqual(names,{'get_my_tasks','get_task_detail','search_tasks','get_task_draft','update_task_draft',
             'search_activities','get_activity_detail','get_my_activity_registrations','search_volunteer_jobs',
             'get_volunteer_detail','get_my_volunteer_registrations','get_my_volunteer_records',
-            'search_discoveries','get_discovery_detail','get_my_overview'})
+            'search_discoveries','get_discovery_detail','get_my_overview',
+            'review_activity_plan','get_assistance','update_volunteer_plan','update_activity_plan','get_participation_preferences','propose_preferences','get_recommendations'})
         for _ in range(6):
             self.app.state.guide_service.backend_factory=lambda:FakeBackend([{'content':'请查看当前草稿'}])
             self.client.post('/api/guide/chat',json={'message':'再查看','conversation_id':reply['conversation_id']})

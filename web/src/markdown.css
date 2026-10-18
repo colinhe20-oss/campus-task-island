@@ -1,0 +1,27 @@
+.markdown-reply { color: #354b3e; font-size: 14px; line-height: 1.85; white-space: normal; overflow-wrap: anywhere; }
+.markdown-reply > :first-child { margin-top: 0; }
+.markdown-reply > :last-child { margin-bottom: 0; }
+.markdown-reply p, .chat-message .markdown-reply p { margin: 10px 0; white-space: normal; font-size: inherit; line-height: inherit; }
+.markdown-reply strong, .chat-message .markdown-reply strong { font-size: inherit; color: inherit; font-weight: 650; }
+.markdown-reply h3 { margin: 20px 0 10px; font-size: 17px; line-height: 1.5; color: #2d5741; }
+.markdown-reply h4 { margin: 18px 0 8px; font-size: 15px; line-height: 1.6; color: #315740; }
+.markdown-reply h5, .markdown-reply h6 { margin: 16px 0 8px; font-size: 14px; }
+.markdown-reply ul, .markdown-reply ol { margin: 10px 0; padding-left: 24px; }
+.markdown-reply li { margin: 5px 0; }
+.markdown-reply li > p { margin: 4px 0; }
+.markdown-reply li::marker { color: #6d886c; }
+.markdown-reply a { color: #2f7867; text-decoration: underline; text-underline-offset: 3px; }
+.markdown-reply a:hover { color: #244e3c; }
+.markdown-reply code { font-family: Consolas, 'SFMono-Regular', monospace; font-size: .88em; padding: 2px 5px; background: #eef3ea; color: #486347; border-radius: 4px; }
+.markdown-reply pre { margin: 14px 0; padding: 14px 16px; overflow-x: auto; background: #f5f8f2; border: 1px solid #e0e7dc; border-radius: 9px; white-space: pre; }
+.markdown-reply pre code { padding: 0; color: #354b3e; background: transparent; border-radius: 0; overflow-wrap: normal; }
+.markdown-reply blockquote { margin: 14px 0; padding: 6px 14px; border-left: 3px solid #a8bda0; background: #f5f8f2; color: #62765f; border-radius: 0 7px 7px 0; }
+.markdown-reply hr { margin: 20px 0; border: 0; border-top: 1px solid #e2e9de; }
+.markdown-table { max-width: 100%; margin: 14px 0; overflow-x: auto; border: 1px solid #e0e7dc; border-radius: 8px; }
+.markdown-table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.markdown-table th, .markdown-table td { padding: 9px 12px; border-bottom: 1px solid #e5ebe1; text-align: left; }
+.markdown-table th { background: #f1f6ed; color: #3e6045; font-weight: 600; white-space: nowrap; }
+.markdown-table tbody tr:nth-child(even) { background: #fbfcf9; }
+.markdown-table tbody tr:last-child td { border-bottom: 0; }
+.markdown-reply .contains-task-list { list-style: none; padding-left: 4px; }
+.markdown-reply input[type=checkbox] { width: auto; margin-right: 7px; accent-color: #628368; }

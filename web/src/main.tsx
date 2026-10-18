@@ -215,15 +215,15 @@ function App() {
   else if (route.path === '/tasks') page = <ListPage query={route.query}/>;
   else if (detail) page = <DetailPage key={detail[1]+(auth.user?.id||'guest')} id={detail[1]} user={auth.user} published={route.query.get('published') === '1'}/>;
   else page = <div className="state"><strong>页面不存在</strong><a className="button secondary" href="#/tasks">返回任务大厅</a></div>;
-  return <div className="app-shell"><aside className="sidebar"><a href="#/home" className="brand"><span className="brand-icon">岛</span><span>校园任务岛<small>CAMPUS TASK ISLAND</small></span></a>
-    <p className="nav-caption">校园协作</p><nav><a className={route.path==='/home'||route.path==='/'?'active':''} href="#/home"><span>⌂</span> 岛屿首页</a><a className={route.path==='/tasks'||(detail&&route.path!=='/tasks/new')?'active':''} href="#/tasks"><span>▦</span> 普通任务</a>
+  return <div className="app-shell"><aside className="sidebar"><a href="#/home" className="brand"><span className="brand-icon">岛</span><span>引航岛<small>CAMPUS COLLABORATION</small></span></a>
+    <p className="nav-caption">校园协作</p><nav><a className={route.path==='/home'||route.path==='/'?'active':''} href="#/home"><span>⌂</span> 岛屿首页</a><a className={route.path==='/guide'?'active':''} href="#/guide"><span>✦</span> 引航员</a><a className={route.path==='/tasks'||(detail&&route.path!=='/tasks/new')?'active':''} href="#/tasks"><span>▦</span> 普通任务</a>
       <a className={route.path.startsWith('/activities')&&!publishing?'active':''} href="#/activities"><span>◷</span> 综素活动</a>
       <a className={route.path.startsWith('/volunteers')?'active':''} href="#/volunteers"><span>♡</span> 志愿服务</a>
       <a className={route.path.startsWith('/discoveries')?'active':''} href="#/discoveries"><span>⌖</span> 校园发现</a>
       <a className={route.path==='/messages'?'active':''} href="#/messages"><span>◉</span> 消息{auth.user&&<MessageBadge key={auth.user.id}/>}</a>
-      <a className={publishing?'active':''} href="#/tasks/new"><span>＋</span> 发布任务</a><a className={mine?'active':''} href="#/mine"><span>▤</span> 我的空间</a><a className={route.path==='/guide'?'active':''} href="#/guide"><span>✦</span> 引航员</a></nav>
+      <a className={publishing?'active':''} href="#/tasks/new"><span>＋</span> 发布任务</a><a className={mine?'active':''} href="#/mine"><span>▤</span> 我的空间</a></nav>
     <div className="account-box">{auth.loading?<span>正在确认登录状态…</span>:auth.user?<><strong>{auth.user.display_name}</strong><small>{auth.user.username}</small><a className="text-button" href="#/mine/account">账号信息</a><button className="text-button" onClick={()=>void logout()} disabled={logoutBusy}>{logoutBusy?'正在退出…':'退出登录'}</button></>:<><span>登录后开始协作</span><a href={`#/login?next=${encodeURIComponent(window.location.hash.slice(1)||'/home')}`} className="button secondary">登录</a></>} {logoutError&&<p role="alert">{logoutError}</p>}</div>
-    <div className="sidebar-note"><span className="small-island">✦</span><strong>一点帮助，一次协作。</strong><p>从校园里的小需求开始。</p></div><div className="sidebar-footer">校园任务岛 · 初版</div></aside><main className={`main-content${route.path==='/home'||route.path==='/'?' home-content':''}`}><PageErrorBoundary resetKey={route.path}>{page}</PageErrorBoundary></main></div>;
+    <div className="sidebar-note"><span className="small-island">✦</span><strong>一点帮助，一次协作。</strong><p>从校园里的小需求开始。</p></div><div className="sidebar-footer">引航岛 · 初版</div></aside><main className={`main-content${route.path==='/home'||route.path==='/'?' home-content':''}`}><PageErrorBoundary resetKey={route.path}>{page}</PageErrorBoundary></main></div>;
 }
 
 createRoot(document.getElementById('root')!).render(<App/>);

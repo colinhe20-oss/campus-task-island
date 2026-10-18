@@ -48,11 +48,34 @@ class RunStore:
     def event(self, run_id, kind, data):
         # 明确白名单；上游的 run_started.task / tool.arguments / tool.result 不落盘。
         allowed = {'model_started': ('step',), 'model_finished': ('step','duration_ms'),
-                   'tool_started': ('step','tool'), 'tool_finished': ('step','tool','success','duration_ms','error_type'),
+                   'tool_started': ('step','tool','call_id'), 'tool_finished': ('step','tool','call_id','success','duration_ms','error_type'),
                    'text_delta': ('step','text')}
         if kind not in allowed:
             return
         item = {'kind': kind, **{k: data[k] for k in allowed[kind] if k in data}}
+        if kind == 'tool_started':
+            args = data.get('arguments')
+            if isinstance(args,str):
+                try:args=json.loads(args)
+                except (ValueError,TypeError):args=None
+            if isinstance(args, dict):
+                item['summary'] = '输入字段：'+('、'.join(str(k)[:50] for k in args)[:250] or '无参数')
+        if kind == 'tool_finished':
+            item['summary'] = '执行成功' if data.get('success') else '工具返回错误，请检查参数或重试'
+            diagnostic=data.get('diagnostic')
+            if not data.get('success') and isinstance(diagnostic,dict):
+                item['diagnostic']={key:str(diagnostic[key])[:250] for key in ('code','message','path') if key in diagnostic}
+                item['summary']=item['diagnostic'].get('message','参数校验失败')
+                if item['diagnostic'].get('path'):item['summary']+='（'+item['diagnostic']['path']+'）'
+            try:
+                result = json.loads(data.get('result',''))
+                if isinstance(result,dict):
+                    if isinstance(result.get('items'),list):item['summary'] = f"返回 {len(result['items'])} 项结果"
+                    plan = result.get('plan')
+                    if isinstance(plan,dict):item['summary'] = f"方案已整理，尚有 {len(plan.get('issues',[]))} 项待核对"
+                    if result.get('preference_proposal'):item['summary'] = '偏好草稿已整理，等待本人确认'
+            except (ValueError,TypeError):pass
+
         with self.database.connect() as conn:
             row = conn.execute('SELECT events,metrics FROM guide_runs WHERE id=?', (run_id,)).fetchone()
             events, metrics = json.loads(row['events']), json.loads(row['metrics'])

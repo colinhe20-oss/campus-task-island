@@ -9,7 +9,7 @@ import httpx
 import test_guide as helpers
 from backend.client import ChatBackend
 from backend.fake_backend import FakeBackend
-from campus.app import create_app
+from app_factory import create_app
 from fastapi.testclient import TestClient
 
 

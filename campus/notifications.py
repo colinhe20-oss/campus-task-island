@@ -2,6 +2,7 @@
 from datetime import datetime, timezone
 import json
 from .errors import AppError
+from .clock import utc_now
 
 STATEMENTS = [
     '''CREATE TABLE IF NOT EXISTS notifications (
@@ -21,7 +22,7 @@ def emit(conn, recipient, event_key, kind, resource_id, title, summary='', creat
     if account is None or account['account_status']!='active':return
     conn.execute('''INSERT INTO notifications(recipient_id,event_key,content_type,resource_id,title,summary,created_at)
         VALUES (?,?,?,?,?,?,?) ON CONFLICT(recipient_id,event_key) DO NOTHING''',
-        (recipient,event_key,kind,resource_id,title,summary,created_at or datetime.now(timezone.utc).isoformat()))
+        (recipient,event_key,kind,resource_id,title,summary,created_at or utc_now().isoformat()))
 
 def registration_event(conn,kind,activity_id,registration_id,action,event_key,stamp):
     if not registration_id:return
@@ -53,7 +54,7 @@ class NotificationService:
 
     def count(self,user_id):
         with self.database.connect() as c:
-            return dict(unread_count=self.unread(c,user_id),server_time=datetime.now(timezone.utc).isoformat(),next_boundary=None)
+            return dict(unread_count=self.unread(c,user_id),server_time=utc_now().isoformat(),next_boundary=None)
 
     def list(self,user_id,unread_only=False,limit=20,before_id=None):
         with self.database.connect() as c:
@@ -68,11 +69,11 @@ class NotificationService:
                 item={k:row[k] for k in ('id','content_type','title','summary','created_at','read_at')}
                 item['href']=f"#/{ROUTES[row['content_type']]}/{row['resource_id']}"
                 items.append(item)
-            return dict(items=items,next_cursor=items[-1]['id'] if len(rows)>limit else None,max_id=maximum,unread_count=self.unread(c,user_id),server_time=datetime.now(timezone.utc).isoformat(),next_boundary=None)
+            return dict(items=items,next_cursor=items[-1]['id'] if len(rows)>limit else None,max_id=maximum,unread_count=self.unread(c,user_id),server_time=utc_now().isoformat(),next_boundary=None)
 
     def read(self,user_id,identifier=None,through_id=None):
         with self.database.connect() as c:
-            c.execute('BEGIN IMMEDIATE');stamp=datetime.now(timezone.utc).isoformat()
+            c.execute('BEGIN IMMEDIATE');stamp=utc_now().isoformat()
             if identifier is not None:
                 row=c.execute('SELECT id FROM notifications WHERE id=? AND recipient_id=?',(identifier,user_id)).fetchone()
                 if row is None:raise AppError('消息不存在',404)

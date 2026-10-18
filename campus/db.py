@@ -196,6 +196,10 @@ class Database:
             statements.extend(volunteer_statements)
             from .discovery_db import STATEMENTS as discovery_statements
             statements.extend(discovery_statements)
+            from .assistance import STATEMENTS as assistance_statements
+            statements.extend(assistance_statements)
+            from .semantics import STATEMENTS as semantic_statements
+            statements.extend(semantic_statements)
             for statement in statements:
                 connection.execute(statement)
             from .notifications import STATEMENTS as notification_statements

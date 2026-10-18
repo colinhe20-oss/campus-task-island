@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 
 import test_guide as helpers
 from backend.fake_backend import FakeBackend
-from campus.app import create_app
+from app_factory import create_app
 from campus.errors import AppError
 from campus.schemas import StagePlanInput, StageActionInput
 from campus.todos import personal_state

@@ -13,7 +13,7 @@ from fastapi.testclient import TestClient
 from agent.cli import main
 from agent.loop import AgentLoop
 from backend.fake_backend import FakeBackend
-from campus.app import create_app
+from app_factory import create_app
 from campus.db import Database
 from campus.schemas import MAX_TASK_OFFSET, TaskCreate
 from campus.service import TaskService

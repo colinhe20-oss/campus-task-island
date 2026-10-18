@@ -287,10 +287,13 @@ class GuideInput(BaseModel):
     conversation_id: str | None = Field(default=None, pattern='^[a-f0-9]{32}$')
     task_id: str | None = Field(default=None, min_length=1, max_length=100)
     draft_version: int | None = Field(default=None, ge=1)
-    purpose: Literal['chat', 'stage_plan'] = 'chat'
+    purpose: Literal['chat', 'stage_plan', 'activity_review'] = 'chat'
+    expected_assistance_version: int | None = Field(default=None,ge=1)
 
     @model_validator(mode='after')
     def stage_context(self):
+        if self.purpose == 'activity_review' and not self.conversation_id:
+            raise ValueError('活动评估必须指定草稿对话')
         if self.purpose == 'stage_plan' and not self.task_id:
             raise ValueError('阶段建议必须指定任务')
         return self
@@ -461,6 +464,7 @@ class GuideConversationRead(BaseModel):
     messages: list[ChatHistoryRead]
     draft: TaskDraftRead | None = None
     stage_suggestion: StageSuggestionRead | None = None
+    assistance: dict | None = None
 
 
 class CampusReference(BaseModel):
@@ -486,6 +490,7 @@ class GuideReply(BaseModel):
     mode: str = 'model'
     draft: TaskDraftRead | None = None
     stage_suggestion: StageSuggestionRead | None = None
+    assistance: dict | None = None
 
 
 class DeadlineInput(BaseModel):

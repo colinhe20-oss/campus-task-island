@@ -38,13 +38,14 @@ class ContentTypeTests(unittest.TestCase):
         request = self.backends[-1].requests[0]
         prompt = request['messages'][0]['content']
         # 验证编排确实将区别与能力边界传给模型，而非仅存在于未使用的常量。
-        for rule in ('校园发现','/#/discoveries','/#/mine/discoveries','不宣称已经核实设施或安全情况','志愿服务','search_volunteer_jobs','get_my_volunteer_records','/#/mine/volunteer-records','综素活动', '二课分、美育分、形策二分', '只查询普通任务', 'search_activities','综素活动发布暂不支持 AI 草稿', '先询问', '/#/tasks/new'):
+        for rule in ('校园发现','/#/discoveries','/#/mine/discoveries','不宣称已经核实设施或安全情况','志愿服务','search_volunteer_jobs','get_my_volunteer_records','/#/mine/volunteer-records','综素活动', '二课分、美育分、形策二分', '只查询普通任务', 'search_activities','综素活动使用 update_activity_plan', '先询问', '/#/tasks/new'):
             self.assertIn(rule, prompt)
         names = {tool['function']['name'] for tool in request['tools']}
         self.assertEqual(names, {'search_tasks','get_my_tasks','get_task_detail','get_task_draft','update_task_draft',
             'search_activities','get_activity_detail','get_my_activity_registrations','search_volunteer_jobs',
             'get_volunteer_detail','get_my_volunteer_registrations','get_my_volunteer_records',
-            'search_discoveries','get_discovery_detail','get_my_overview'})
+            'search_discoveries','get_discovery_detail','get_my_overview',
+            'review_activity_plan','get_assistance','update_volunteer_plan','update_activity_plan','get_participation_preferences','propose_preferences','get_recommendations'})
         self.assertIsNone(response.json()['draft'])
         with self.service.database.connect() as conn:
             self.assertEqual(conn.execute('SELECT COUNT(*) FROM tasks').fetchone()[0], 0)
