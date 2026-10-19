@@ -1,0 +1,23 @@
+{
+  "sample_id": "EXP-V02-O3",
+  "version": "1.0.0-candidate",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Only morning capacity and dependent total change",
+      "passed": true
+    },
+    {
+      "name": "Final capacities are5/3 and total8",
+      "passed": true
+    },
+    {
+      "name": "Initial-state gate explicit",
+      "passed": true
+    },
+    {
+      "name": "Parent source binding retained",
+      "passed": true
+    }
+  ]
+}

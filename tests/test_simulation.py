@@ -33,9 +33,10 @@ class SimulationTests(unittest.TestCase):
         report=json.loads((self.directory/'acceptance.json').read_text(encoding='utf-8'))
         self.assertTrue(report['passed'])
         self.assertTrue(report['http_checked'])
-        self.assertGreater(len(report['checks']),300)
+        self.assertTrue(all(check['passed'] for check in report['checks']))
+        self.assertIn('实际志愿服务时间不重叠', {check['name'] for check in report['checks']})
         self.assertEqual(report['counts']['users'],53)
-        self.assertEqual(report['confirmed_minutes'],870)
+        self.assertEqual(report['confirmed_minutes'],1660)
         log=json.loads((self.directory/'events.json').read_text(encoding='utf-8'))
         self.assertEqual(len(log),self.manifest['events'])
         self.assertEqual(log,sorted(log,key=lambda r:r['at']))
@@ -71,22 +72,22 @@ class SimulationTests(unittest.TestCase):
         directory=self.copy_dataset();ids=self.manifest['ids']
         accounts=json.loads((directory/'accounts.json').read_text(encoding='utf-8'))
         helper=next(u for u in accounts if u['key']=='U043')
-        with TestClient(demo_app(directory,frozen=True)) as client:
+        with TestClient(demo_app(directory,frozen=True,enable_semantics=False)) as client:
             self.assertEqual(client.post('/api/auth/login',json={k:helper[k] for k in ('username','password')}).status_code,200)
-            response=client.post(f"/api/tasks/{ids['T004']}/claim",json={'confirmed':True})
+            response=client.post(f"/api/tasks/{ids['T001']}/claim",json={'confirmed':True})
             self.assertEqual(response.status_code,200,response.text)
             self.assertEqual(response.json()['status'],'in_progress')
             self.assertEqual(aware_time(client.get('/api/me/messages').json()['server_time']),aware_time(self.manifest['observation']))
-        with TestClient(demo_app(directory,frozen=True)) as client:
-            result=client.get(f"/api/tasks/{ids['T004']}").json()
+        with TestClient(demo_app(directory,frozen=True,enable_semantics=False)) as client:
+            result=client.get(f"/api/tasks/{ids['T001']}").json()
             self.assertEqual(result['assignee_id'],ids['U043'])
         with self.assertRaisesRegex(AssertionError,'验收失败'):
             verify(directory,http_checks=False)
         self.assertFalse(json.loads((directory/'acceptance.json').read_text(encoding='utf-8'))['passed'])
 
     def test_runtime_clock_anchor_is_persistent(self):
-        a=demo_app(self.directory)
-        b=demo_app(self.directory)
+        a=demo_app(self.directory,enable_semantics=False)
+        b=demo_app(self.directory,enable_semantics=False)
         with TestClient(a) as first,TestClient(b) as second:
             ta=aware_time(first.get('/api/simulation').json()['server_time'])
             tb=aware_time(second.get('/api/simulation').json()['server_time'])

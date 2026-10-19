@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "findings": [
+    {
+      "id": "V01-P02-UNSUPPORTED-NARROWING",
+      "sample_id": "EXP-V01",
+      "status": "resolved_in_0.1.1",
+      "severity": "blocks_profile_comparison",
+      "path": "versions/0.1.0/participant_cases.json/profiles/P02",
+      "evidence": "Narrative interest is 校园公益; native_preferences.interests is 图书整理.",
+      "impact": "Native fixture narrows the stated preference without evidence, so the two P02 decisions do not measure the described persona.",
+      "required_action": "Completed: archived v0.1.0, preserved 校园公益 in v0.1.1, and reran matching-run-005 before changing any label."
+    },
+    {
+      "id": "V01-P03-UNDECLARED-NORMALIZATION",
+      "sample_id": "EXP-V01",
+      "status": "resolved_in_0.1.1",
+      "severity": "weakens_semantic_probe",
+      "path": "versions/0.1.0/participant_cases.json/profiles/P03",
+      "evidence": "Narrative interests 读书、整理书籍 become the exact opportunity keyword 图书整理 in native_preferences.",
+      "impact": "An undeclared normalization removes the intended lexical mismatch before matching.",
+      "required_action": "Completed: v0.1.1 preserves 读书 and 整理书籍; both lexical-fallback misses remain in matching-run-005."
+    },
+    {
+      "id": "V01-O3-VERBAL-UPDATE-NOT-PERSISTED",
+      "sample_id": "EXP-V01-O3",
+      "status": "retained_model_failure",
+      "severity": "critical_model_error",
+      "path": ".runtime/evals/dataset/EXP-V01-O3/run-001/turn-03.json",
+      "evidence": "Final answer claims capacities 6/4 and target 10, but tools_used is empty; persisted draft and SQLite remain 4/4 and target 8.",
+      "impact": "The response claims a successful write that did not occur and invents a target_volunteers_history field.",
+      "required_action": "Keep the traceable negative case and report content failure independently from collection completion."
+    },
+    {
+      "id": "V02-P02-NATIVE-INTEREST-NARROWING",
+      "sample_id": "EXP-V02",
+      "status": "resolved_in_0.1.1",
+      "severity": "needs_source_review_before_recollection",
+      "path": "versions/0.1.0/participant_cases.json/profiles/P02",
+      "evidence": "Narrative interest 信息核对 becomes 路线信息核验 in native_preferences.",
+      "impact": "The added route-specific phrase overlaps the opportunity wording and may conceal a semantic retrieval gap.",
+      "required_action": "Completed: archived v0.1.0, preserved 信息核对 in v0.1.1, froze labels before matching-run-003, and retained the newly exposed miss."
+    },
+    {
+      "id": "V02-O1-WRONG-PLAN-TOOL-GUARD",
+      "sample_id": "EXP-V02",
+      "status": "runtime_fixed_failure_retained",
+      "severity": "collection_blocker",
+      "path": ".runtime/evals/dataset/EXP-V02/run-002/failure-classification.json",
+      "evidence": "Both C5-only attempts reached eight model rounds after final_check demanded activity tooling for volunteer recognition metadata. Successful buffered volunteer updates were rolled back.",
+      "impact": "Workflow failure was exposed as a generic retry error; these attempts cannot count as completed O1 conversations.",
+      "required_action": "Completed minimal kind-selection fix and four targeted regressions; preserve pre-fix run and identify fresh run-003 as a separate product-code cohort."
+    },
+    {
+      "id": "V02-P06-INCORRECT-TIME-CAUSE",
+      "sample_id": "EXP-V02",
+      "status": "retained_model_failure",
+      "severity": "explanation_error",
+      "path": ".runtime/evals/dataset/EXP-V02/dialogue-P06-run-001/unknown-time-diagnostic.json",
+      "evidence": "The agent attributes an empty list to unknown availability. Setting time alone still returns zero; setting only the exact interest phrase returns two conditional matches with time still unknown.",
+      "impact": "Search recovers candidates, but the explanation of native matching behavior is wrong.",
+      "required_action": "Keep the primary FN decisions and explanation failure; retain the disposable-world diagnostic separately from primary scores."
+    }
+  ]
+}

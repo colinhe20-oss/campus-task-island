@@ -1,0 +1,586 @@
+{
+  "sample_id": "EXP-V05",
+  "version": "0.1.1-candidate",
+  "status": "candidate_pending_user_review",
+  "world_status": "合成活动在报名开放前的模拟快照；无真实审批、场地或学生资料。",
+  "clock": {
+    "observation_at": "2026-10-20T13:00:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "opportunities": [
+    {
+      "id": "J-EAST-CHECKIN",
+      "name": "东区签到与物资发放",
+      "starts_at": "2026-11-14T08:30:00+08:00",
+      "ends_at": "2026-11-14T10:30:00+08:00",
+      "capacity": 3
+    },
+    {
+      "id": "J-WEST-ROUTE",
+      "name": "西区路线引导",
+      "starts_at": "2026-11-14T10:45:00+08:00",
+      "ends_at": "2026-11-14T12:45:00+08:00",
+      "capacity": 2
+    },
+    {
+      "id": "J-WEST-SORT",
+      "name": "西区可重复物资分类整理",
+      "starts_at": "2026-11-14T14:00:00+08:00",
+      "ends_at": "2026-11-14T16:00:00+08:00",
+      "capacity": 3
+    },
+    {
+      "id": "J-NORTH-COMMUNITY",
+      "name": "北区社区自然观察签到",
+      "starts_at": "2026-11-15T09:00:00+08:00",
+      "ends_at": "2026-11-15T11:00:00+08:00",
+      "capacity": 4
+    }
+  ],
+  "profiles": [
+    {
+      "id": "P01",
+      "name": "东区早班签到兴趣",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我想做东区签到或发材料，11月14日08:30—10:30有空，只想参加这个早班。",
+      "fields": {
+        "skills": [
+          "签到",
+          "物资发放"
+        ],
+        "interests": [
+          "东区活动"
+        ],
+        "locations": [
+          "东区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T08:30:00+08:00",
+            "ends_at": "2026-11-14T10:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "recommend",
+        "J-WEST-ROUTE": "exclude",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P02",
+      "name": "西区路线引导兴趣",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我对路线引导感兴趣，11月14日10:45—12:45能完整参加西区班次。",
+      "fields": {
+        "skills": [
+          "现场引导"
+        ],
+        "interests": [
+          "路线引导"
+        ],
+        "locations": [
+          "西区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T10:45:00+08:00",
+            "ends_at": "2026-11-14T12:45:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "exclude",
+        "J-WEST-ROUTE": "recommend",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P03",
+      "name": "西区物资整理兴趣",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我想做可重复材料的分类整理，11月14日14:00—16:00有空。",
+      "fields": {
+        "skills": [
+          "分类整理"
+        ],
+        "interests": [
+          "可重复物资"
+        ],
+        "locations": [
+          "西区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T14:00:00+08:00",
+            "ends_at": "2026-11-14T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "exclude",
+        "J-WEST-ROUTE": "exclude",
+        "J-WEST-SORT": "recommend",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P04",
+      "name": "第二天社区班次兴趣",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我周六没空，但11月15日09:00—11:00可以去北区社区点，想参加自然观察签到。",
+      "fields": {
+        "skills": [
+          "活动签到"
+        ],
+        "interests": [
+          "社区服务",
+          "自然观察"
+        ],
+        "locations": [
+          "北区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-15T09:00:00+08:00",
+            "ends_at": "2026-11-15T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "exclude",
+        "J-WEST-ROUTE": "exclude",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "recommend"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P05",
+      "name": "时间尚未确定的多地点参与者",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我对东区签到和西区引导都有兴趣，但最近课表还没定；先给我候选，别说我已经能参加。",
+      "fields": {
+        "skills": [
+          "签到",
+          "路线引导"
+        ],
+        "interests": [
+          "物资发放",
+          "路线引导"
+        ],
+        "locations": [
+          "东区",
+          "西区"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "conditional",
+        "J-WEST-ROUTE": "conditional",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P06",
+      "name": "只接受综素活动",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我喜欢公益集市，但只想作为普通参与者报名综素活动，不做志愿服务。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "公益集市"
+        ],
+        "locations": [
+          "东区",
+          "西区",
+          "北区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T08:00:00+08:00",
+            "ends_at": "2026-11-14T17:00:00+08:00"
+          },
+          {
+            "starts_at": "2026-11-15T08:00:00+08:00",
+            "ends_at": "2026-11-15T12:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "exclude",
+        "J-WEST-ROUTE": "exclude",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "id": "P07",
+      "name": "已提交东区岗位申请",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我已经提交东区签到班次申请，当前还在等负责人审核。",
+      "fields": {
+        "skills": [
+          "签到"
+        ],
+        "interests": [
+          "公益服务"
+        ],
+        "locations": [
+          "东区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T08:30:00+08:00",
+            "ends_at": "2026-11-14T10:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "exclude",
+        "J-WEST-ROUTE": "exclude",
+        "J-WEST-SORT": "exclude",
+        "J-NORTH-COMMUNITY": "exclude"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。",
+      "initial_state": {
+        "opportunity": "J-EAST-CHECKIN",
+        "registration_status": "pending"
+      }
+    },
+    {
+      "id": "P08",
+      "name": "关闭提醒且能参加多个日期",
+      "persona": "合成参与者偏好；不是真实学生资料。",
+      "utterance": "我对现场服务和社区活动都感兴趣，两个日期都能按完整班次参加，不过请不要给我发推荐提醒。",
+      "fields": {
+        "skills": [
+          "签到",
+          "引导",
+          "物资整理"
+        ],
+        "interests": [
+          "志愿服务",
+          "社区服务",
+          "自然观察",
+          "路线引导",
+          "物资发放",
+          "物资回收"
+        ],
+        "locations": [
+          "东区",
+          "西区",
+          "北区"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-14T08:00:00+08:00",
+            "ends_at": "2026-11-14T17:00:00+08:00"
+          },
+          {
+            "starts_at": "2026-11-15T08:00:00+08:00",
+            "ends_at": "2026-11-15T12:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EAST-CHECKIN": "recommend",
+        "J-WEST-ROUTE": "recommend",
+        "J-WEST-SORT": "recommend",
+        "J-NORTH-COMMUNITY": "recommend"
+      },
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    }
+  ],
+  "pairs": [
+    {
+      "profile": "P01",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-WEST-SORT",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "conditional",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "conditional",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-WEST-SORT",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "exclude",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-EAST-CHECKIN",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-WEST-ROUTE",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-WEST-SORT",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-NORTH-COMMUNITY",
+      "label": "recommend",
+      "reason": "按兴趣、可用完整班次、服务类型和申请状态独立标注。"
+    }
+  ],
+  "bundle_checks": [
+    {
+      "profile": "P08",
+      "opportunities": [
+        "J-EAST-CHECKIN",
+        "J-WEST-ROUTE"
+      ],
+      "expected_joint_feasible": false,
+      "reason": "15分钟班次间隔小于45分钟模拟转场时间，且每日最多报名一个班次。单岗候选可以分别展示，但不能把两个班次说成可连续承担。",
+      "scoring_scope": "manual_dialogue_review; individual matcher reports do not establish joint schedule feasibility"
+    }
+  ],
+  "labels": {
+    "recommend": "应展示独立班次候选，不代表录取或名额锁定",
+    "conditional": "可展示候选，但必须说明时间/资格待确认",
+    "exclude": "当前状态下不应展示该志愿机会"
+  },
+  "evaluation": {
+    "oracle": "岗位与人物标签独立人工制定，并在原生匹配运行前冻结。",
+    "binary_metrics": "recommend与conditional计为应展示；共8人×4岗位=32对。",
+    "notifications": "P08偏好关闭提醒，仍应看到候选列表，但机会提醒为0。",
+    "hard_cases": "两日期/三地、岗位级名额、未知时间条件候选、活动类型排除、已申请排除、提醒授权、班次组合转场约束。",
+    "bundle_note": "现有关键词匹配器按单岗位评分，不计算多班次组合可行性；bundle_checks只用于人工检查，不并入precision/recall。"
+  },
+  "split": "公开开发集；8人共享一个活动原型，不能计作8个独立场景。"
+}

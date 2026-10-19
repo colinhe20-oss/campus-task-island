@@ -1,0 +1,191 @@
+{
+  "sample_id": "EXP-A02",
+  "status": "draft_for_user_review",
+  "opportunity_id": "EXP-A02",
+  "profiles": [
+    {
+      "id": "P01",
+      "preference_summary": "城市文化、视觉艺术；全程有空",
+      "availability": "15-16:30",
+      "expected": "recommend",
+      "rationale": "兴趣和固定时段匹配。"
+    },
+    {
+      "id": "P02",
+      "preference_summary": "视觉艺术；只有15-15:45有空",
+      "availability": "15-15:45",
+      "expected": "exclude",
+      "rationale": "固定场次需全程参加。"
+    },
+    {
+      "id": "P03",
+      "preference_summary": "城市文化；全程有空",
+      "availability": "15-16:30",
+      "expected": "recommend",
+      "rationale": "可推荐但不保证名额。"
+    },
+    {
+      "id": "P04",
+      "preference_summary": "体育；全程有空",
+      "availability": "15-16:30",
+      "expected": "exclude",
+      "rationale": "兴趣不相关，时间匹配不能单独构成推荐。"
+    },
+    {
+      "id": "P05",
+      "preference_summary": "视觉文化；空闲时间未设置",
+      "availability": "unknown",
+      "expected": "conditional",
+      "rationale": "先确认能否参加固定全程。"
+    },
+    {
+      "id": "P06",
+      "preference_summary": "视觉文化；全程有空；容量已满",
+      "availability": "15-16:30",
+      "expected": "exclude",
+      "rationale": "满额且无候补，不应继续作为可报名机会。"
+    },
+    {
+      "id": "P07",
+      "preference_summary": "视觉文化；已直接报名",
+      "availability": "15-16:30",
+      "expected": "exclude",
+      "rationale": "避免重复推荐。"
+    },
+    {
+      "id": "P08",
+      "preference_summary": "视觉文化；全程有空；提醒关闭",
+      "availability": "15-16:30",
+      "expected": "recommend",
+      "rationale": "可出现在列表，但关闭提醒时不发消息。"
+    }
+  ],
+  "label_definitions": {
+    "recommend": "符合已知兴趣和时间规则，可展示但不保证名额或认定。",
+    "conditional": "条件不足或需澄清，明确限制后可展示候选。",
+    "exclude": "时间冲突、满额、已参与或明显不相关时不作为匹配候选。"
+  },
+  "outcome_dimensions": [
+    "候选展示",
+    "条件解释",
+    "提醒触达"
+  ],
+  "limitations": [
+    "人物为合成边界条件，不代表真实用户比例。",
+    "标签以独立活动规则人工制定，不由匹配实现生成。"
+  ],
+  "native_matrix": {
+    "kind": "activity",
+    "title": "图像与城市·视觉文化专题讲座（匹配测试副本）",
+    "description": "图像与城市文化专题讲座；固定场次，需参加全程。纯合成讲座信息。",
+    "location": "紫金港校区模拟教室D（虚构地点）",
+    "date": "2026-11-21",
+    "start": "15:00",
+    "end": "16:30",
+    "opens_at": "2026-10-19T12:00:00+08:00",
+    "closes_at": "2026-11-20T18:00:00+08:00",
+    "capacity": 60,
+    "mode": "direct",
+    "org": "模拟校园美育小组（匹配测试副本）",
+    "source": "合成匹配测试fixture",
+    "contact": "不对外联系",
+    "requirements": "固定场次需参加全程；仅供隔离实验库测匹配。",
+    "credited_tag_fixture": "aesthetic",
+    "full_state_profile": "P06",
+    "registered_profile": "P07",
+    "reminders_off_profile": "P08",
+    "profiles": {
+      "P01": {
+        "interests": [
+          "城市文化",
+          "视觉艺术"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ]
+      },
+      "P02": {
+        "interests": [
+          "视觉艺术"
+        ],
+        "available": [
+          [
+            "15:00",
+            "15:45"
+          ]
+        ]
+      },
+      "P03": {
+        "interests": [
+          "城市文化"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ]
+      },
+      "P04": {
+        "interests": [
+          "体育"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ]
+      },
+      "P05": {
+        "interests": [
+          "视觉文化"
+        ],
+        "available": []
+      },
+      "P06": {
+        "interests": [
+          "视觉文化"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ]
+      },
+      "P07": {
+        "interests": [
+          "视觉文化"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ]
+      },
+      "P08": {
+        "interests": [
+          "视觉文化"
+        ],
+        "available": [
+          [
+            "15:00",
+            "16:30"
+          ]
+        ],
+        "notifications": false
+      }
+    }
+  },
+  "natural_dialogues": [
+    {
+      "profile": "P01",
+      "message": "我对城市文化和视觉艺术感兴趣，优先紫金港。我在2026年11月21日15:00到16:30有空，只是这一次，不是每周。只关注综素活动。核对后我希望收到站内新机会提醒。请先整理成待确认偏好，不要替我报名。"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # 独立模拟环境
 
-生成器读取[数据设计](SIMULATION_DATASET.md)，按历史时间顺序通过业务服务回放50个用户的操作。产物在`.runtime/simulation/`下，不使用日常平台的`.runtime/campus.sqlite3`，也不依赖CAMPUS_DB_PATH环境变量。
+生成器读取[第二版数据设计](SIMULATION_DATASET_V2_SPEC.md)，按历史时间顺序通过业务服务回放50个用户的操作。2.1修订使用独立校园场次，并为核心推荐故事保留尚未报名的用户。产物在`.runtime/simulation/`下，不使用日常平台的`.runtime/campus.sqlite3`，也不依赖CAMPUS_DB_PATH环境变量。
 
 ## Windows一键启动
 
@@ -37,7 +37,7 @@ Windows命令如下，Ubuntu将Python路径换为`.venv/bin/python`。
 # 仅生成和验收，默认观察时点为当前北京时间
 .\.venv\Scripts\python.exe -X utf8 -m examples.simulation_dataset generate
 # 指定时间与种子，重现文档中的业务ID和操作次序
-.\.venv\Scripts\python.exe -X utf8 -m examples.simulation_dataset generate --at 2026-10-17T18:00:00+08:00 --seed 20261017
+.\.venv\Scripts\python.exe -X utf8 -m examples.simulation_dataset generate --at 2026-10-19T18:00:00+08:00 --seed 20261017
 # 自定义输出必须是不存在的新目录
 .\.venv\Scripts\python.exe -X utf8 -m examples.simulation_dataset generate --output .runtime/simulation/my-demo
 ```
@@ -51,7 +51,8 @@ Windows命令如下，Ubuntu将Python路径换为`.venv/bin/python`。
 | demo.accounts.json | 3个内置演示账号的初始凭据，不参与50人故事 |
 | manifest.json | 观察时点、种子、设计文档SHA256、所有业务ID映射 |
 | events.json | 按时间排序的实际调用记录，记录设计编号和操作名，不包含密码 |
-| snapshot.json | 原观察时点的120条主体内容快照 |
+| snapshot.json | 原观察时点的主体内容、岗位与报名快照 |
+| specification.md / calendar.json | 生成时的完整规格副本 / 96场活动实际日历 |
 | acceptance.json / acceptance.md | 自动验收结果、计数和检查项 |
 
 固定种子使业务ID、关系、操作和快照可复现；密码及登录令牌每次独立随机生成。数据库文件不会逐字节一致。生成器不调用模型、不联网；一键脚本首次安装npm依赖需要联网，手动使用引航员时仍遵循本机已有模型配置。
@@ -63,15 +64,17 @@ Windows命令如下，Ubuntu将Python路径换为`.venv/bin/python`。
 | 场景 | 登录账号 | 内容 |
 |---|---|---|
 | 选择申请人 | sim_u002 | T002，仍有两项待选申请 |
-| 直接接取 | sim_u043 | T004，待接取 |
-| 阶段补充 | sim_u014 | T020，先重新开始当前阶段再提交 |
-| 审批变更 | sim_u004 | T026，延期提案待确认，原截止仍有效 |
-| 候补递补 | sim_u003管理／sim_u020查看 | A011，U020候补第1 |
-| 换岗历史 | sim_u009 | V003，旧J1已退出，新J2获位 |
-| 时长更正 | sim_u001管理／sim_u009查看 | V017，原120失效，可重新核验110 |
-| 撤回可见性 | sim_u049／其他用户 | D030仅作者可查原文与版本 |
+| 直接接取 | sim_u043 | T001，待接取 |
+| 阶段补充 | sim_u014 | T004，先重新开始当前阶段再提交 |
+| 审批变更 | sim_u004 | T008，延期提案待确认，原截止仍有效 |
+| 候补递补 | sim_u003管理／sim_u020查看 | A027，U020候补第1 |
+| 换岗历史 | sim_u009 | V008，旧J1已退出，新J2获位 |
+| 时长更正 | sim_u001管理／sim_u009查看 | V026，原120失效，可重新核验110 |
+| 撤回可见性 | sim_u049／其他用户 | D012仅作者可查原文与版本 |
+| 推荐后报名 | sim_u012 / sim_u020 | 引航员页面“适合我的机会”：A008、V036-J3 / V003，初始尚未报名 |
+| 有推荐但关闭提醒 | sim_u010 | A036周六上午可参与，推荐可见，没有机会消息 |
 
-实际ID查manifest.json中的ids，例如`ids.T020`对应`/#/tasks/<真实ID>`；已结束活动从“我的报名／我发布的活动”进入。完整故事见设计文档第7节。
+实际ID查manifest.json中的ids，例如`ids.T004`对应`/#/tasks/<真实ID>`；已结束活动从“我的报名／我发布的活动”进入。完整故事见设计文档第13节。
 
 ## 时间与重复验收
 

@@ -1,0 +1,13 @@
+{
+  "sample_id": "VOL-LETTER-001",
+  "version": "1.0.0",
+  "status": "approved",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "a189dc9ec3092d817d94f31e08a92c14f3f32ffb546b1c90a2ef4dc7f34efa6b",
+    "gold.json": "9548860be7c8ba93707ca950a32ac827be1f00ca44c0085523b5264417a2c6b1",
+    "REVIEW.md": "5f1f7681e430604ccbb7eec6365c2c8062994e089979d5197975c3cd42092775",
+    "validation.json": "ef72ac06abc3095a2b70645036769b7f6179504f744caf1f6e1e45e657bfb0b7"
+  },
+  "model_evaluation_status": "not_run"
+}

@@ -1,0 +1,74 @@
+{
+  "sample_id": "VOL-LEAP-001",
+  "status": "draft_for_user_review",
+  "source_family": "official_LEAP_2025_notice",
+  "opportunity_id": "VOL-LEAP-001",
+  "profiles": [
+    {
+      "id": "P01",
+      "summary": "英语沟通、跨文化交流；全程可参加",
+      "availability": "全程",
+      "expected": "recommend",
+      "rationale": "资格与全程可用性匹配。"
+    },
+    {
+      "id": "P02",
+      "summary": "英语沟通；只能7月13日至20日参加",
+      "availability": "partial",
+      "expected": "exclude",
+      "rationale": "通知要求全程参与。"
+    },
+    {
+      "id": "P03",
+      "summary": "中国籍浙大本科生；全程可参加；英语较弱",
+      "availability": "full",
+      "expected": "conditional",
+      "rationale": "英语水平是要求，用户自述较弱需要人工核验，不自动认定符合。"
+    },
+    {
+      "id": "P04",
+      "summary": "浙大硕士生；全程可参加；英语良好但非中国籍",
+      "availability": "full",
+      "expected": "exclude",
+      "rationale": "历史通知限定中国籍。"
+    },
+    {
+      "id": "P05",
+      "summary": "浙江大学本科生；国籍信息未说明；全程有空",
+      "availability": "full",
+      "expected": "conditional",
+      "rationale": "需确认国籍及英语条件。"
+    },
+    {
+      "id": "P06",
+      "summary": "跨文化交流；全程可参加；服务小时数要求明确",
+      "availability": "full",
+      "expected": "conditional",
+      "rationale": "推荐前须说明2027模拟小时数规则尚未确定。"
+    },
+    {
+      "id": "P07",
+      "summary": "英语沟通；全程可参加；已对本岗位提交待审申请",
+      "availability": "full",
+      "expected": "exclude",
+      "rationale": "避免对有效申请重复招募。"
+    },
+    {
+      "id": "P08",
+      "summary": "国际交流；全程可参加；提醒关闭",
+      "availability": "full",
+      "expected": "recommend",
+      "rationale": "候选列表可展示；提醒关闭时不可触达新机会消息。"
+    }
+  ],
+  "label_definitions": {
+    "recommend": "已知条件匹配；不代表录取。",
+    "conditional": "可以展示但必须说明未确认资格或权益边界。",
+    "exclude": "已知条件冲突或已有有效申请。"
+  },
+  "limitations": [
+    "日程跨多个地点、日期；系统只能表达活动和岗位时间，不能模拟真实接机/住宿协调。",
+    "活动小时数未公布；不得从历史通知移植累计小时。",
+    "人物均合成。"
+  ]
+}

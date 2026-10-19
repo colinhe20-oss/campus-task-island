@@ -9,17 +9,33 @@
   box-shadow: 0 3px 14px #304f3805;
 }
 
+.trace-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  list-style: none;
+  cursor: pointer;
+  background: #f5f8f2;
+}
+.trace-toggle::-webkit-details-marker { display: none; }
+.trace-toggle > strong { color: #315740; font-size: 13px; }
+.trace-toggle > span:not(.trace-chevron) { color: #697e6d; flex: 1; }
+.trace-chevron { width: 8px; height: 8px; border-right: 1.5px solid #647a69; border-bottom: 1.5px solid #647a69; transform: rotate(45deg) translateY(-2px); transition: transform .18s ease; }
+.trace[open] .trace-chevron { transform: rotate(225deg) translate(-2px,-1px); }
+.trace[open] .trace-toggle { border-bottom: 1px solid #e3eadf; }
+.trace-toggle:hover { background: #eef4eb; }
+.trace-content { background: #fff; }
+
 .trace-head {
   display: flex;
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
   padding: 14px 16px;
-  background: #f5f8f2;
-  border-bottom: 1px solid #e3eadf;
+  background: #fbfcf9;
 }
-.trace-head > strong { color: #315740; font-size: 13px; }
-.trace-head > span { color: #697e6d; flex: 1; }
+.trace-head-label { color: #697e6d; flex: 1; }
 .trace-head button {
   background: #fff;
   color: #637969;
@@ -110,6 +126,7 @@
 .trace-foot { border-top: 1px solid #e9eee5; background: #fbfcf9; }
 
 @media (max-width: 600px) {
+  .trace-toggle { padding: 12px; }
   .trace-head { padding: 12px; }
   .trace-head > span { min-width: 130px; }
   .trace-head input { flex: 1 1 100%; width: 100%; }

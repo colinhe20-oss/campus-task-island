@@ -1,0 +1,422 @@
+{
+  "sample_id": "EXP-V04",
+  "version": "0.1.0-candidate",
+  "status": "candidate_pending_user_review",
+  "world_status": "synthetic post-approval snapshot; approval asserted by mock organizer and not a real-world credential",
+  "clock": {
+    "observation_at": "2026-10-20T13:00:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "opportunities": [
+    {
+      "id": "J-CHECKIN",
+      "name": "社区工作坊签到与分流",
+      "starts_at": "2026-12-12T13:00:00+08:00",
+      "ends_at": "2026-12-12T15:00:00+08:00",
+      "capacity": 4
+    },
+    {
+      "id": "J-GUIDE",
+      "name": "社区参与者动线引导",
+      "starts_at": "2026-12-12T13:00:00+08:00",
+      "ends_at": "2026-12-12T15:00:00+08:00",
+      "capacity": 2
+    }
+  ],
+  "profiles": [
+    {
+      "id": "P01",
+      "name": "热爱演出但只想观演",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我喜欢音乐和演出，12月12日13:00—15:00有空，但只想坐观众席看节目，不参加服务工作。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "演出",
+          "音乐"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "exclude",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "用户只想看演出，观演互动不是志愿服务，不能按志愿岗位推荐。"
+    },
+    {
+      "id": "P02",
+      "name": "社区服务与现场引导兴趣",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我对社区工作坊和动线引导都感兴趣，12月12日13:00—15:00可以服务；愿意接受负责人审核。",
+      "fields": {
+        "skills": [
+          "活动支持"
+        ],
+        "interests": [
+          "社区服务",
+          "工作坊",
+          "动线引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "recommend",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "社区服务兴趣和空闲时段匹配两个真实服务岗位；需通过审核。"
+    },
+    {
+      "id": "P03",
+      "name": "只想做签到",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我做过签到，想帮社区活动；12月12日13:00—15:00有空。",
+      "fields": {
+        "skills": [
+          "签到"
+        ],
+        "interests": [
+          "社区服务"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "recommend",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "兴趣只对应签到分流岗位；不应泛化到动线引导。"
+    },
+    {
+      "id": "P04",
+      "name": "只想做动线引导",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我只想做工作坊和展区的动线引导，12月12日13:00—15:00有空。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "动线引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "exclude",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "兴趣与引导岗位相符，时段完整。"
+    },
+    {
+      "id": "P05",
+      "name": "艺术兴趣强但只空一小时",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我喜欢艺术展演；12月12日只有14:00—15:00有空。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "艺术",
+          "演出"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T14:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "exclude",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "一个小时不足以参加完整两小时服务班次；观演兴趣不能替代岗位兴趣。"
+    },
+    {
+      "id": "P06",
+      "name": "社区服务兴趣但未登记时间",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我对社区公益服务感兴趣，但还没有登记12月12日的空闲时间。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "社区服务"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "conditional",
+        "J-GUIDE": "conditional"
+      },
+      "reason": "方向相符但空闲时间未知，只能提示核对，不能声称可参加。"
+    },
+    {
+      "id": "P07",
+      "name": "已提交签到岗位申请",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我已经提交社区工作坊签到岗申请，正在等负责人审核。",
+      "fields": {
+        "skills": [
+          "签到"
+        ],
+        "interests": [
+          "社区服务"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "exclude",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "已有同一志愿活动待审核申请，不重复推荐本活动其他岗位。",
+      "initial_state": {
+        "opportunity": "J-CHECKIN",
+        "registration_status": "pending"
+      }
+    },
+    {
+      "id": "P08",
+      "name": "偏好社区服务但关闭提醒",
+      "persona": "模拟参与者自述；不是真实学生资料。",
+      "utterance": "我对工作坊和动线引导感兴趣，12月12日13:00—15:00有空，但请关闭站内机会提醒。",
+      "fields": {
+        "skills": [
+          "活动支持"
+        ],
+        "interests": [
+          "工作坊",
+          "动线引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-12-12T13:00:00+08:00",
+            "ends_at": "2026-12-12T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-CHECKIN": "recommend",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "提醒关闭不应删除列表匹配，只抑制通知。"
+    }
+  ],
+  "pairs": [
+    {
+      "profile": "P01",
+      "opportunity": "J-CHECKIN",
+      "label": "exclude",
+      "reason": "用户只想看演出，观演互动不是志愿服务，不能按志愿岗位推荐。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "用户只想看演出，观演互动不是志愿服务，不能按志愿岗位推荐。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-CHECKIN",
+      "label": "recommend",
+      "reason": "社区服务兴趣和空闲时段匹配两个真实服务岗位；需通过审核。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "社区服务兴趣和空闲时段匹配两个真实服务岗位；需通过审核。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-CHECKIN",
+      "label": "recommend",
+      "reason": "兴趣只对应签到分流岗位；不应泛化到动线引导。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "兴趣只对应签到分流岗位；不应泛化到动线引导。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-CHECKIN",
+      "label": "exclude",
+      "reason": "兴趣与引导岗位相符，时段完整。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "兴趣与引导岗位相符，时段完整。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-CHECKIN",
+      "label": "exclude",
+      "reason": "一个小时不足以参加完整两小时服务班次；观演兴趣不能替代岗位兴趣。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "一个小时不足以参加完整两小时服务班次；观演兴趣不能替代岗位兴趣。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-CHECKIN",
+      "label": "conditional",
+      "reason": "方向相符但空闲时间未知，只能提示核对，不能声称可参加。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-GUIDE",
+      "label": "conditional",
+      "reason": "方向相符但空闲时间未知，只能提示核对，不能声称可参加。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-CHECKIN",
+      "label": "exclude",
+      "reason": "已有同一志愿活动待审核申请，不重复推荐本活动其他岗位。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "已有同一志愿活动待审核申请，不重复推荐本活动其他岗位。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-CHECKIN",
+      "label": "recommend",
+      "reason": "提醒关闭不应删除列表匹配，只抑制通知。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "提醒关闭不应删除列表匹配，只抑制通知。"
+    }
+  ],
+  "labels": {
+    "recommend": "应展示真实服务岗位候选，不代表审核录取或服务小时获认证",
+    "conditional": "方向相关但时段未知，应提示核实",
+    "exclude": "不应作为当前志愿服务候选展示"
+  },
+  "evaluation": {
+    "oracle": "规则来源与岗位事实人工编写标签；不调用匹配器反推答案。",
+    "audience_boundary": "观演互动岗位在主世界不存在；P01/P05不能按志愿服务推荐。",
+    "binary_metrics": "recommend和conditional作为应展示候选计算precision/recall；16对逐项检查。",
+    "notification": "P08保留列表候选且通知数为0；P07同活动待审申请不重复推荐。"
+  },
+  "split": "公开开发集；8人×2岗位是一个合成活动世界，不计为16个独立场景。"
+}

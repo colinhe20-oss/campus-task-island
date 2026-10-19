@@ -1,0 +1,34 @@
+{
+  "sample_id": "EXP-V01-O3",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Both initial and final schemas validate",
+      "passed": true
+    },
+    {
+      "name": "Initial capacities and total are 4/4/8",
+      "passed": true
+    },
+    {
+      "name": "Final capacities and total are 6/4/10",
+      "passed": true
+    },
+    {
+      "name": "Only morning capacity and dependent total change",
+      "passed": true
+    },
+    {
+      "name": "Correction has an explicit persisted-state phase gate",
+      "passed": true
+    },
+    {
+      "name": "Parent family and split are preserved",
+      "passed": true
+    },
+    {
+      "name": "The correction supersedes the initial capacity fact",
+      "passed": true
+    }
+  ]
+}

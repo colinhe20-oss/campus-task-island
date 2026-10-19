@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import json
 import os
+import time
+from contextlib import contextmanager
+from contextvars import ContextVar
 from typing import Any
 
 
@@ -14,6 +17,8 @@ class ChatBackend:
         self.base_url = (base_url or os.getenv("LLM_BASE_URL") or
                          os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")).rstrip("/")
         self.model = model or os.getenv("LLM_MODEL") or os.getenv("DEEPSEEK_MODEL", "")
+        self.request_timeout = float(timeout)
+        self._deadline = ContextVar('model_request_deadline', default=None)
         if not self.api_key or not self.model:
             missing = []
             if not self.api_key:
@@ -23,6 +28,29 @@ class ChatBackend:
             raise ValueError("缺少配置：" + "、".join(missing))
         self._client = httpx.Client(timeout=timeout)
 
+    @contextmanager
+    def request_budget(self, seconds):
+        token = self._deadline.set(time.monotonic() + seconds)
+        try:
+            yield
+        finally:
+            self._deadline.reset(token)
+
+    def _check_deadline(self):
+        deadline = self._deadline.get()
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError('guide time limit')
+
+    def _http_timeout(self):
+        import httpx
+        self._check_deadline()
+        deadline = self._deadline.get()
+        seconds = self.request_timeout
+        if deadline is not None:
+            seconds = min(seconds, max(0.001, deadline - time.monotonic()))
+        return httpx.Timeout(seconds, connect=min(10.0, seconds),
+                             write=min(30.0, seconds), pool=min(10.0, seconds))
+
     def chat(self, messages: list[dict[str, Any]], tools: list[dict] | None = None,
              temperature: float = 0.0) -> dict:
         payload = {"model": self.model, "messages": self._to_openai_messages(messages),
@@ -30,10 +58,18 @@ class ChatBackend:
         if tools:
             payload.update(tools=tools, tool_choice="auto")
         endpoint = self.base_url if self.base_url.endswith("/v1") else self.base_url + "/v1"
-        response = self._client.post(endpoint + "/chat/completions",
-                                     headers={"Authorization": f"Bearer {self.api_key}"}, json=payload)
-        response.raise_for_status()
-        body = response.json()
+        # Keep the non-streaming wire protocol, but inspect the deadline while
+        # receiving bytes too: HTTPX read timeouts measure network inactivity.
+        with self._client.stream('POST', endpoint + "/chat/completions",
+                                 headers={"Authorization": f"Bearer {self.api_key}"},
+                                 json=payload, timeout=self._http_timeout()) as response:
+            response.raise_for_status()
+            chunks = []
+            for chunk in response.iter_bytes():
+                self._check_deadline()
+                chunks.append(chunk)
+            self._check_deadline()
+            body = json.loads(b''.join(chunks))
         choices = body.get('choices') if isinstance(body, dict) else None
         if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
             raise ValueError('模型响应缺少有效候选结果')
@@ -63,9 +99,11 @@ class ChatBackend:
         content, reasoning, calls, usage = [], [], {}, {}
         finished = False
         with self._client.stream('POST', endpoint+'/chat/completions',
-                                 headers={'Authorization': f'Bearer {self.api_key}'}, json=payload) as response:
+                                 headers={'Authorization': f'Bearer {self.api_key}'}, json=payload,
+                                 timeout=self._http_timeout()) as response:
             response.raise_for_status()
             for line in response.iter_lines():
+                self._check_deadline()
                 if cancel_event.is_set():
                     raise RunCancelled('任务已取消')
                 if not line.startswith('data:'):

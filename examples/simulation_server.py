@@ -12,16 +12,16 @@ from campus.app import create_app
 from .simulation_dataset import aware_time, current_directory, generate
 
 
-def demo_app(directory, *, frozen=False):
+def demo_app(directory, *, frozen=False, enable_semantics=True):
     directory=Path(directory).resolve()
     manifest=json.loads((directory/'manifest.json').read_text(encoding='utf-8'))
-    if manifest.get('format_version')!=1:raise ValueError('不支持的演示库版本')
+    if manifest.get('format_version') not in (1, 2):raise ValueError('不支持的演示库版本')
     if not (directory/'demo.sqlite3').is_file():raise FileNotFoundError('演示数据库不存在')
     observation=aware_time(manifest['observation'])
     anchor=aware_time(manifest['created_at'])
     def clock():
         return observation if frozen else observation+(datetime.now(timezone.utc)-anchor)
-    app=create_app(directory/'demo.sqlite3',business_clock=clock)
+    app=create_app(directory/'demo.sqlite3',business_clock=clock,enable_semantics=enable_semantics)
 
     @app.get('/api/simulation',tags=['模拟环境'])
     def simulation_context():

@@ -1,0 +1,13 @@
+{
+  "sample_id": "EXP-V01-O3",
+  "version": "1.0.0-candidate",
+  "parent_sample_id": "EXP-V01",
+  "case_variant": "O3",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "dbf36a986139bf48d0fe929571bf9b96d1ed673a1713535b07c0da970f3774a2",
+    "gold.json": "bf380c333d24d1cb2e63556e6969fde13ed2c8870709ecefea01cea237d93a01",
+    "REVIEW.md": "5a40f8fcc3e19c30a7d0b9f6cbb990beee70a14c7c12ac9cc199d1a7706a891e",
+    "validation.json": "545c31bc3afed098f6386871d8992921b539a17f6da00e2f2ccc938ffc9b4a95"
+  }
+}

@@ -1,5 +1,6 @@
 ﻿param(
     [int]$Port = 8001,
+    [string]$Listen = '0.0.0.0',
     [switch]$New,
     [switch]$NoBrowser,
     [switch]$FreezeClock
@@ -18,7 +19,7 @@ try {
     }
     & npm.cmd --prefix web run build
     if ($LASTEXITCODE -ne 0) { throw '前端构建失败。' }
-    $launchArgs = @('-X', 'utf8', '-m', 'examples.simulation_server', '--port', "$Port")
+    $launchArgs = @('-X', 'utf8', '-m', 'examples.simulation_server', '--port', "$Port", '--host', $Listen)
     if ($New) { $launchArgs += '--new' }
     if ($NoBrowser) { $launchArgs += '--no-browser' }
     if ($FreezeClock) { $launchArgs += '--freeze-clock' }

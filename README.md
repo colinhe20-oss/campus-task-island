@@ -208,9 +208,11 @@ npm.cmd --prefix web run build
 
 Windows双击项目根目录的 `start_simulation.cmd`，或运行 `.\start_simulation.ps1`。首次生成独立演示库并验收，随后在 <http://127.0.0.1:8001/> 打开；再次启动保留人工操作。使用 `.\start_simulation.ps1 -New` 生成新的演示，旧目录保留。Ubuntu使用 `bash start_simulation.sh`。
 
-数据包括50个模拟用户、50个普通任务、20个志愿活动（48个岗位）、20个综素／二课活动、30条校园发现及交互历史。模拟账号凭据、数据库和验收报告保存在 `.runtime/simulation/`，当前目录由其中的 `current.json` 指向；兼容启动的3个系统内置账号另计。日常数据库不受影响。
+数据包括50个模拟用户、12个普通任务、48个志愿活动（104个岗位）、48个综素／二课活动、12条校园发现、16份参与偏好及交互历史。模拟账号凭据、数据库和验收报告保存在 `.runtime/simulation/`，当前目录由其中的 `current.json` 指向；兼容启动的3个系统内置账号另计。日常数据库不受影响。
 
-完整生成、启动、时间控制和验收命令见[模拟环境使用说明](docs/SIMULATION_USAGE.md)，业务规格见[模拟数据设计](docs/SIMULATION_DATASET.md)。
+局域网其他电脑访问：直接双击 `start_simulation.cmd` 即可——脚本已默认监听所有网卡（`0.0.0.0`），其他电脑访问 `http://本机局域网IP:8001/`。如需自定义目录或端口，可显式指定：`.\.venv\Scripts\python.exe -X utf8 -m examples.simulation_server --directory .runtime/simulation/<目录> --port 8001 --host 0.0.0.0 --no-browser`。
+
+完整生成、启动、时间控制和验收命令见[模拟环境使用说明](docs/SIMULATION_USAGE.md)，业务规格见[模拟数据设计](docs/SIMULATION_DATASET_V2_SPEC.md)。
 
 ## 文档图示约定
 

@@ -1,0 +1,7 @@
+{
+  "sample_id": "EXP-V01",
+  "version": "0.1.0-review",
+  "status": "not_run_pending_review",
+  "checks": [],
+  "note": "此文件记录校验状态；用户审核与规则确认前不标记通过。"
+}

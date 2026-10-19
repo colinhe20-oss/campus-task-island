@@ -1,0 +1,295 @@
+{
+  "sample_id": "EXP-V03",
+  "version": "0.1.0-candidate",
+  "status": "candidate_pending_user_review",
+  "task": "volunteer_organizer_clarification_and_drafting",
+  "model_input_file": "input.txt",
+  "visibility": "evaluator_only; do not provide gold or unrevealed cards to the agent",
+  "initial_message": "我们想办一场校园科普体验日，设置讲解和现场引导两个志愿岗位，想请同学帮忙。请帮我整理招募方案和报名安排。",
+  "clock": {
+    "base_at": "2026-10-19T10:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "mode": "frozen_during_dialogue"
+  },
+  "provenance": {
+    "material": "人工构造的校园科普体验日志愿服务场景",
+    "source_type": "fully_synthetic_scenario",
+    "source_url": null,
+    "independently_verified": false,
+    "source_facts": [],
+    "synthetic_facts": "全部活动安排、岗位、机构、场地、时间、名额与规则均为合成设定，不代表浙江大学或任何真实单位发布、批准、授权或承诺。"
+  },
+  "environment": {
+    "initial_state": "独立空白实验库中的有效组织者账号和新对话。",
+    "publish_action": "仅保存待组织者核对的志愿活动草稿，不发布、不报名、不生成服务记录。",
+    "organizer_display_name": "科普活动组织者",
+    "operator_note": "执行者按冻结信息卡回应；需人工审核卡片选择与样本轨迹。"
+  },
+  "gold_plan": {
+    "kind": "volunteer",
+    "fields": {
+      "title": "校园科普体验日志愿服务（模拟场）",
+      "description": "纯合成实验活动。2026年11月8日在紫金港校区虚构的模拟科普活动区设置展台讲解、现场引导两个志愿岗位。每人按活动方规则选择一个完整班次并提交平台审核报名；讲解经历仅为优先条件，不是硬门槛。活动方提供提纲和提示卡。最终时长以实际签到签退核验，学校综素、第二课堂和志愿汇认定均未知。不得将本模拟安排表述为真实校方活动、真实场地授权或已确认认定。",
+      "organization_name": "模拟校园科普活动小组",
+      "information_source": "模拟组织方通知（纯合成实验场景）",
+      "contact": "平台内联系模拟活动负责人",
+      "recognition_conditions": "每岗预计服务120分钟；仅按实际签到签退核验。学校综素、第二课堂或志愿汇认定政策、分值和录入方式未知，不作承诺。",
+      "starts_at": "2026-11-08T09:00:00+08:00",
+      "ends_at": "2026-11-08T15:00:00+08:00",
+      "opens_at": "2026-10-19T12:00:00+08:00",
+      "closes_at": "2026-11-06T18:00:00+08:00",
+      "registration_mode": "review",
+      "jobs": [
+        {
+          "name": "展台讲解志愿者",
+          "description": "使用活动方提供的讲解提纲介绍模拟科普展项，并回答参与者的一般性问题；不做专业诊断或安全操作指导。",
+          "requirements": "面向浙江大学在校学生；沟通表达清楚；有科普讲解经历者优先但不是硬性门槛；完整参加本岗位班次。",
+          "location": "紫金港校区模拟科普活动区（虚构场地）",
+          "starts_at": "2026-11-08T09:00:00+08:00",
+          "ends_at": "2026-11-08T11:00:00+08:00",
+          "capacity": 4,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟；最终按实际签到签退核验，不承诺学校认定。"
+        },
+        {
+          "name": "现场引导志愿者",
+          "description": "迎接参与者、说明活动区动线并维护现场秩序；不收集或处理个人敏感信息。",
+          "requirements": "面向浙江大学在校学生；无需相关经验；按现场说明完成引导；完整参加本岗位班次。",
+          "location": "紫金港校区模拟科普活动区（虚构场地）",
+          "starts_at": "2026-11-08T13:00:00+08:00",
+          "ends_at": "2026-11-08T15:00:00+08:00",
+          "capacity": 4,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟；最终按实际签到签退核验，不承诺学校认定。"
+        }
+      ]
+    },
+    "target_volunteers": 8
+  },
+  "user_simulation": {
+    "mode": "operator_with_fixed_disclosure_cards",
+    "max_agent_responses": 8,
+    "card_policy": "按问题主题披露对应卡片，多卡按编号顺序；不主动补齐未追问信息。",
+    "proposal_policy": "与事实卡冲突时回复：请按我提供的安排保留。额外建议只能列作待讨论事项。",
+    "unknown_reply": "关于“{topic}”，目前还未确定，请只将这一项列为待核对，其他已确认事实不变。",
+    "require_unknown_topic": true,
+    "finish_rule": "全部信息卡披露后请求保存完整草稿并保留认定未知项。",
+    "final_user_message": "这些是目前确定的信息。请保存完整的志愿活动草稿，分别整理两个岗位的班次、人数、资格和报名要求，并列出待核对事项。认定未知，不要发布。",
+    "cards": [
+      {
+        "id": "C1",
+        "topic": "活动身份、来源与联系",
+        "reply": "活动名称是“校园科普体验日志愿服务（模拟场）”，组织方为“模拟校园科普活动小组”。信息来源写“模拟组织方通知（纯合成实验场景）”，联系渠道为平台内联系模拟活动负责人。活动、组织方和场地都是虚构的，不代表校方已授权或发布。",
+        "fact_ids": [
+          "F01",
+          "F02",
+          "F03",
+          "F04",
+          "F20"
+        ]
+      },
+      {
+        "id": "C2",
+        "topic": "时间、地点、岗位班次与出勤",
+        "reply": "日期是2026年11月8日，地点为“紫金港校区模拟科普活动区”（虚构场地）。展台讲解岗09:00—11:00，现场引导岗13:00—15:00。报名者完整参加其中一个岗位班次；活动方规则是每人只选一个岗位，不要求两个班次都参加。全部时间为北京时间。",
+        "fact_ids": [
+          "F05",
+          "F06",
+          "F07",
+          "F08",
+          "F09"
+        ]
+      },
+      {
+        "id": "C3",
+        "topic": "岗位职责、资格与名额",
+        "reply": "展台讲解岗4人：按活动方提供的提纲介绍模拟展项并回答一般性问题，不做专业诊断或安全操作指导；面向浙大在校学生，沟通表达清楚，有科普讲解经历者优先但不是硬门槛。现场引导岗4人：迎接参与者、说明动线、维护模拟活动区秩序，不处理个人敏感信息；面向浙大在校学生，无需相关经验。负责人不占岗位名额，两个岗位名额分别计算。",
+        "fact_ids": [
+          "F10",
+          "F11",
+          "F12",
+          "F13",
+          "F14"
+        ]
+      },
+      {
+        "id": "C4",
+        "topic": "报名方式、材料与现场准备",
+        "reply": "平台审核报名，申请时选择一个岗位并说明参与意愿，由负责人审核后确认。报名于2026年10月19日12:00开放，2026年11月6日18:00截止。活动方提供讲解提纲和引导提示卡，不需要自备设备或材料。平台本身不能强制同一人跨岗位互斥，负责人要人工核对重复申请。",
+        "fact_ids": [
+          "F15",
+          "F16",
+          "F17",
+          "F20"
+        ]
+      },
+      {
+        "id": "C5",
+        "topic": "服务时长与认定边界",
+        "reply": "每个岗位预计服务120分钟，最终只按实际签到签退核验时长。学校综素、第二课堂或志愿汇的认定政策、分值及录入方式都没有确定，不承诺加分或认定。模拟活动不代表真实场地授权或校方安排。",
+        "fact_ids": [
+          "F18",
+          "F19",
+          "F20"
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "id": "F01",
+        "field": "title",
+        "value": "校园科普体验日志愿服务（模拟场）",
+        "required": true
+      },
+      {
+        "id": "F02",
+        "field": "organization_name",
+        "value": "模拟校园科普活动小组",
+        "required": true
+      },
+      {
+        "id": "F03",
+        "field": "information_source",
+        "value": "模拟组织方通知（纯合成实验场景）",
+        "required": true
+      },
+      {
+        "id": "F04",
+        "field": "contact",
+        "value": "平台内联系模拟活动负责人",
+        "required": true
+      },
+      {
+        "id": "F05",
+        "field": "date",
+        "value": "2026-11-08；全部时间为北京时间",
+        "required": true
+      },
+      {
+        "id": "F06",
+        "field": "location",
+        "value": "紫金港校区模拟科普活动区（虚构场地）",
+        "required": true
+      },
+      {
+        "id": "F07",
+        "field": "activity_window",
+        "value": "活动服务岗位安排在09:00—15:00，分两个不重叠班次",
+        "required": true
+      },
+      {
+        "id": "F08",
+        "field": "roles",
+        "value": "展台讲解岗09:00—11:00；现场引导岗13:00—15:00",
+        "required": true
+      },
+      {
+        "id": "F09",
+        "field": "attendance",
+        "value": "报名者完整参加一个岗位班次；每人只选一个岗位",
+        "required": true
+      },
+      {
+        "id": "F10",
+        "field": "headcount",
+        "value": "每个岗位4人，共8个岗位名额；负责人不计入岗位名额",
+        "required": true
+      },
+      {
+        "id": "F11",
+        "field": "explainer_tasks",
+        "value": "用活动方提供的提纲介绍模拟科普展项并回答一般性问题；不做专业诊断或安全操作指导",
+        "required": true
+      },
+      {
+        "id": "F12",
+        "field": "explainer_requirement",
+        "value": "面向浙大在校学生；沟通表达清楚；有科普讲解经历者优先，不是硬性门槛",
+        "required": true
+      },
+      {
+        "id": "F13",
+        "field": "guide_tasks",
+        "value": "迎接参与者、说明动线、维护模拟活动区秩序；不处理个人敏感信息",
+        "required": true
+      },
+      {
+        "id": "F14",
+        "field": "guide_requirement",
+        "value": "面向浙大在校学生；无需相关经验，按现场说明完成引导",
+        "required": true
+      },
+      {
+        "id": "F15",
+        "field": "registration",
+        "value": "平台审核报名；申请时选择一个岗位并说明参与意愿；负责人审核后确认",
+        "required": true
+      },
+      {
+        "id": "F16",
+        "field": "registration_window",
+        "value": "2026-10-19 12:00开放；2026-11-06 18:00截止",
+        "required": true
+      },
+      {
+        "id": "F17",
+        "field": "materials",
+        "value": "活动方提供讲解提纲和引导提示卡；无需自备设备或材料",
+        "required": true
+      },
+      {
+        "id": "F18",
+        "field": "service_duration",
+        "value": "每岗预计服务120分钟；最终只按实际签到签退核验时长",
+        "required": true
+      },
+      {
+        "id": "F19",
+        "field": "recognition",
+        "value": "学校综素、第二课堂或志愿汇认定政策、分值及录入方式均未知",
+        "required": true
+      },
+      {
+        "id": "F20",
+        "field": "system_boundary",
+        "value": "全部活动细节为模拟设定；平台不能强制同一人跨岗位互斥，需负责人审核重复申请",
+        "required": true
+      }
+    ],
+    "unknowns": [
+      "真实活动是否获批、场地是否获授权；本模拟不表示已批准或授权",
+      "学校综素、第二课堂、志愿汇认定政策及分值",
+      "正式服务时长记录与审核责任人",
+      "平台是否支持一个人只能报名一个岗位（当前不支持强制互斥）"
+    ],
+    "prohibited_inventions": [
+      "将模拟组织方、场地或活动说成真实校级活动或已获批准",
+      "把讲解经历优先改成硬性资格，或把引导岗改成要求经验",
+      "混淆两个岗位的时间、名额或资格",
+      "要求每人参加两个岗位或将时段拼成全程服务",
+      "把预计120分钟承诺为无条件认定时长",
+      "承诺综素、第二课堂或志愿汇录入结果",
+      "声称平台强制一个人只能报一个岗位",
+      "增加个人敏感信息采集、专业诊断或高风险操作"
+    ],
+    "expected_terminal_state": "两个岗位和规则忠实保存为未发布待核对的志愿活动草稿；认定未知与平台互斥限制清楚标注。",
+    "scoring": {
+      "critical_errors": [
+        "捏造活动获批或场地授权",
+        "改变讲解经历优先的性质",
+        "混淆两个岗位的时间、名额或资格",
+        "擅自承诺认定或服务时长",
+        "擅自发布或创建报名/服务记录"
+      ],
+      "dimensions": {
+        "fact_fidelity": 40,
+        "eligibility_and_role_boundary": 20,
+        "persisted_draft": 15,
+        "unknowns_and_recognition": 15,
+        "registration_capacity_and_clarity": 10
+      },
+      "pass_rule": "总分至少85/100，无关键错误；真实志愿活动草稿保存，正式发布数为0。"
+    }
+  },
+  "related_evaluation": "participant_cases.json contains paired participant matching gold for this same synthetic opportunity world."
+}

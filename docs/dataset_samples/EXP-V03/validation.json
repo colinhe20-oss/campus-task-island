@@ -1,0 +1,55 @@
+{
+  "sample_id": "EXP-V03",
+  "version": "0.1.0-candidate",
+  "status": "static_candidate_ready",
+  "checks": [
+    {
+      "name": "组织者金标准包含20项事实",
+      "passed": true
+    },
+    {
+      "name": "信息卡引用事实编号有效",
+      "passed": true
+    },
+    {
+      "name": "两个岗位时段各为120分钟",
+      "passed": true
+    },
+    {
+      "name": "报名窗口早于岗位开始",
+      "passed": true
+    },
+    {
+      "name": "岗位容量合计等于计划人数",
+      "passed": true
+    },
+    {
+      "name": "讲解经历保留为优先条件",
+      "passed": true
+    },
+    {
+      "name": "认定未知且不承诺",
+      "passed": true
+    },
+    {
+      "name": "参与者编号唯一且有16对判断",
+      "passed": true
+    },
+    {
+      "name": "活动和8个人物偏好均通过当前业务数据模型",
+      "passed": true
+    },
+    {
+      "name": "P03两岗候选与一岗规则均保留",
+      "passed": true
+    },
+    {
+      "name": "P07已有申请与P08关闭提醒边界齐全",
+      "passed": true
+    },
+    {
+      "name": "来源明确标注纯合成",
+      "passed": true
+    }
+  ]
+}

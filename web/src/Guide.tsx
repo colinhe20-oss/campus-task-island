@@ -1,13 +1,11 @@
 import {useEffect, useRef, useState, type FormEvent} from 'react';
-import {rewardNames,formatMoney,acceptanceNames,applicationLabels,requirementNames,type ApplicationRequirements,request, statusNames, categories, formatTime, type Task, type User, type Category} from './api';
+import {rewardNames,formatMoney,acceptanceNames,applicationLabels,requirementNames,type ApplicationRequirements,request, categories, formatTime, type User, type Category} from './api';
 import {useResource} from './hooks';
 import './guide.css';
 import {AssistancePanel,type Assistance} from './Assistance';
 import {RunTrace,type TraceEvent} from './RunTrace';
 import {MarkdownReply} from './MarkdownReply';
 
-type Todo = {task_id:string; title:string; role:string; task_status:string; action:string; action_label:string; href:string};
-type PersonalState = {published:Task[]; assigned:Task[]; applied:Task[]; todos:Todo[]; waiting:Todo[]; completed_count:number};
 type Draft = {conversation_id:string; version:number; status:'draft'|'published'|'cancelled';
   fields:{title:string|null;category:Category|null;description:string|null;completion_criteria:string|null;location:string|null;deadline:string|null;reward:string|null;reward_type:'mutual'|'paid'|null;reward_amount_fen:number|null;acceptance_mode:keyof typeof acceptanceNames;application_requirements:ApplicationRequirements};
   missing_fields:string[];ready:boolean;published_task_id:string|null;href:string|null};
@@ -22,7 +20,6 @@ const toolNames:Record<string,string> = {review_activity_plan:'评估方案与�
 const fieldNames:Record<string,string> = {title:'标题',category:'分类',description:'需求说明',completion_criteria:'完成标准',location:'地点',deadline:'截止时间（需晚于当前时间）',reward_type:'回报类型',reward_amount_fen:'固定报酬金额',reward:'回报说明'};
 
 export function GuidePage({user}:{user:User}) {
-  const state = useResource<PersonalState>('/api/guide/todos');
   const runs = useResource<{items:RunRecord[]}>('/api/guide/runs');
   const [selectedRun,setSelectedRun] = useState<RunRecord|null>(null);
   const [runId,setRunId] = useState<string>();
@@ -41,6 +38,7 @@ export function GuidePage({user}:{user:User}) {
   const [error,setError] = useState('');
   const controller = useRef<AbortController|null>(null);
   const chatEnd = useRef<HTMLDivElement>(null);
+  const chatPanel = useRef<HTMLElement|null>(null);
   const storageKey = `campus-guide-conversation:${user.id}`;
   const runStorageKey = `campus-guide-run:${user.id}`;
   function remember(id?:string){try{if(id)sessionStorage.setItem(storageKey,id);else sessionStorage.removeItem(storageKey);}catch{/* 对话仍可在当前页面使用。 */}}
@@ -70,7 +68,7 @@ export function GuidePage({user}:{user:User}) {
           try{
             const value=await request<Conversation>(`/api/guide/conversations/${reply.conversation_id}`,{signal:active.signal});
             if(!active.signal.aborted){setMessages(value.messages.map((m,i)=>({role:m.role,text:m.content,reply:i===value.messages.length-1?reply:undefined})));
-              setConversation(reply.conversation_id);remember(reply.conversation_id);setDraft(value.draft);setAssistance(value.assistance||null);setInput('');state.retry();}
+              setConversation(reply.conversation_id);remember(reply.conversation_id);setDraft(value.draft);setAssistance(value.assistance||null);setInput('');}
             resolve();
           }catch(reason){if(!active.signal.aborted){remember(reply.conversation_id);reject(new Error(`回答已保存，读取对话失败，请刷新：${reason instanceof Error?reason.message:''}`));}else resolve();}
         }else{setInput(message);reject(new Error(run.error||'运行未完成，请重试'));}
@@ -102,6 +100,10 @@ export function GuidePage({user}:{user:User}) {
   },[storageKey]);
   useEffect(()=>()=>{controller.current?.abort();stream.current?.close();},[]);
   useEffect(()=>{chatEnd.current?.scrollIntoView({block:'nearest'});},[messages,busy,partial]);
+  function sendAndFocus(message:string,review=false){
+    void send(message,review);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>chatPanel.current?.scrollIntoView({behavior:'smooth',block:'center'})));
+  }
   async function send(text:string,review=false) {
     if(busy||recovering||!text.trim())return;
     const message=text.trim();
@@ -136,7 +138,7 @@ export function GuidePage({user}:{user:User}) {
         headers:{'Content-Type':'application/json'},body:JSON.stringify({version:draft.version})});
       if(active.signal.aborted)return;
       setDraft(reply.draft);setMessages(previous=>[...previous,{role:'user',text:action==='publish'?'确认发布':'取消草稿'},{role:'assistant',text:reply.answer,reply}]);
-      setInput('');state.retry();runs.retry();
+      setInput('');runs.retry();
     }catch(reason){if(!active.signal.aborted)setError(reason instanceof Error?reason.message:'操作失败，请重试。');}
     finally{if(!active.signal.aborted)setBusy(false);}
   }
@@ -152,20 +154,10 @@ export function GuidePage({user}:{user:User}) {
   }
   function submit(event:FormEvent){event.preventDefault();void send(input);}
   function reset(){setAssistance(null);setTrace([]);setTraceStatus("idle");setMessages([]);setConversation(undefined);setDraft(null);remember();setError('');setInput('');}
-  function items(values:Todo[],empty:string){return values.length?<ul className="todo-list">{values.map(item=><li key={item.task_id}>
-    <a href={item.href}><strong>{item.title}</strong><span>{item.action_label}</span><small>{statusNames[item.task_status]}</small></a>
-  </li>)}</ul>:<p className="guide-empty">{empty}</p>;}
   return <>
     <div className="page-heading"><div><p className="eyebrow">下一步，有个方向</p><h1>引航员</h1><p className="subheading">协助筹备校园活动，持续匹配参与机会，查询真实报名进展。</p></div></div>
-    <AssistancePanel value={assistance} onChange={setAssistance} disabled={busy||recovering} onPrompt={message=>void send(message)} onReview={()=>void send("请评估当前活动方案与修改影响",true)}/>
-    <div className="guide-layout"><section className="panel guide-todos"><div className="section-heading"><h2>个人待办</h2><button className="text-button" onClick={state.retry}>刷新</button></div>
-      {state.loading&&<p role="status">正在查询当前任务…</p>}
-      {state.error&&<div className="form-error" role="alert">{state.error}<button className="text-button" onClick={state.retry}>重新加载</button></div>}
-      {!state.loading&&state.data&&<><p className="guide-count">需要我行动 <b>{state.data.todos.length}</b> · 等待他人 <b>{state.data.waiting.length}</b></p>
-        <h3>需要我行动</h3>{items(state.data.todos,'当前没有需要你处理的事项。')}
-        <h3>等待他人</h3>{items(state.data.waiting,'当前没有等待中的事项。')}
-        <p className="guide-completed">已完成 {state.data.completed_count} 条协作 · <a href="#/mine">查看我的任务</a></p></>}
-    </section><section className="panel guide-chat"><div className="section-heading"><h2>与引航员聊聊</h2><button className="text-button" onClick={reset} disabled={busy||recovering}>新对话</button></div>
+    <AssistancePanel value={assistance} onChange={setAssistance} disabled={busy||recovering} onPrompt={message=>sendAndFocus(message)} onReview={()=>sendAndFocus("请评估当前活动方案与修改影响",true)}/>
+    <div className="guide-layout"><section ref={chatPanel} className="panel guide-chat"><div className="section-heading"><h2>与引航员聊聊</h2><button className="text-button" onClick={reset} disabled={busy||recovering}>新对话</button></div>
       <p className="guide-intro">描述活动构想，引航员会补问关键条件，整理招募方案、岗位建议与筹备清单。也可以登记参与偏好，寻找适合自己的机会，查询实际报名和候补状态。</p>
       <p className="guide-intro">活动方案和偏好需核对后确认；报名、审核和小时核验由本人或负责人在业务页面完成。普通任务与校园发现仍可查询。</p>
       <div className="guide-questions">{['周末想组织一次环保志愿活动，请帮我规划','我现在需要做什么？','根据我的偏好推荐参与机会'].map(question=><button key={question} disabled={busy||recovering} onClick={()=>void send(question)}>{question}</button>)}</div>

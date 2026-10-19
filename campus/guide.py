@@ -2,11 +2,12 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import threading
 import time
 from pathlib import Path
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
@@ -43,9 +44,22 @@ def model_backend():
     config = dotenv_values(Path(__file__).resolve().parents[1]/'.env',encoding='utf-8-sig')
     def value(primary,legacy,default=None):
         return os.getenv(primary) or os.getenv(legacy) or config.get(primary) or config.get(legacy) or default
-    return ChatBackend(api_key=value('LLM_API_KEY','DEEPSEEK_API_KEY'),
+    def seconds(name, default):
+        raw = os.getenv(name) or config.get(name) or default
+        try:
+            parsed = float(raw)
+        except (ValueError, TypeError):
+            raise ValueError(name+' 必须为正的有限秒数') from None
+        if not math.isfinite(parsed) or parsed <= 0:
+            raise ValueError(name+' 必须为正的有限秒数')
+        return parsed
+    request_timeout = seconds('LLM_REQUEST_TIMEOUT_SECONDS', 120)
+    run_timeout = seconds('GUIDE_RUN_TIMEOUT_SECONDS', 300)
+    backend = ChatBackend(api_key=value('LLM_API_KEY','DEEPSEEK_API_KEY'),
                        base_url=value('LLM_BASE_URL','DEEPSEEK_BASE_URL','https://api.deepseek.com'),
-                       model=value('LLM_MODEL','DEEPSEEK_MODEL'),timeout=45)
+                       model=value('LLM_MODEL','DEEPSEEK_MODEL'),timeout=request_timeout)
+    backend.guide_run_timeout = run_timeout
+    return backend
 
 
 def semantic_identity():
@@ -57,12 +71,20 @@ def semantic_identity():
 class BudgetBackend:
     def __init__(self, backend):
         self.backend = backend
-        self.deadline = time.monotonic()+120
+        self.deadline = time.monotonic()+getattr(backend,'guide_run_timeout',300)
+
+    def _request_scope(self):
+        remaining = self.deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError('guide time limit')
+        budget = getattr(self.backend, 'request_budget', None)
+        return budget(remaining) if budget else nullcontext()
 
     def chat(self,*args,**kwargs):
         if time.monotonic()>self.deadline:
             raise TimeoutError('guide time limit')
-        result = self.backend.chat(*args,**kwargs)
+        with self._request_scope():
+            result = self.backend.chat(*args,**kwargs)
         if time.monotonic()>self.deadline:
             raise TimeoutError('guide time limit')
         return result
@@ -75,7 +97,8 @@ class BudgetBackend:
         if time.monotonic()>self.deadline:
             raise TimeoutError('guide time limit')
         if hasattr(self.backend, 'chat_stream'):
-            result = self.backend.chat_stream(*args, on_delta=delta, cancel_event=cancel_event, **kwargs)
+            with self._request_scope():
+                result = self.backend.chat_stream(*args, on_delta=delta, cancel_event=cancel_event, **kwargs)
         else:
             result = self.chat(*args, **kwargs)
         if time.monotonic()>self.deadline:
@@ -348,7 +371,12 @@ class GuideService:
                 wants_matching = any(w in text for w in ('推荐','匹配')) and any(w in text for w in ('我的偏好','我已保存','适合我的','已保存偏好'))
                 names={a.name for a in activity if a.success}
                 if any(w in text for w in ('保存','暂存','整理成')) and any(w in text for w in ('草稿','方案')) and any(w in text for w in ('志愿','综素')):
-                    plan_tool='update_volunteer_plan' if '志愿' in text else 'update_activity_plan'
+                    # The existing draft owns its type. Recognition metadata such as
+                    # “综素认定未知” must not require the other draft's tool.
+                    plan_kind=(assistance_buffer.data.get('plan') or {}).get('kind')
+                    if plan_kind not in ('volunteer','activity'):
+                        plan_kind='volunteer' if '志愿' in text else 'activity'
+                    plan_tool='update_'+plan_kind+'_plan'
                     if plan_tool not in names:
                         return '用户已明确活动类型并要求暂存已知信息，请调用 '+plan_tool+' 保存已知字段，未知条件留空继续追问，不要重复询问已经明确的类型。'
                 explicit=assistance_buffer.explicit
@@ -369,7 +397,8 @@ class GuideService:
                               cancel_event=control.cancel,stream=stream,final_check=final_check)
             try:
                 answer = agent.run(body.message,history_messages=[] if body.purpose=='activity_review' else history)
-            except (httpx.TimeoutException,TimeoutError):
+            except (httpx.TimeoutException,TimeoutError) as exc:
+                self.runs.event(control.id,'model_timeout',{'error_type':type(exc).__name__})
                 raise AppError('引航员响应超时，请稍后重试；任务状态未改变',504) from None
             except (httpx.HTTPError,StepLimitExceeded,KeyError,TypeError,ValueError):
                 raise AppError('引航员暂时无法完成回答，请稍后重试；任务状态未改变',502) from None

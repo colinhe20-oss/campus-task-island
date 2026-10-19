@@ -1,0 +1,532 @@
+{
+  "sample_id": "EXP-V03",
+  "version": "0.1.0-candidate",
+  "status": "candidate_pending_user_review",
+  "case_unit": "persona_by_job_opportunity_pair",
+  "clock": {
+    "observation_at": "2026-10-19T13:00:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "opportunities": [
+    {
+      "id": "J-EXPLAIN",
+      "name": "展台讲解志愿者",
+      "starts_at": "2026-11-08T09:00:00+08:00",
+      "ends_at": "2026-11-08T11:00:00+08:00",
+      "capacity": 4
+    },
+    {
+      "id": "J-GUIDE",
+      "name": "现场引导志愿者",
+      "starts_at": "2026-11-08T13:00:00+08:00",
+      "ends_at": "2026-11-08T15:00:00+08:00",
+      "capacity": 4
+    }
+  ],
+  "profiles": [
+    {
+      "id": "P01",
+      "name": "科普讲解经历与上午空闲",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "教育"
+        ],
+        "availability": [
+          "09:00",
+          "11:00"
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "教育"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "recommend",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "讲解和科普方向匹配上午讲解岗；下午引导岗时间不符。"
+    },
+    {
+      "id": "P02",
+      "name": "志愿引导兴趣与下午空闲",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [],
+        "interests": [
+          "现场引导"
+        ],
+        "availability": [
+          "13:00",
+          "15:00"
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [],
+        "interests": [
+          "现场引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T13:00:00+08:00",
+            "ends_at": "2026-11-08T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "exclude",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "现场引导兴趣与岗位职责相符；讲解岗时间不符。"
+    },
+    {
+      "id": "P03",
+      "name": "两类兴趣且两个班次都有空",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "现场引导"
+        ],
+        "availability": [
+          [
+            "09:00",
+            "11:00"
+          ],
+          [
+            "13:00",
+            "15:00"
+          ]
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "现场引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          },
+          {
+            "starts_at": "2026-11-08T13:00:00+08:00",
+            "ends_at": "2026-11-08T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "recommend",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "两岗分别匹配兴趣和时间；须说明每人只选一岗。"
+    },
+    {
+      "id": "P04",
+      "name": "对科普感兴趣但无讲解经历",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [],
+        "interests": [
+          "科普"
+        ],
+        "availability": [
+          "09:00",
+          "11:00"
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [],
+        "interests": [
+          "科普"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "conditional",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "讲解经历只是优先条件，不能硬排除；最终由负责人审核。"
+    },
+    {
+      "id": "P05",
+      "name": "讲解相关但未登记空闲",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普"
+        ],
+        "availability": null,
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "conditional",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "方向相关但时段未知，只能作为核实空闲时间的候选。"
+    },
+    {
+      "id": "P06",
+      "name": "只有下午一小时空闲",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [],
+        "interests": [
+          "公益"
+        ],
+        "availability": [
+          "14:00",
+          "15:00"
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [],
+        "interests": [
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T14:00:00+08:00",
+            "ends_at": "2026-11-08T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "exclude",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "无法完整参加13:00—15:00引导班次，且缺少对应兴趣。"
+    },
+    {
+      "id": "P07",
+      "name": "已申请科普讲解岗",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普"
+        ],
+        "availability": [
+          "09:00",
+          "11:00"
+        ],
+        "notifications_enabled": true
+      },
+      "fields": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "exclude",
+        "J-GUIDE": "exclude"
+      },
+      "reason": "已有本活动待审核申请，不重复推荐该活动其他岗位。",
+      "initial_state": {
+        "opportunity": "J-EXPLAIN",
+        "registration_status": "pending"
+      }
+    },
+    {
+      "id": "P08",
+      "name": "关闭提醒但保留匹配",
+      "persona": "模拟浙江大学在校学生；条件为场景自述，不是身份认证。",
+      "preferences": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "现场引导"
+        ],
+        "availability": [
+          [
+            "09:00",
+            "11:00"
+          ],
+          [
+            "13:00",
+            "15:00"
+          ]
+        ],
+        "notifications_enabled": false
+      },
+      "fields": {
+        "skills": [
+          "讲解"
+        ],
+        "interests": [
+          "科普",
+          "现场引导"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          },
+          {
+            "starts_at": "2026-11-08T13:00:00+08:00",
+            "ends_at": "2026-11-08T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      },
+      "expected": {
+        "J-EXPLAIN": "recommend",
+        "J-GUIDE": "recommend"
+      },
+      "reason": "关闭提醒只影响消息，不应删除列表候选。"
+    }
+  ],
+  "pairs": [
+    {
+      "profile": "P01",
+      "opportunity": "J-EXPLAIN",
+      "label": "recommend",
+      "reason": "讲解和科普方向匹配上午讲解岗；下午引导岗时间不符。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "讲解和科普方向匹配上午讲解岗；下午引导岗时间不符。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-EXPLAIN",
+      "label": "exclude",
+      "reason": "现场引导兴趣与岗位职责相符；讲解岗时间不符。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "现场引导兴趣与岗位职责相符；讲解岗时间不符。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-EXPLAIN",
+      "label": "recommend",
+      "reason": "两岗分别匹配兴趣和时间；须说明每人只选一岗。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "两岗分别匹配兴趣和时间；须说明每人只选一岗。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-EXPLAIN",
+      "label": "conditional",
+      "reason": "讲解经历只是优先条件，不能硬排除；最终由负责人审核。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "讲解经历只是优先条件，不能硬排除；最终由负责人审核。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-EXPLAIN",
+      "label": "conditional",
+      "reason": "方向相关但时段未知，只能作为核实空闲时间的候选。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "方向相关但时段未知，只能作为核实空闲时间的候选。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-EXPLAIN",
+      "label": "exclude",
+      "reason": "无法完整参加13:00—15:00引导班次，且缺少对应兴趣。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "无法完整参加13:00—15:00引导班次，且缺少对应兴趣。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-EXPLAIN",
+      "label": "exclude",
+      "reason": "已有本活动待审核申请，不重复推荐该活动其他岗位。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "J-GUIDE",
+      "label": "exclude",
+      "reason": "已有本活动待审核申请，不重复推荐该活动其他岗位。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-EXPLAIN",
+      "label": "recommend",
+      "reason": "关闭提醒只影响消息，不应删除列表候选。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "J-GUIDE",
+      "label": "recommend",
+      "reason": "关闭提醒只影响消息，不应删除列表候选。"
+    }
+  ],
+  "labels": {
+    "recommend": "应展示候选，不代表通过审核或获得名额",
+    "conditional": "可展示但必须说明待核对条件",
+    "exclude": "当前状态下不应展示此机会"
+  },
+  "evaluation": {
+    "oracle": "岗位规则和人物条件人工独立标注，不由匹配代码产生。",
+    "binary_metrics": "recommend和conditional合并统计precision/recall；另逐项检查条件解释。共8人×2岗位=16对。",
+    "notifications": "P08应保留列表候选但不产生站内机会提醒。",
+    "hard_cases": "讲解经历优先而非硬门槛；每人只选一个岗位；已有活动申请不重复推荐。"
+  },
+  "split": "公开开发集；8人共享一个活动原型，不能计作8个独立活动。"
+}

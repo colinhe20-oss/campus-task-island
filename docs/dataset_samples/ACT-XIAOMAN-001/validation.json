@@ -1,0 +1,58 @@
+{
+  "sample_id": "ACT-XIAOMAN-001",
+  "version": "1.0.0-candidate",
+  "validation_type": "static_specification_validation",
+  "passed": true,
+  "checks": [
+    {
+      "check": "首句与底稿一致",
+      "passed": true
+    },
+    {
+      "check": "金标准通过现有ActivityCreate输入模型",
+      "passed": true
+    },
+    {
+      "check": "金标准草稿后端就绪且无阻塞",
+      "passed": true
+    },
+    {
+      "check": "初始需求仍缺信息且不就绪",
+      "passed": true
+    },
+    {
+      "check": "20项事实唯一且信息卡完整覆盖",
+      "passed": true
+    },
+    {
+      "check": "评分字段路径均存在",
+      "passed": true
+    },
+    {
+      "check": "评分权重合计100",
+      "passed": true
+    },
+    {
+      "check": "美育二课标签未错用思政",
+      "passed": true
+    },
+    {
+      "check": "综素草稿未混入志愿岗位及服务分钟",
+      "passed": true
+    },
+    {
+      "check": "未知回复要求具体指代",
+      "passed": true
+    },
+    {
+      "check": "原活动与模拟活动日期分开",
+      "passed": true
+    },
+    {
+      "check": "首次信息卡披露加最终请求不超过输入上限",
+      "passed": true
+    }
+  ],
+  "llm_evaluation": "not_run_at_freeze",
+  "business_database_modified": false
+}

@@ -1,0 +1,34 @@
+{
+  "sample_id": "EXP-V01-O2",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Only contact is missing from the canonical model",
+      "passed": true
+    },
+    {
+      "name": "Contact fact explicitly unknown",
+      "passed": true
+    },
+    {
+      "name": "The disclosure card withholds the original channel",
+      "passed": true
+    },
+    {
+      "name": "Known per-shift capacities unchanged",
+      "passed": true
+    },
+    {
+      "name": "Target unchanged",
+      "passed": true
+    },
+    {
+      "name": "No correction card in O2",
+      "passed": true
+    },
+    {
+      "name": "Family split retained",
+      "passed": true
+    }
+  ]
+}

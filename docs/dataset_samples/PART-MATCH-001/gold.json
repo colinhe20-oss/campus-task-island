@@ -1,0 +1,566 @@
+{
+  "sample_id": "PART-MATCH-001",
+  "version": "1.0.0-candidate",
+  "status": "pending_user_review",
+  "sources": [
+    {
+      "sample_id": "VOL-LETTER-001",
+      "path": "docs/dataset_samples/VOL-LETTER-001/gold.json",
+      "sha256": "9548860be7c8ba93707ca950a32ac827be1f00ca44c0085523b5264417a2c6b1"
+    },
+    {
+      "sample_id": "ACT-XIAOMAN-001",
+      "path": "docs/dataset_samples/ACT-XIAOMAN-001/gold.json",
+      "sha256": "3ed71e4746bc897925cce4072b43a758b323701d74556b2f38da821cbc37cece"
+    }
+  ],
+  "clock": {
+    "source_base": "2027-05-16T10:00:00+08:00",
+    "observation": "2027-05-16T13:00:00+08:00"
+  },
+  "overlay": "书信样本所有时间从原基准整体平移到2027-05-16基准；游园不改。只改变运行副本时间，原样本保持不变。观察在报名开放后一小时。",
+  "world": {
+    "V": "集中回信，2027-05-23 14至16点，8个审核名额；必须全程。",
+    "A": "小满游园，2027-05-23 12至17点开放，60个直接名额；允许自由到场。"
+  },
+  "profiles": [
+    {
+      "id": "P01",
+      "name": "书信兴趣且全程有空",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T14:00:00+08:00",
+            "ends_at": "2027-05-23T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P02",
+      "name": "手作兴趣且开放时段均有空",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P03",
+      "name": "书信志愿仅后半段有空",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T15:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P04",
+      "name": "游园仅一小时有空",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T14:00:00+08:00",
+            "ends_at": "2027-05-23T15:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P05",
+      "name": "书信兴趣但未登记空闲",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P06",
+      "name": "只有地点相同",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "篮球"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer",
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P07",
+      "name": "已申请书信活动",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T14:00:00+08:00",
+            "ends_at": "2027-05-23T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "initial_registration": {
+        "opportunity": "V",
+        "status": "pending"
+      }
+    },
+    {
+      "id": "P08",
+      "name": "手作匹配但不接收提醒",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "activity"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P09",
+      "name": "两个方向均感兴趣",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益",
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer",
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P10",
+      "name": "偏好已过期",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "书信",
+          "公益",
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": "2027-05-16T12:00:00+08:00",
+        "content_types": [
+          "volunteer",
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P11",
+      "name": "中段不可参与但可错时游园",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [
+          "回信"
+        ],
+        "interests": [
+          "书信",
+          "公益",
+          "手作",
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [
+          {
+            "starts_at": "2027-05-23T14:00:00+08:00",
+            "ends_at": "2027-05-23T16:00:00+08:00"
+          }
+        ],
+        "valid_until": null,
+        "content_types": [
+          "volunteer",
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P12",
+      "name": "传统文化语义表达",
+      "persona": "模拟浙江大学在校学生；身份为场景自述，不视为学校认证。",
+      "fields": {
+        "skills": [],
+        "interests": [
+          "传统文化"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2027-05-23T12:00:00+08:00",
+            "ends_at": "2027-05-23T17:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "activity"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "profile": "P01",
+      "opportunity": "V",
+      "label": "recommend",
+      "reason": "志愿时段完整且兴趣吻合；综素不在用户选择类型中。"
+    },
+    {
+      "profile": "P01",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "志愿时段完整且兴趣吻合；综素不在用户选择类型中。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "游园兴趣和时段吻合；志愿不在选择类型中。"
+    },
+    {
+      "profile": "P02",
+      "opportunity": "A",
+      "label": "recommend",
+      "reason": "游园兴趣和时段吻合；志愿不在选择类型中。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "书信岗位要求14至16点全程，15至17点不满足；综素未选。"
+    },
+    {
+      "profile": "P03",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "书信岗位要求14至16点全程，15至17点不满足；综素未选。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "游园允许自由到场，14至15点可作为候选；需核对体验耗时，不保证集满章。"
+    },
+    {
+      "profile": "P04",
+      "opportunity": "A",
+      "label": "conditional",
+      "reason": "游园允许自由到场，14至15点可作为候选；需核对体验耗时，不保证集满章。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "V",
+      "label": "conditional",
+      "reason": "书信方向相关，空闲未知应提醒核对14至16点；不是自动判定有空。"
+    },
+    {
+      "profile": "P05",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "书信方向相关，空闲未知应提醒核对14至16点；不是自动判定有空。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "地点相同不足以建立兴趣或技能相关性。"
+    },
+    {
+      "profile": "P06",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "地点相同不足以建立兴趣或技能相关性。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "本人已有有效待审核申请，不重复招募；综素未选。"
+    },
+    {
+      "profile": "P07",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "本人已有有效待审核申请，不重复招募；综素未选。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "关闭提醒不应关闭推荐列表，只禁止发送机会提醒。"
+    },
+    {
+      "profile": "P08",
+      "opportunity": "A",
+      "label": "recommend",
+      "reason": "关闭提醒不应关闭推荐列表，只禁止发送机会提醒。"
+    },
+    {
+      "profile": "P09",
+      "opportunity": "V",
+      "label": "recommend",
+      "reason": "两项兴趣与时段均吻合，不规定两项之间的唯一排序。"
+    },
+    {
+      "profile": "P09",
+      "opportunity": "A",
+      "label": "recommend",
+      "reason": "两项兴趣与时段均吻合，不规定两项之间的唯一排序。"
+    },
+    {
+      "profile": "P10",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "偏好在观察时点已过期。"
+    },
+    {
+      "profile": "P10",
+      "opportunity": "A",
+      "label": "exclude",
+      "reason": "偏好在观察时点已过期。"
+    },
+    {
+      "profile": "P11",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "14至16点不能完整服务，但可12至14点或16至17点游园；需核对体验条件。"
+    },
+    {
+      "profile": "P11",
+      "opportunity": "A",
+      "label": "conditional",
+      "reason": "14至16点不能完整服务，但可12至14点或16至17点游园；需核对体验条件。"
+    },
+    {
+      "profile": "P12",
+      "opportunity": "V",
+      "label": "exclude",
+      "reason": "传统文化与小满传统手作语义相关，不要求逐字命中。"
+    },
+    {
+      "profile": "P12",
+      "opportunity": "A",
+      "label": "recommend",
+      "reason": "传统文化与小满传统手作语义相关，不要求逐字命中。"
+    }
+  ],
+  "natural_messages": {
+    "P01": "我会回信，兴趣是书信、公益，优先紫金港。只关注志愿服务。我在2027年5月23日14:00到16:00有空，按北京时间，只是这一次，不是每周。请帮我登记成待核对偏好，我希望确认保存后通过站内消息提醒新机会。",
+    "P02": "我的兴趣是手作、传统文化，优先紫金港，只关注综素活动。我在2027年5月23日12:00到17:00有空，按北京时间，只是这一次。请登记成待核对偏好，我希望确认保存后通过站内消息提醒新机会。",
+    "P04": "我的兴趣是手作、传统文化，优先紫金港，只关注综素活动。我在2027年5月23日14:00到15:00只有这一小时有空，按北京时间，只是这一次。请登记成待核对偏好，我希望确认保存后通过站内消息提醒新机会。"
+  },
+  "explanation_message": "请根据我已保存的偏好，查询并解释适合我的参与机会和需要核对的条件。请引用当前记录，不要替我报名。",
+  "labels": {
+    "recommend": "方向相关且已知时间可参与，推荐不代表资格获官方认证。",
+    "conditional": "可列为需核对的候选，不保证能完成服务、体验或认定。",
+    "exclude": "该用户在当前业务状态和偏好下不应收到此招募推荐。"
+  },
+  "evaluation": {
+    "oracle": "依据活动规则和独立人工场景判断；不调用当前matching函数产生标签。",
+    "binary_metrics": "recommend和conditional合为应展示候选，计算24对的precision/recall；另逐项检查conditional提示。不对两个候选计算NDCG或宣称大规模排序质量。",
+    "natural_extraction": "检查一次性时段、类型、提醒意愿、原话支持、无擅自增加技能；只在忠实核对后模拟用户独立确认。",
+    "lifecycle": "发布触达、本人过滤、去重、重启、忽略、关闭提醒、报名和退出、满额和释放、取消、截止。",
+    "acceptance": "规格、产品运行结果和用户接受分别记录；不改变金标准迎合当前算法。"
+  },
+  "operator": "Codex执行固定合成人物和模拟用户确认，仅写入独立实验库；不代表真实学生试用。",
+  "split": "公开开发集；12个人物共享两个活动原型，不当作24个独立活动或未见测试样本。"
+}

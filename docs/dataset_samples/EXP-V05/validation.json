@@ -1,0 +1,59 @@
+{
+  "sample_id": "EXP-V05",
+  "version": "0.1.1-candidate",
+  "status": "static_candidate_ready",
+  "checks": [
+    {
+      "name": "全部地点和活动事实明确为合成",
+      "passed": true
+    },
+    {
+      "name": "活动跨两天且四岗位时间带时区",
+      "passed": true
+    },
+    {
+      "name": "岗位级名额合计为12",
+      "passed": true
+    },
+    {
+      "name": "四个岗位都符合VolunteerCreate模型",
+      "passed": true
+    },
+    {
+      "name": "东到西的间隔小于转场时间",
+      "passed": true
+    },
+    {
+      "name": "报名截止早于最早岗位且报名方式是审核",
+      "passed": true
+    },
+    {
+      "name": "参与者覆盖8人和完整32对",
+      "passed": true
+    },
+    {
+      "name": "已有申请人物的机会ID有效",
+      "passed": true
+    },
+    {
+      "name": "关闭提醒人物仍保留推荐标签",
+      "passed": true
+    },
+    {
+      "name": "只接受活动的人物排除志愿内容",
+      "passed": true
+    },
+    {
+      "name": "全部人物偏好通过业务模型",
+      "passed": true
+    },
+    {
+      "name": "跨班次组合限制独立列出，不冒充单岗匹配指标",
+      "passed": true
+    },
+    {
+      "name": "两项西区岗位的地点逐项对应",
+      "passed": true
+    }
+  ]
+}

@@ -68,6 +68,17 @@ export function AssistancePanel({value,onChange,disabled,onPrompt,onReview}:{val
   const busy=working||disabled;
   const plan=value?.plan;
   return <section className="assistance-panel" aria-label="活动筹备与参与助手">
+    <details className="preferences-panel" open={Boolean(value?.preference_proposal)||Boolean(editing)}><summary>我的参与偏好 {profile?.confirmed_at?'· 已保存':'· 尚未登记'}{value?.preference_proposal?' · 有待确认草稿':''}</summary>
+      <p className="guide-intro">技能为本人自述。偏好仅用于本人机会匹配，可随时编辑或关闭提醒；一次性与每周空闲分开保存。未登记时间时，推荐会提示核对。</p>
+      {!editing&&profile&&<><p>技能：{profile.fields.skills.join('、')||'未设置'} · 兴趣：{profile.fields.interests.join('、')||'未设置'} · 提醒：{profile.fields.notifications_enabled?'已开启':'已关闭'}</p><button className="button secondary" disabled={busy} onClick={()=>{setEditing(profile.fields);setEditingVersion(profile.version);}}>编辑参与偏好</button></>}
+      {editing&&<><fieldset disabled={busy}><ProfileEditor value={editing} onChange={setEditing}/></fieldset><div className="draft-actions"><button className="text-button" disabled={busy} onClick={()=>setEditing(null)}>收起编辑</button><button className="button" disabled={busy||!profile} onClick={()=>void execute(async()=>{
+        const proposal=value?.preference_proposal;
+        if(proposal&&JSON.stringify(editing)===JSON.stringify(proposal.fields)){onChange(await request<Assistance>(`/api/guide/assistance/${value!.conversation_id}/preferences`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:value!.version,profile_version:proposal.base_version})}));}
+        else {setProfile(await request<SavedProfile>('/api/guide/preferences',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:editingVersion,fields:editing})}));if(value)onChange(await request<Assistance>(`/api/guide/assistance/${value.conversation_id}`));}
+        setEditing(null);
+      })}>核对并保存偏好{editing.notifications_enabled?'与提醒授权':''}</button></div></>}
+      <SemanticProfile disabled={busy} onChanged={()=>void load()}/>
+    </details>
     <div className="section-heading"><div><p className="eyebrow">从活动构想到参与机会</p><h2>筹备与发现</h2></div></div>
     <div className="assistance-start"><button disabled={busy} className="button secondary" onClick={()=>onPrompt('我想筹备一次志愿活动，请先帮我明确需求，再形成招募方案和筹备清单。')}>筹备志愿活动</button><button disabled={busy} className="button secondary" onClick={()=>onPrompt('我想组织一次综素活动，请帮我规划招募方案。')}>筹备综素活动</button><button disabled={busy} className="button secondary" onClick={()=>onPrompt('请根据我的已保存偏好寻找适合我的参与机会，并解释推荐原因。')}>寻找参与机会</button><button disabled={busy} className="text-button" onClick={()=>onPrompt('我想登记或修改我的技能、兴趣和空闲时间，请帮我整理偏好草稿。')}>对话登记偏好</button></div>
     {error&&<p className="form-error" role="alert">{error}<button onClick={()=>void load()} className="text-button">重新加载</button></p>}
@@ -81,17 +92,6 @@ export function AssistancePanel({value,onChange,disabled,onPrompt,onReview}:{val
       {plan.status==='draft'&&<><details><summary>待补全或核对 {plan.issues.length} 项</summary><ul>{plan.issues.map((s,i)=><li key={i}>{Object.entries(labels).reduce((v,[k,label])=>v.replaceAll(k,label),s)}</li>)}</ul></details><div className="draft-actions"><button className="button secondary" disabled={busy} onClick={()=>void savePlan()}>保存表单修改</button><button className="text-button" disabled={busy} onClick={()=>void confirm('cancel')}>取消方案</button><button className="button" disabled={busy||!plan.ready||(JSON.stringify(planFields)!==JSON.stringify(plan.fields)||target!==(plan.target_volunteers??null))} onClick={()=>void confirm('publish')}>核对并确认发布</button></div><p className="guide-intro">正式发布前请保存修改并核对时间、岗位与认定条件。所有时间均为北京时间。</p></>}
       {plan.href&&<a className="button" href={plan.href}>查看活动与报名状态 ↗</a>}
     </section>}
-    <details className="preferences-panel" open={Boolean(value?.preference_proposal)||Boolean(editing)}><summary>我的参与偏好 {profile?.confirmed_at?'· 已保存':'· 尚未登记'}{value?.preference_proposal?' · 有待确认草稿':''}</summary>
-      <p className="guide-intro">技能为本人自述。偏好仅用于本人机会匹配，可随时编辑或关闭提醒；一次性与每周空闲分开保存。未登记时间时，推荐会提示核对。</p>
-      {!editing&&profile&&<><p>技能：{profile.fields.skills.join('、')||'未设置'} · 兴趣：{profile.fields.interests.join('、')||'未设置'} · 提醒：{profile.fields.notifications_enabled?'已开启':'已关闭'}</p><button className="button secondary" disabled={busy} onClick={()=>{setEditing(profile.fields);setEditingVersion(profile.version);}}>编辑参与偏好</button></>}
-      {editing&&<><fieldset disabled={busy}><ProfileEditor value={editing} onChange={setEditing}/></fieldset><div className="draft-actions"><button className="text-button" disabled={busy} onClick={()=>setEditing(null)}>收起编辑</button><button className="button" disabled={busy||!profile} onClick={()=>void execute(async()=>{
-        const proposal=value?.preference_proposal;
-        if(proposal&&JSON.stringify(editing)===JSON.stringify(proposal.fields)){onChange(await request<Assistance>(`/api/guide/assistance/${value!.conversation_id}/preferences`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:value!.version,profile_version:proposal.base_version})}));}
-        else {setProfile(await request<SavedProfile>('/api/guide/preferences',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:editingVersion,fields:editing})}));if(value)onChange(await request<Assistance>(`/api/guide/assistance/${value.conversation_id}`));}
-        setEditing(null);
-      })}>核对并保存偏好{editing.notifications_enabled?'与提醒授权':''}</button></div></>}
-      <SemanticProfile disabled={busy} onChanged={()=>void load()}/>
-    </details>
     <section className="opportunities"><div className="section-heading"><h3>适合我的机会</h3><button disabled={busy} className="text-button" onClick={()=>void execute(async()=>setOpportunities(await request<Recommendations>('/api/guide/recommendations/refresh',{method:'POST'})))}>重新匹配</button></div>
       {opportunities?.error&&<p role="alert">{opportunities.error}</p>}
       {!opportunities?.items.length&&<p className="guide-empty">暂时没有匹配机会。可先登记技能、兴趣和空闲时间；后台会持续关注新发布的内容。</p>}

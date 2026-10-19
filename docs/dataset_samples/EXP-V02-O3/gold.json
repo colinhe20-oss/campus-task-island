@@ -1,0 +1,284 @@
+{
+  "sample_id": "EXP-V02-O3",
+  "version": "1.0.0-candidate",
+  "status": "candidate_pending_user_review",
+  "task": "volunteer_organizer_clarification_and_drafting",
+  "model_input_file": "input.txt",
+  "visibility": "evaluator_only; never inject into tested agent",
+  "initial_message": "我们想招募志愿者核对一份校园无障碍路线说明，帮忙记录路线标识和信息是否一致。你能帮我整理招募方案吗？",
+  "clock": {
+    "base_at": "2026-10-19T10:00:00+08:00",
+    "mode": "frozen_during_dialogue",
+    "timezone": "Asia/Shanghai"
+  },
+  "provenance": {
+    "material": null,
+    "source_type": "fully_synthetic_scenario",
+    "independently_verified": false,
+    "source_facts": [],
+    "synthetic_facts": "本场景全部组织、场地、时间、名额及活动规则均为合成实验设定，不代表浙江大学或现实单位已经举办或批准。"
+  },
+  "cards": [
+    {
+      "id": "C1",
+      "topic": "名称、组织方、来源",
+      "reply": "活动名“路线清晰·无障碍信息核验志愿服务”；组织方“模拟校园信息服务小组”；来源“纯合成实验通知”；平台内联系负责人。该组织和活动均为虚构。",
+      "fact_ids": []
+    },
+    {
+      "id": "C2",
+      "topic": "时间、地点、班次",
+      "reply": "2026年11月8日（周日），紫金港校区模拟研习室B（虚构地点）。设09:00—11:00和14:00—16:00两个班次；报名者完整参加其中一个。北京时间。",
+      "fact_ids": []
+    },
+    {
+      "id": "C3",
+      "topic": "岗位、任务、名额、资格",
+      "reply": "唯一岗位“路线信息核验志愿者”，上午、下午各3人。只核对合成路线卡片中的文字与模拟标识图片，填写差异记录；不实地测试真实通道、不接触个人健康或残障信息、不判断路线安全。无需经验，参加所选班次全程说明。",
+      "fact_ids": []
+    },
+    {
+      "id": "C4",
+      "topic": "报名规则与窗口",
+      "reply": "平台审核报名。每人选择一个班次并说明参与意愿，负责人审核；平台不能阻止同一人跨岗位重复申请，需人工核对。10月19日12:00开放，11月7日18:00截止，分别按班次计额。",
+      "fact_ids": []
+    },
+    {
+      "id": "C5",
+      "topic": "材料、记录、认定",
+      "reply": "活动方提供虚构路线卡、模拟标识图和记录表，无需自带材料。流程：说明隐私与核验边界、分组比对、记录差异、负责人复核。每班预计120分钟，只登记实际签到签退时长。综素和第二课堂认定及分值未知，不承诺。 请先按上午3人、下午3人、合计6人保存内部初稿，让我核对。",
+      "fact_ids": []
+    },
+    {
+      "id": "C6",
+      "topic": "保存初稿后的名额修正",
+      "phase": "correction",
+      "requires_disclosed": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "reply": "更正：上午班从3人改为5人，下午仍3人，计划总名额由6人同步改为8人。日期、班次、地点、报名窗口、工作边界及每班120分钟均不变。请替换旧名额和相关总数，只保存内部草稿。",
+      "fact_ids": []
+    }
+  ],
+  "facts": {
+    "date": "2026-11-08",
+    "slots": [
+      "09:00-11:00",
+      "14:00-16:00"
+    ],
+    "capacity_each": 3,
+    "mode": "review",
+    "open": "2026-10-19T12:00:00+08:00",
+    "close": "2026-11-07T18:00:00+08:00",
+    "minutes": 120,
+    "unknown_credit": true
+  },
+  "prohibited_inventions": [
+    "将模拟组织方或虚构场地描述为真实校方单位或已授权场所",
+    "承诺学校综素或第二课堂认定及分值",
+    "将未披露内容当作已确认事实"
+  ],
+  "expected_terminal_state": "Verified initial3/3/6 followed by persisted final5/3/8, unchanged times and boundaries, no stale active capacity claims, no publication.",
+  "environment": {
+    "initial_state": "独立实验库中的有效组织者账号与新对话；仅保存草稿，不发布。",
+    "publish_action": "本样本不执行发布。"
+  },
+  "user_simulation": {
+    "mode": "human_operator_with_fixed_disclosure_cards",
+    "max_agent_responses": 8,
+    "card_policy": "按问题覆盖主题返回卡片；多卡按编号顺序披露。",
+    "proposal_policy": "与金标准冲突的建议不采纳，要求保留已确认安排。",
+    "unknown_reply": "尚未确定，请列为待确认，不要写成已确认。",
+    "finish_rule": "全部卡片披露后发送最终整理请求。",
+    "final_user_message": "请以更正后的上午5人、下午3人、合计8人为唯一有效名额保存内部草稿，旧3/3和总6人仅属于历史，不得留在有效招募字段或待采纳的冲突建议中。其他事实不变，学校认定仍未知，不发布。",
+    "cards": [
+      {
+        "id": "C1",
+        "topic": "名称、组织方、来源",
+        "reply": "活动名“路线清晰·无障碍信息核验志愿服务”；组织方“模拟校园信息服务小组”；来源“纯合成实验通知”；平台内联系负责人。该组织和活动均为虚构。",
+        "fact_ids": []
+      },
+      {
+        "id": "C2",
+        "topic": "时间、地点、班次",
+        "reply": "2026年11月8日（周日），紫金港校区模拟研习室B（虚构地点）。设09:00—11:00和14:00—16:00两个班次；报名者完整参加其中一个。北京时间。",
+        "fact_ids": []
+      },
+      {
+        "id": "C3",
+        "topic": "岗位、任务、名额、资格",
+        "reply": "唯一岗位“路线信息核验志愿者”，上午、下午各3人。只核对合成路线卡片中的文字与模拟标识图片，填写差异记录；不实地测试真实通道、不接触个人健康或残障信息、不判断路线安全。无需经验，参加所选班次全程说明。",
+        "fact_ids": []
+      },
+      {
+        "id": "C4",
+        "topic": "报名规则与窗口",
+        "reply": "平台审核报名。每人选择一个班次并说明参与意愿，负责人审核；平台不能阻止同一人跨岗位重复申请，需人工核对。10月19日12:00开放，11月7日18:00截止，分别按班次计额。",
+        "fact_ids": []
+      },
+      {
+        "id": "C5",
+        "topic": "材料、记录、认定",
+        "reply": "活动方提供虚构路线卡、模拟标识图和记录表，无需自带材料。流程：说明隐私与核验边界、分组比对、记录差异、负责人复核。每班预计120分钟，只登记实际签到签退时长。综素和第二课堂认定及分值未知，不承诺。 请先按上午3人、下午3人、合计6人保存内部初稿，让我核对。",
+        "fact_ids": []
+      },
+      {
+        "id": "C6",
+        "topic": "保存初稿后的名额修正",
+        "phase": "correction",
+        "requires_disclosed": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5"
+        ],
+        "reply": "更正：上午班从3人改为5人，下午仍3人，计划总名额由6人同步改为8人。日期、班次、地点、报名窗口、工作边界及每班120分钟均不变。请替换旧名额和相关总数，只保存内部草稿。",
+        "fact_ids": []
+      }
+    ],
+    "phase_gate": "Disclose C6 only after persisted capacities3/3 and target6 pass the initial-phase verifier.",
+    "expected_terminal_state": "Verified initial3/3/6 followed by persisted final5/3/8, unchanged times and boundaries, no stale active capacity claims, no publication.",
+    "scoring": {
+      "dimensions": {
+        "verified_initial_state": 20,
+        "correction_consistency": 40,
+        "unchanged_fact_fidelity": 20,
+        "persisted_final_draft": 10,
+        "recognition_and_confirmation_boundaries": 10
+      },
+      "critical_errors": [
+        "Correction disclosed before a persisted3/3/6 baseline",
+        "Final capacities or total differ from5/3/8",
+        "Unrelated dates or boundaries changed",
+        "Publication or recognition invented"
+      ],
+      "pass_rule": "At least85/100, no critical error; preserve content failures as measured negative cases."
+    }
+  },
+  "gold_plan": {
+    "kind": "volunteer",
+    "fields": {
+      "title": "路线清晰·无障碍信息核验志愿服务",
+      "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+      "organization_name": "模拟校园信息服务小组",
+      "information_source": "纯合成实验通知",
+      "contact": "平台内联系负责人",
+      "recognition_conditions": "综素和第二课堂认定未知，不承诺加分；仅登记实际签到签退时长。",
+      "opens_at": "2026-10-19T12:00:00+08:00",
+      "closes_at": "2026-11-07T18:00:00+08:00",
+      "registration_mode": "review",
+      "starts_at": "2026-11-08T09:00:00+08:00",
+      "ends_at": "2026-11-08T16:00:00+08:00",
+      "jobs": [
+        {
+          "name": "路线信息核验志愿者（上午班）",
+          "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+          "requirements": "无需经验，完整参加所选的一个班次；仅比对合成路线卡片和模拟标识图，不实测真实通道，不接触健康或残障个人信息，不判断真实路线安全。每人限选一班由负责人审核，平台不强制跨岗位互斥。",
+          "location": "紫金港校区模拟研习室B（虚构地点）",
+          "starts_at": "2026-11-08T09:00:00+08:00",
+          "ends_at": "2026-11-08T11:00:00+08:00",
+          "capacity": 5,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟，仅按实际签到签退记录；学校认定未知，不承诺。"
+        },
+        {
+          "name": "路线信息核验志愿者（下午班）",
+          "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+          "requirements": "无需经验，完整参加所选的一个班次；仅比对合成路线卡片和模拟标识图，不实测真实通道，不接触健康或残障个人信息，不判断真实路线安全。每人限选一班由负责人审核，平台不强制跨岗位互斥。",
+          "location": "紫金港校区模拟研习室B（虚构地点）",
+          "starts_at": "2026-11-08T14:00:00+08:00",
+          "ends_at": "2026-11-08T16:00:00+08:00",
+          "capacity": 3,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟，仅按实际签到签退记录；学校认定未知，不承诺。"
+        }
+      ]
+    },
+    "target_volunteers": 8
+  },
+  "revision": {
+    "from": "0.1.0-review",
+    "organizer_cards_changed": false,
+    "note": "Participant source-fidelity revision and independently authored canonical organizer plan; no model output used."
+  },
+  "evaluation": {
+    "dimensions": {
+      "fact_fidelity": 30,
+      "clarification_and_unknown_handling": 20,
+      "persisted_draft": 25,
+      "shift_capacity_consistency": 15,
+      "synthetic_privacy_and_recognition_boundaries": 10
+    },
+    "critical_errors": [
+      "Invented real route testing or safety certification",
+      "Invented personal health data processing",
+      "Wrong dates, capacities, or full-day attendance requirement",
+      "Published or promised unknown school recognition"
+    ],
+    "pass_rule": "At least85/100, no critical error; measured collection completion remains separate from correctness."
+  },
+  "parent_sample_id": "EXP-V02",
+  "case_variant": "O3",
+  "split": "development",
+  "split_group": "EXP-V02",
+  "parent_manifest_sha256": "c8d5dfe77d0a73d86d92f1542dabb514e8301ef1796cbc59720aa2191bb6d99c",
+  "initial_gold_plan": {
+    "kind": "volunteer",
+    "fields": {
+      "title": "路线清晰·无障碍信息核验志愿服务",
+      "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+      "organization_name": "模拟校园信息服务小组",
+      "information_source": "纯合成实验通知",
+      "contact": "平台内联系负责人",
+      "recognition_conditions": "综素和第二课堂认定未知，不承诺加分；仅登记实际签到签退时长。",
+      "opens_at": "2026-10-19T12:00:00+08:00",
+      "closes_at": "2026-11-07T18:00:00+08:00",
+      "registration_mode": "review",
+      "starts_at": "2026-11-08T09:00:00+08:00",
+      "ends_at": "2026-11-08T16:00:00+08:00",
+      "jobs": [
+        {
+          "name": "路线信息核验志愿者（上午班）",
+          "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+          "requirements": "无需经验，完整参加所选的一个班次；仅比对合成路线卡片和模拟标识图，不实测真实通道，不接触健康或残障个人信息，不判断真实路线安全。每人限选一班由负责人审核，平台不强制跨岗位互斥。",
+          "location": "紫金港校区模拟研习室B（虚构地点）",
+          "starts_at": "2026-11-08T09:00:00+08:00",
+          "ends_at": "2026-11-08T11:00:00+08:00",
+          "capacity": 3,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟，仅按实际签到签退记录；学校认定未知，不承诺。"
+        },
+        {
+          "name": "路线信息核验志愿者（下午班）",
+          "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+          "requirements": "无需经验，完整参加所选的一个班次；仅比对合成路线卡片和模拟标识图，不实测真实通道，不接触健康或残障个人信息，不判断真实路线安全。每人限选一班由负责人审核，平台不强制跨岗位互斥。",
+          "location": "紫金港校区模拟研习室B（虚构地点）",
+          "starts_at": "2026-11-08T14:00:00+08:00",
+          "ends_at": "2026-11-08T16:00:00+08:00",
+          "capacity": 3,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟，仅按实际签到签退记录；学校认定未知，不承诺。"
+        }
+      ]
+    },
+    "target_volunteers": 6
+  },
+  "facts_phase": "initial; correction supersedes initial capacity_each for morning only",
+  "controlled_change": {
+    "trigger": "After a persisted 3/3/6 baseline is verified",
+    "changed_path": "jobs[morning].capacity",
+    "before": 3,
+    "after": 5,
+    "dependent_before": {
+      "target_volunteers": 6
+    },
+    "dependent_after": {
+      "target_volunteers": 8
+    }
+  }
+}

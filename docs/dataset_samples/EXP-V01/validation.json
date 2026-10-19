@@ -1,0 +1,47 @@
+{
+  "sample_id": "EXP-V01",
+  "version": "0.1.1-review",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Eight preferences pass the application schema",
+      "passed": true
+    },
+    {
+      "name": "Every structured interest appears in its source narrative",
+      "passed": true
+    },
+    {
+      "name": "P02 broad interest is not narrowed to library work",
+      "passed": true
+    },
+    {
+      "name": "P03 lexical mismatch is preserved",
+      "passed": true
+    },
+    {
+      "name": "Every profile retains independently authored labels for both shifts",
+      "passed": true
+    },
+    {
+      "name": "The native opportunity validates with two independent capacity pools",
+      "passed": true
+    },
+    {
+      "name": "Signup closes before both shifts",
+      "passed": true
+    },
+    {
+      "name": "Each information-card fact reference exists",
+      "passed": true
+    },
+    {
+      "name": "All initial organizer source facts remain identical",
+      "passed": true
+    },
+    {
+      "name": "Unknown time and reminders-off boundaries remain intact",
+      "passed": true
+    }
+  ]
+}

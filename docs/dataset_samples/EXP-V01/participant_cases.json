@@ -1,0 +1,400 @@
+{
+  "sample_id": "EXP-V01",
+  "status": "draft_for_user_review",
+  "case_unit": "persona_by_shift_opportunity_pair",
+  "opportunities": [
+    {
+      "id": "V-M",
+      "shift": "09:00-10:30",
+      "capacity": 4,
+      "deadline": "2026-10-24T18:00:00+08:00"
+    },
+    {
+      "id": "V-A",
+      "shift": "14:00-15:30",
+      "capacity": 4,
+      "deadline": "2026-10-24T18:00:00+08:00"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "P01",
+      "preferences": "图书整理、阅读服务；上午有空；只找志愿活动",
+      "availability": "09:00-10:30",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "recommend",
+        "V-A": "exclude"
+      },
+      "rationale": "兴趣、类型、时段均匹配；下午时段冲突。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "图书整理",
+          "阅读服务"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T09:00:00+08:00",
+            "ends_at": "2026-10-25T10:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我对图书整理和阅读服务感兴趣，优先紫金港。2026年10月25日09:00到10:30有空，只是这一次；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P02",
+      "preferences": "校园公益；下午有空；只找志愿活动",
+      "availability": "14:00-15:30",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "conditional"
+      },
+      "rationale": "时间匹配，但未表达图书整理兴趣；可按开放规则展示并说明任务要求，避免声称兴趣匹配。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "校园公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T14:00:00+08:00",
+            "ends_at": "2026-10-25T15:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我感兴趣的是校园公益，具体工作还想了解，优先紫金港。2026年10月25日14:00到15:30有空，只是这一次；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P03",
+      "preferences": "读书、整理书籍；全天有空；只找志愿活动",
+      "availability": "09:00-10:30 and 14:00-15:30",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "recommend",
+        "V-A": "recommend"
+      },
+      "rationale": "两班条件分别满足；需披露每人只能选择一个，不得把两个都当作已报名。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "读书",
+          "整理书籍"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T09:00:00+08:00",
+            "ends_at": "2026-10-25T10:30:00+08:00"
+          },
+          {
+            "starts_at": "2026-10-25T14:00:00+08:00",
+            "ends_at": "2026-10-25T15:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我喜欢读书、整理书籍，优先紫金港。2026年10月25日09:00到10:30和14:00到15:30都能安排，最终只选一个班次，不是每周固定空闲；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P04",
+      "preferences": "图书整理；只有上午09:00-09:45有空；只找志愿活动",
+      "availability": "09:00-09:45",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "两个班次均要求完整参加，上午只有45分钟。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "图书整理"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T09:00:00+08:00",
+            "ends_at": "2026-10-25T09:45:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我对图书整理感兴趣，优先紫金港。2026年10月25日仅09:00到09:45有空，只是这一次；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P05",
+      "preferences": "图书整理；具体可用时间未填写；只找志愿活动",
+      "availability": "unknown",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "conditional",
+        "V-A": "conditional"
+      },
+      "rationale": "可按兴趣展示两个班次，但应先确认具体选择与完整时段可用性。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "图书整理"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我对图书整理感兴趣，优先紫金港，但具体可用时间还没有确定；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P06",
+      "preferences": "球类运动；上午有空；只找志愿活动",
+      "availability": "09:00-10:30",
+      "existing_state": "none",
+      "reminders": true,
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "活动兴趣不相关；地点一致不能单独构成推荐理由。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "球类运动"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T09:00:00+08:00",
+            "ends_at": "2026-10-25T10:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我只对球类运动感兴趣，优先紫金港。2026年10月25日09:00到10:30有空，只是这一次；只关注志愿活动。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P07",
+      "preferences": "图书整理；上午有空；只找志愿活动",
+      "availability": "09:00-10:30",
+      "existing_state": "pending_application_for_V-M",
+      "reminders": true,
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "上午已有待审核申请；排除该岗位的重复推荐。下午虽有岗位名额，但时间冲突；此外，平台不强制跨岗位互斥，解释时需披露由负责人人工核对活动方的单班规则。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "图书整理"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T09:00:00+08:00",
+            "ends_at": "2026-10-25T10:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      },
+      "utterance": "我对图书整理感兴趣，优先紫金港。2026年10月25日09:00到10:30有空，只是这一次；只关注志愿活动。我已经提交上午班申请，正在等审核。核对后可以给我站内新机会提醒。请先整理待确认偏好，不要替我再次报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    },
+    {
+      "id": "P08",
+      "preferences": "阅读公益；下午有空；只找志愿活动",
+      "availability": "14:00-15:30",
+      "existing_state": "none",
+      "reminders": false,
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "conditional"
+      },
+      "rationale": "推荐列表可有候选；提醒关闭时不得发送新机会消息。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "阅读公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-10-25T14:00:00+08:00",
+            "ends_at": "2026-10-25T15:30:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      },
+      "utterance": "我对阅读公益感兴趣，优先紫金港。2026年10月25日14:00到15:30有空，只是这一次；只关注志愿活动。不要给我发送推荐提醒。请先整理待确认偏好，不要替我报名。",
+      "field_provenance": {
+        "interests": "Original narrative preferences, preserved verbatim as concepts",
+        "other_fields": "Previously authored structured synthetic fixture; now expressed explicitly in utterance"
+      }
+    }
+  ],
+  "label_definitions": {
+    "recommend": "按明确兴趣和时段展示；解释班次及名额状态，不保证审核通过。",
+    "conditional": "可作为候选展示，但必须先披露并核对关键条件，不得称为已确认匹配。",
+    "exclude": "不应展示为匹配候选；可在只读检索中如实说明原因。"
+  },
+  "limitations": [
+    "跨班次互斥没有原生实现；单班规则需要组织者人工核对。此场景检验Agent是否披露限制，不评估自动互斥执行。",
+    "P02与P08使用宽泛兴趣时，条件推荐取决于产品的展示策略；首轮用户审核后冻结标签。",
+    "此处8个人物是同一场景内的受控判断，不是8个真实独立用户。",
+    "不对学校综素/第二课堂认定作任何推断。"
+  ],
+  "native_opportunity": {
+    "title": "书架有序·图书整理志愿服务",
+    "description": "按模拟索书号整理书架、核对书脊标签并记录错位书。纯合成活动，不访问真实数据。",
+    "organization_name": "模拟校园阅读服务小组",
+    "information_source": "模拟组织方活动通知（纯合成实验场景）",
+    "contact": "平台内联系活动负责人",
+    "recognition_conditions": "认定未知，不承诺加分。",
+    "location": "紫金港校区模拟阅览室A（虚构地点）",
+    "date": "2026-10-25",
+    "opens_at": "2026-10-19T12:00:00+08:00",
+    "closes_at": "2026-10-24T18:00:00+08:00",
+    "registration_mode": "review",
+    "jobs": [
+      {
+        "key": "V-M",
+        "name": "图书整理志愿者（上午班）",
+        "starts_at": "09:00",
+        "ends_at": "10:30",
+        "capacity": 4,
+        "minutes": 90
+      },
+      {
+        "key": "V-A",
+        "name": "图书整理志愿者（下午班）",
+        "starts_at": "14:00",
+        "ends_at": "15:30",
+        "capacity": 4,
+        "minutes": 90
+      }
+    ]
+  },
+  "opportunity_id": {
+    "V-M": "上午班",
+    "V-A": "下午班"
+  },
+  "pending_registration": {
+    "profile": "P07",
+    "opportunity": "V-M"
+  },
+  "version": "0.1.1-review",
+  "revision": {
+    "from": "0.1.0-review",
+    "labels_changed": false,
+    "activity_rules_changed": false,
+    "frozen_before_matching_run": true,
+    "note": "The revision was authored before collecting new matching output. Historical scores remain under their original input hashes."
+  }
+}

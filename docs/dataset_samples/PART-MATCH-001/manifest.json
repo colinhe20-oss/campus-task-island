@@ -1,0 +1,11 @@
+{
+  "sample_id": "PART-MATCH-001",
+  "version": "1.0.0-candidate",
+  "status": "frozen_candidate_user_accepted",
+  "hash_algorithm": "sha256",
+  "files": {
+    "gold.json": "cbb547ce96988913fe4162941d728eb3f7ab92f5a3e0ac54801fc32f39ea88c8",
+    "REVIEW.md": "9827f44f86426b5dbbc9fa3fb1b1bfa400b76f9cf6b0a21d8d3248c84abf664c",
+    "validation.json": "5a0ceaf6ae66129944b2fe51f53da0b0ddab1e6a3521a37439ace5663295be46"
+  }
+}

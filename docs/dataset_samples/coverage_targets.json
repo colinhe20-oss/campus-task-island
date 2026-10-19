@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "basis": "docs/DATASET_EXPANSION.md sections 3.1-3.3",
+  "organizer_variants": ["O1", "O2", "O3"],
+  "participant_roles": ["positive", "negative", "boundary"],
+  "minimum_recommendation_pairs": 32,
+  "families": [
+    {"id": "EXP-V01", "participants": {"positive": "P01", "negative": "P04", "boundary": "P03"}},
+    {"id": "EXP-V02", "participants": {"positive": "P01", "negative": "P03", "boundary": "P06"}},
+    {"id": "EXP-A01", "participants": {"positive": "P01", "negative": "P03", "boundary": "P02"}},
+    {"id": "EXP-A02", "participants": {"positive": "P01", "negative": "P02", "boundary": "P05"}}
+  ],
+  "counting_rules": [
+    "O2 and O3 require separately frozen controlled cases; baseline unknown credit does not count as an O2 controlled variant.",
+    "A completed conversation requires a successful final response, source binding, and preserved input/output. Model content failures remain evidence and are reported separately from collection failure.",
+    "Historical dialogue without a source digest is observed evidence, not a fully traceable completed quota.",
+    "Variants share their parent scene family and development split; they never count as new independent scenes."
+  ]
+}

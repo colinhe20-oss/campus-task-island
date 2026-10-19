@@ -1,0 +1,12 @@
+{
+  "sample_id": "ACT-XIAOMAN-001",
+  "version": "1.0.0-candidate",
+  "status": "frozen_candidate_pending_user_review",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "20bb8a37aa1121934bf5b00ff45976a06ce67c3ebad0b724b812093d06856bd2",
+    "gold.json": "3ed71e4746bc897925cce4072b43a758b323701d74556b2f38da821cbc37cece",
+    "REVIEW.md": "71362c46247c95c5e55534510b08ec7a02f064ee41b40714cb02f72ccce4bce1",
+    "validation.json": "c0c35bf33ebae10f6f59154c5d684749c37cb64e11085411a0616c6cfe64cc2a"
+  }
+}

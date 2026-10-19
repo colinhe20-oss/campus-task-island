@@ -49,7 +49,7 @@ class RunStore:
         # 明确白名单；上游的 run_started.task / tool.arguments / tool.result 不落盘。
         allowed = {'model_started': ('step',), 'model_finished': ('step','duration_ms'),
                    'tool_started': ('step','tool','call_id'), 'tool_finished': ('step','tool','call_id','success','duration_ms','error_type'),
-                   'text_delta': ('step','text')}
+                   'text_delta': ('step','text'), 'model_timeout': ('error_type',)}
         if kind not in allowed:
             return
         item = {'kind': kind, **{k: data[k] for k in allowed[kind] if k in data}}

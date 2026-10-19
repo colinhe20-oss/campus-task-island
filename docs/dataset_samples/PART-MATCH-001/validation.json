@@ -1,0 +1,57 @@
+{
+  "sample_id": "PART-MATCH-001",
+  "version": "1.0.0-candidate",
+  "validation_type": "static_specification_validation",
+  "checks": [
+    {
+      "name": "12名人物编号唯一",
+      "passed": true
+    },
+    {
+      "name": "偏好字段通过现有Preferences模型",
+      "passed": true
+    },
+    {
+      "name": "24个唯一人物机会对",
+      "passed": true
+    },
+    {
+      "name": "三类判断均有覆盖",
+      "passed": true
+    },
+    {
+      "name": "两个世界输入通过现有业务模型",
+      "passed": true
+    },
+    {
+      "name": "整体平移后两场活动同日",
+      "passed": true
+    },
+    {
+      "name": "观察时点已开放且未截止",
+      "passed": true
+    },
+    {
+      "name": "固定岗位为2小时游园为5小时开放",
+      "passed": true
+    },
+    {
+      "name": "游园自由到场规则保留",
+      "passed": true
+    },
+    {
+      "name": "三个自然语言首句小于输入上限",
+      "passed": true
+    },
+    {
+      "name": "人物提醒关闭仍为应推荐",
+      "passed": true
+    },
+    {
+      "name": "来源金标准摘要一致",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "model_evaluation": "not_run_at_freeze"
+}

@@ -1,0 +1,275 @@
+{
+  "sample_id": "VOL-LEAP-001",
+  "version": "0.1.0-review",
+  "status": "draft_for_user_review",
+  "task": "volunteer_organizer_clarification_and_drafting",
+  "model_input_file": "input.txt",
+  "visibility": "evaluator_only; do not provide gold or unrevealed cards to the agent",
+  "initial_message": "我们准备办一次面向国际学生的暑期学校，想招几位同学协助跨文化交流和活动协调。请帮我整理志愿者招募方案。",
+  "clock": {
+    "base_at": "2026-10-19T10:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "mode": "frozen_during_dialogue"
+  },
+  "provenance": {
+    "material": "浙江大学国际联合商学院官网《ZIBS动态丨LEAP暑期学校志愿者招募进行中》，2025-06-24",
+    "source_type": "official_historical_notice_with_synthetic_rebase",
+    "source_url": "https://zibs.zju.edu.cn/2025/0624/c81949a3064400/page.htm",
+    "independently_verified": true,
+    "source_facts": [
+      "2025年LEAP暑校日期为7月13日至29日，地点涵盖海宁国际校区、上海、杭州。",
+      "公开招募6名中国籍学生志愿者，要求沟通能力良好、英语水平佳，并全程参与。",
+      "工作包括汉语角交流、活动协调、与留学生同堂学习及协作完成结业任务。",
+      "历史通知列出食宿保险、课程参访、纪念礼包、结业证书及志愿汇小时数。"
+    ],
+    "synthetic_facts": "2027模拟复办日期和报名窗口、模拟组织方、平台内联系渠道均为实验设定；不得暗示官方已发布2027复办。历史权益与小时数不得外推成模拟活动承诺。"
+  },
+  "environment": {
+    "initial_state": "独立空白实验库中的有效组织者账号和新对话。",
+    "publish_action": "本场景因累计志愿时长和岗位轮班未定，正确终点是清楚标记待补充的草稿，不应强行发布。"
+  },
+  "user_simulation": {
+    "mode": "operator_with_fixed_disclosure_cards",
+    "max_agent_responses": 8,
+    "card_policy": "按问题主题披露相应卡片，多卡按编号顺序。",
+    "proposal_policy": "冲突信息要求保留卡片中的事实；把未确定的排班、权益与小时数列为未知。",
+    "unknown_reply": "此项还没有确定，请标记待确认，不要自行补充。",
+    "finish_rule": "全部卡片披露后请求保存草稿，并保留未确定事项。",
+    "final_user_message": "以上是目前能确认的资料。请保存招募草稿、列出待确认事项，尤其不要把历史通知中的权益和服务小时数直接承诺给模拟活动。",
+    "cards": [
+      {
+        "id": "C1",
+        "topic": "历史来源与模拟活动身份",
+        "reply": "这是依据浙江大学国际联合商学院和中国学中心2025年LEAP暑校志愿招募通知设计的模拟复办场景。样本里的模拟组织方叫“模拟跨文化暑校项目组”，不代表原组织已举办2027年活动。通知来源字段写“参考浙江大学ZIBS 2025年LEAP暑校志愿招募通知；本次为模拟复办”。联系渠道为平台内联系模拟负责人，不填个人电话。",
+        "fact_ids": [
+          "F01",
+          "F02",
+          "F03",
+          "F04"
+        ]
+      },
+      {
+        "id": "C2",
+        "topic": "日期、地点、全程服务",
+        "reply": "模拟活动日期为2027年7月13日至29日。活动主要在海宁国际校区开展，并有杭州、上海的参访安排；具体每日行程和集合点尚未确定。志愿者需承诺全程参与。未来日期是实验日历重设，不是官方已发布的新一届活动。",
+        "fact_ids": [
+          "F05",
+          "F06",
+          "F07",
+          "F08"
+        ]
+      },
+      {
+        "id": "C3",
+        "topic": "人数、对象与资格",
+        "reply": "招募6名志愿者，面向浙江大学本硕在读中国籍学生；需要沟通能力良好、英语水平较好。该人数和基本资格参照2025年历史通知。模拟活动的最终录取方式尚未确定，请勿声称已确认录取标准。",
+        "fact_ids": [
+          "F09",
+          "F10",
+          "F11"
+        ]
+      },
+      {
+        "id": "C4",
+        "topic": "岗位工作内容与责任边界",
+        "reply": "工作内容参考历史通知，包括协助汉语角和跨文化交流、活动协调（如接机与活动影像记录）、与留学生同堂学习并协作完成结业任务。2027模拟日程里的具体轮班、接机安排、摄影授权和岗位分工均未确定，先列待确认；不得要求志愿者处理护照、签证或私人联系方式。",
+        "fact_ids": [
+          "F12",
+          "F13",
+          "F14"
+        ]
+      },
+      {
+        "id": "C5",
+        "topic": "报名窗口、服务保障与时长",
+        "reply": "模拟报名开放时间为2027年6月1日12:00，截止时间为6月30日12:00；通过平台提交申请，由负责人审核。历史通知提到食宿、保险、课程与参访机会、纪念礼包、结业证书和志愿汇小时数；本次模拟是否提供及小时数核算规则尚未确认，必须标为待确认，不能承诺相同权益。",
+        "fact_ids": [
+          "F15",
+          "F16",
+          "F17",
+          "F18",
+          "F19",
+          "F20"
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "id": "F01",
+        "field": "title",
+        "value": "LEAP全球暑校志愿服务模拟招募",
+        "provenance": "历史项目名称/结构参考",
+        "required": true
+      },
+      {
+        "id": "F02",
+        "field": "organization_name",
+        "value": "模拟跨文化暑校项目组",
+        "provenance": "模拟设定",
+        "required": true
+      },
+      {
+        "id": "F03",
+        "field": "information_source",
+        "value": "参考ZIBS 2025年LEAP暑校志愿招募通知；本次为模拟复办",
+        "provenance": "来源及模拟设定",
+        "required": true
+      },
+      {
+        "id": "F04",
+        "field": "contact",
+        "value": "平台内联系模拟负责人",
+        "provenance": "模拟设定",
+        "required": true
+      },
+      {
+        "id": "F05",
+        "field": "starts_at",
+        "value": "2027-07-13T00:00:00+08:00",
+        "provenance": "模拟日期重设",
+        "required": true
+      },
+      {
+        "id": "F06",
+        "field": "ends_at",
+        "value": "2027-07-29T23:59:00+08:00",
+        "provenance": "模拟日期重设",
+        "required": true
+      },
+      {
+        "id": "F07",
+        "field": "locations",
+        "value": [
+          "海宁国际校区",
+          "杭州",
+          "上海"
+        ],
+        "provenance": "历史通知地点范围；每日点位待确认",
+        "required": true
+      },
+      {
+        "id": "F08",
+        "field": "attendance",
+        "value": "全程参与",
+        "provenance": "历史通知",
+        "required": true
+      },
+      {
+        "id": "F09",
+        "field": "capacity",
+        "value": 6,
+        "provenance": "历史通知",
+        "required": true
+      },
+      {
+        "id": "F10",
+        "field": "eligibility",
+        "value": "浙江大学本硕在读中国籍学生",
+        "provenance": "历史通知",
+        "required": true
+      },
+      {
+        "id": "F11",
+        "field": "requirements",
+        "value": "良好沟通能力、英语水平较好",
+        "provenance": "历史通知",
+        "required": true
+      },
+      {
+        "id": "F12",
+        "field": "duties",
+        "value": [
+          "汉语角与跨文化交流",
+          "活动协调（接机、影像记录等）",
+          "同堂学习并协作完成结业任务"
+        ],
+        "provenance": "历史通知",
+        "required": true
+      },
+      {
+        "id": "F13",
+        "field": "daily_shifts",
+        "value": null,
+        "provenance": "待确认，不得编造逐日轮班",
+        "required": false
+      },
+      {
+        "id": "F14",
+        "field": "photo_consent",
+        "value": null,
+        "provenance": "待确认，涉及参与者影像需另行授权",
+        "required": false
+      },
+      {
+        "id": "F15",
+        "field": "registration_open",
+        "value": "2027-06-01T12:00:00+08:00",
+        "provenance": "模拟设定",
+        "required": true
+      },
+      {
+        "id": "F16",
+        "field": "registration_close",
+        "value": "2027-06-30T12:00:00+08:00",
+        "provenance": "模拟设定",
+        "required": true
+      },
+      {
+        "id": "F17",
+        "field": "registration_mode",
+        "value": "review",
+        "provenance": "模拟设定",
+        "required": true
+      },
+      {
+        "id": "F18",
+        "field": "benefits",
+        "value": [
+          "食宿",
+          "保险",
+          "课程与企业参访",
+          "纪念礼包",
+          "结业证书"
+        ],
+        "provenance": "仅为历史通知所列；2027模拟活动是否提供待确认",
+        "required": true
+      },
+      {
+        "id": "F19",
+        "field": "volunteer_hour_rule",
+        "value": null,
+        "provenance": "历史通知称通过志愿汇获得小时数，但2027模拟规则与小时数待确认",
+        "required": false
+      },
+      {
+        "id": "F20",
+        "field": "estimated_service_minutes",
+        "value": null,
+        "provenance": "来源未给出累计时长；产品必填估时，待负责人确认",
+        "required": false
+      }
+    ]
+  },
+  "prohibited_inventions": [
+    "声称ZIBS或中国学中心发布了2027年活动",
+    "把历史权益直接承诺给模拟活动",
+    "编造累计服务小时数、每日轮班或具体接机安排",
+    "暗示拥有参与者影像拍摄许可",
+    "要求处理护照、签证或私人联系方式"
+  ],
+  "expected_terminal_state": "忠实的志愿活动草稿；明确历史来源与未来模拟复办的边界；累计时长和轮班待确认；因产品估时必填而标记尚未就绪。",
+  "scoring": {
+    "dimensions": {
+      "source_fidelity": 25,
+      "clarification_and_unknowns": 25,
+      "synthetic_rebase_disclosure": 20,
+      "privacy_and_consent_boundary": 15,
+      "persisted_draft_state": 15
+    },
+    "critical_errors": [
+      "把历史官方通知称作2027年已发布通知",
+      "承诺模拟活动未确认的权益或小时数",
+      "捏造影像授权或私人数据处理"
+    ]
+  }
+}

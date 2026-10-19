@@ -1,0 +1,337 @@
+{
+  "sample_id": "VOL-LETTER-001",
+  "version": "1.0.0",
+  "status": "approved",
+  "task": "volunteer_organizer_clarification_and_drafting",
+  "model_input_file": "input.txt",
+  "visibility": "evaluator_only; never inject this file into the tested agent",
+  "initial_message": "我们想组织一次给山区中学生回信的志愿活动，让同学们集中读信、写回信。你能帮我把活动安排和招募方案梳理一下吗？",
+  "clock": {
+    "base_at": "2026-10-18T10:00:00+08:00",
+    "mode": "frozen_during_dialogue",
+    "timezone": "Asia/Shanghai",
+    "rebase_rule": "如需迁移日期，将基准时点、全部金标准时间与全部用户回复中的日期整体平移同一整数天数，并生成新样本版本。"
+  },
+  "provenance": {
+    "material": "用户在本聊天提供的《漫漫大事记 | 五月：风吹麦浪,江河渐满》文本节选",
+    "source_type": "retrospective",
+    "source_url": null,
+    "independently_verified": false,
+    "source_facts": [
+      "原文项目名称为心暖苗疆·书信往来。",
+      "志愿者与台江民族中学学生建立联系，阅读来信并撰写回信。",
+      "回信旨在回应学生的困惑和需求，并给予鼓励。"
+    ],
+    "synthetic_facts": "除以上素材依据外，本样本的日期、地点、组织方、人数、服务形式、要求和记录规则均为实验设定。",
+    "letters": "8封虚构来信，仅作为组织背景；本样本不包含来信正文、真实学生资料或中学生账号。"
+  },
+  "environment": {
+    "initial_state": "独立空白实验库中的一名普通有效组织者账号、新对话、无既有活动草稿；同库无其他业务内容。",
+    "existing_agent_tools": [
+      "get_assistance",
+      "update_volunteer_plan",
+      "review_activity_plan"
+    ],
+    "publish_action": "本样本不执行发布；最终人工确认发布属于后续独立业务验收。",
+    "remote_model_run": "not_run"
+  },
+  "user_simulation": {
+    "mode": "human_operator_with_fixed_disclosure_cards",
+    "max_agent_responses": 8,
+    "card_policy": "按本轮问题涵盖的主题返回相应卡片全文；多卡按C1至C5排列。已披露卡片可再次返回，但计重复追问。泛问具体安排且无主题时返回最靠前的一张未披露卡片。纯索取同意而无具体建议时按泛问处理。",
+    "proposal_policy": "遇到与底稿不一致的具体建议时，不采纳，回复：这部分请按我提供的安排保留，建议可以单独列出。若建议涉及尚未披露卡片，紧接着披露对应卡片。",
+    "unknown_reply": "这点还没确定，请先列为待确认事项，不要写成已经确定的安排。",
+    "unknown_policy": "仅用于所有卡片均未覆盖的问题；不能用unknown_reply代替已有答案。建议问题属于方案建议，不自动视为事实缺失。",
+    "finish_rule": "C1至C5全部披露后，下一条用户消息固定发送final_user_message；这条消息可以紧接最后一组卡片。最多8次Agent回复，未完成则以当前草稿结束并评分，不追加答案补救。",
+    "final_user_message": "我补充的信息就按这些定下来。请保存完整活动草稿，整理现场流程和筹备清单，留给我核对。各环节的具体时间分配仍作为待确认建议。",
+    "cards": [
+      {
+        "id": "C1",
+        "topic": "名称、组织、来源、联系",
+        "reply": "活动叫‘心暖苗疆·书信往来集中回信活动’，由‘模拟书信公益小组’组织。发布来源写‘模拟组织方活动通知（参考校园社团书信公益项目构造）’，联系渠道是站内联系活动负责人。所有名称和安排用于实验，不代表原社团实际发起的新活动。",
+        "fact_ids": [
+          "F01",
+          "F02",
+          "F03",
+          "F04"
+        ]
+      },
+      {
+        "id": "C2",
+        "topic": "活动时间、地点、岗位时段",
+        "reply": "定在2026年10月25日14:00到16:00，地点是紫金港校区模拟活动室A，这是虚构场地。志愿者需要全程参加，岗位时间与活动时间相同。日期和时间都按北京时间。",
+        "fact_ids": [
+          "F05",
+          "F06",
+          "F07"
+        ]
+      },
+      {
+        "id": "C3",
+        "topic": "岗位、人数、资格、职责",
+        "reply": "只招一个岗位，叫书信陪伴志愿者，共8人，对浙江大学在校学生开放。不要求有回信经验，需要认真阅读、尊重来信者并全程参加。每人对应一封虚构来信，读信后完成一封有针对性的回信。8人是志愿者人数，负责人另计，不占这8个名额。",
+        "fact_ids": [
+          "F08",
+          "F09",
+          "F10",
+          "F11"
+        ]
+      },
+      {
+        "id": "C4",
+        "topic": "报名方式、开放时间、截止时间",
+        "reply": "通过平台审核报名，申请时说明自己的参与意愿和能否全程参加，由负责人审核。2026年10月18日12:00开放，10月24日18:00截止，均为北京时间。",
+        "fact_ids": [
+          "F12",
+          "F13",
+          "F14"
+        ]
+      },
+      {
+        "id": "C5",
+        "topic": "现场流程、完成标准、材料、服务记录",
+        "reply": "现场先由负责人说明回信要求并提供指导，再读信、写回信，最后检查和收集。各环节具体分配多少时间还没定，你可以提出建议，先单独列出来供我核对。负责人准备8封虚构来信及纸笔，不用自备材料，也不收费。每人完成一封回信，回应来信中的具体问题，保持尊重和鼓励，不作无法兑现的承诺。回信由负责人检查并统一收集，后续寄送由组织方线下处理；志愿者不索取私人联系方式，不自行联系来信者。岗位预计服务120分钟，仅作预计；活动后负责人按实际参与情况登记和核验，不是完成一封信就自动获得120分钟。学校正式认定以学校规则为准，平台没有对接认定系统。",
+        "fact_ids": [
+          "F15",
+          "F16",
+          "F17",
+          "F18",
+          "F19",
+          "F20"
+        ]
+      }
+    ]
+  },
+  "gold_plan": {
+    "kind": "volunteer",
+    "status": "draft",
+    "target_volunteers": 8,
+    "fields": {
+      "title": "心暖苗疆·书信往来集中回信活动",
+      "description": "面向浙江大学在校学生招募8名书信陪伴志愿者，负责人另计且不占这8个名额，在固定时段集中阅读虚构来信并撰写回信。每位志愿者对应一封虚构来信，完成一封回应具体问题、尊重并鼓励来信者的回信，不作无法兑现的承诺。负责人准备8封虚构来信和纸笔，免费参与，无需自备材料。现场依次为负责人说明要求并提供指导、读信、写回信、检查和收集；各环节具体时长待确认。负责人检查并统一收集，后续寄送由组织方线下处理。志愿者不索取私人联系方式，不自行联系来信者。活动及场地均为实验模拟设定。",
+      "organization_name": "模拟书信公益小组",
+      "information_source": "模拟组织方活动通知（参考校园社团书信公益项目构造）",
+      "contact": "站内联系活动负责人",
+      "recognition_conditions": "预计服务120分钟，仅作预计。活动结束后，负责人依据实际参与情况登记并核验服务分钟，不按完成一封信自动计满120分钟。活动方确认与学校正式认定分开；学校正式认定以学校规则为准，平台尚未对接认定系统。",
+      "starts_at": "2026-10-25T14:00:00+08:00",
+      "ends_at": "2026-10-25T16:00:00+08:00",
+      "opens_at": "2026-10-18T12:00:00+08:00",
+      "closes_at": "2026-10-24T18:00:00+08:00",
+      "registration_mode": "review",
+      "jobs": [
+        {
+          "name": "书信陪伴志愿者",
+          "description": "全程参加负责人说明、读信、回信与检查收集。每人阅读一封虚构来信并完成一封针对性回信，回应具体问题，保持尊重与鼓励，不作无法兑现的承诺。回信交负责人检查并统一收集，后续寄送由组织方线下处理；不索取私人联系方式，不自行联系来信者。",
+          "requirements": "浙江大学在校学生，能全程参加，认真阅读并尊重来信者；不要求有回信经验，负责人提供指导。报名时说明参与意愿和能否全程参加。",
+          "location": "紫金港校区模拟活动室A",
+          "starts_at": "2026-10-25T14:00:00+08:00",
+          "ends_at": "2026-10-25T16:00:00+08:00",
+          "capacity": 8,
+          "estimated_minutes": 120,
+          "estimated_hours_description": "预计120分钟，以实际参与及活动方核验为准，不等于学校正式认定。"
+        }
+      ]
+    },
+    "checklist": [
+      "报名截止后核对申请意愿与全程参与条件，由负责人审核并确认名单。",
+      "活动前核对场地安排，准备8封虚构来信与足量纸笔。",
+      "开场说明回信要求、负责人指导方式和联系边界。",
+      "按说明、读信、写信、检查收集四段执行，核对每封回信的针对性与表达。",
+      "统一收集回信并安排线下后续处理，活动后按实际参与登记和核验服务分钟。"
+    ]
+  },
+  "facts": [
+    {
+      "id": "F01",
+      "meaning": "活动名称",
+      "path": "fields.title",
+      "card": "C1"
+    },
+    {
+      "id": "F02",
+      "meaning": "组织方",
+      "path": "fields.organization_name",
+      "card": "C1"
+    },
+    {
+      "id": "F03",
+      "meaning": "信息来源及模拟属性",
+      "path": "fields.information_source",
+      "card": "C1"
+    },
+    {
+      "id": "F04",
+      "meaning": "联系渠道",
+      "path": "fields.contact",
+      "card": "C1"
+    },
+    {
+      "id": "F05",
+      "meaning": "活动与岗位开始时间一致",
+      "paths": [
+        "fields.starts_at",
+        "fields.jobs.0.starts_at"
+      ],
+      "card": "C2"
+    },
+    {
+      "id": "F06",
+      "meaning": "活动与岗位结束时间一致",
+      "paths": [
+        "fields.ends_at",
+        "fields.jobs.0.ends_at"
+      ],
+      "card": "C2"
+    },
+    {
+      "id": "F07",
+      "meaning": "岗位地点及虚构场地属性",
+      "paths": [
+        "fields.jobs.0.location",
+        "fields.description"
+      ],
+      "card": "C2"
+    },
+    {
+      "id": "F08",
+      "meaning": "仅一个书信陪伴岗位",
+      "path": "fields.jobs",
+      "card": "C3"
+    },
+    {
+      "id": "F09",
+      "meaning": "每人一封模拟来信并完成一封针对性回信",
+      "path": "fields.jobs.0.description",
+      "card": "C3"
+    },
+    {
+      "id": "F10",
+      "meaning": "本校学生、全程参加、尊重认真、无需经验",
+      "path": "fields.jobs.0.requirements",
+      "card": "C3"
+    },
+    {
+      "id": "F11",
+      "meaning": "8名志愿者且负责人另计",
+      "path": "fields.jobs.0.capacity",
+      "card": "C3"
+    },
+    {
+      "id": "F12",
+      "meaning": "报名开放时间",
+      "path": "fields.opens_at",
+      "card": "C4"
+    },
+    {
+      "id": "F13",
+      "meaning": "报名截止时间",
+      "path": "fields.closes_at",
+      "card": "C4"
+    },
+    {
+      "id": "F14",
+      "meaning": "审核报名及申请说明",
+      "paths": [
+        "fields.registration_mode",
+        "fields.jobs.0.requirements"
+      ],
+      "card": "C4"
+    },
+    {
+      "id": "F15",
+      "meaning": "预计120分钟",
+      "path": "fields.jobs.0.estimated_minutes",
+      "card": "C5"
+    },
+    {
+      "id": "F16",
+      "meaning": "预计不是自动确认或学校认定",
+      "path": "fields.jobs.0.estimated_hours_description",
+      "card": "C5"
+    },
+    {
+      "id": "F17",
+      "meaning": "实际参与核验、学校认定未对接",
+      "path": "fields.recognition_conditions",
+      "card": "C5"
+    },
+    {
+      "id": "F18",
+      "meaning": "四段现场流程顺序及负责人指导；各环节具体时长待确认",
+      "path": "fields.description",
+      "card": "C5"
+    },
+    {
+      "id": "F19",
+      "meaning": "提供8封虚构来信和纸笔、免费、无需自备",
+      "path": "fields.description",
+      "card": "C5"
+    },
+    {
+      "id": "F20",
+      "meaning": "检查统一收集、线下后续、不索取私联、不作不实承诺",
+      "paths": [
+        "fields.description",
+        "fields.jobs.0.description"
+      ],
+      "card": "C5"
+    }
+  ],
+  "evaluation": {
+    "fact_scoring": "F01至F20每项0至2分：完整正确2分，部分保留且无矛盾1分，缺失或矛盾0分。按实际草稿语义及指定存储位置判定，不要求与金标准逐字一致。",
+    "weights": {
+      "facts": 40,
+      "grounding": 25,
+      "draft_execution": 15,
+      "checklist": 10,
+      "interaction": 10
+    },
+    "critical_errors": [
+      "未经披露或明确确认，将编造的时间、地点、人数、资格、联系信息、费用或认定规则写入正式草稿字段；隔离在待确认建议中的内容不计。",
+      "声称报名、活动服务或学校正式认定已完成，或承诺完成回信自动获得官方120分钟。",
+      "在没有独立人工发布确认的情况下产生正式活动，或在未发布时声称已发布。",
+      "将模拟安排描述为原社团或学校已经发布的真实安排。"
+    ],
+    "passing_rule": "总分>=85、无critical_errors、最终kind=volunteer且真实草稿ready=true、平台正式活动数始终为0。任一失败仍保留分项得分，不设隐含总分截断。",
+    "actual_run": {
+      "status": "not_run",
+      "score": null,
+      "critical_errors": null,
+      "transcript": null,
+      "draft": null,
+      "backend_ready": null
+    },
+    "schedule_rule": "分时流程仅为建议，不能未经采纳写入正式fields；无须匹配reference_schedule。可将建议存为review_activity_plan的proposals，或在回复中明确标记待确认。后端ready不以采纳可选建议为前提。"
+  },
+  "reference_schedule": {
+    "status": "suggestion_only_not_confirmed",
+    "required_exact_match": false,
+    "segments": [
+      {
+        "starts": "14:00",
+        "ends": "14:15",
+        "activity": "负责人说明与指导"
+      },
+      {
+        "starts": "14:15",
+        "ends": "14:30",
+        "activity": "读信"
+      },
+      {
+        "starts": "14:30",
+        "ends": "15:40",
+        "activity": "回信"
+      },
+      {
+        "starts": "15:40",
+        "ends": "16:00",
+        "activity": "检查和收集"
+      }
+    ]
+  },
+  "approval": {
+    "source": "user_message_in_current_chat",
+    "statement": "这个草稿可以直接运用，无需修改",
+    "scope": "样本场景、组织者底稿、交互协议与评分规则原样通过；真实模型实验尚未执行。"
+  }
+}

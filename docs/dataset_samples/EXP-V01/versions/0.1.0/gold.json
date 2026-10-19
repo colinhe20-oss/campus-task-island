@@ -1,0 +1,71 @@
+{
+  "sample_id": "EXP-V01",
+  "version": "0.1.0-review",
+  "status": "draft_for_user_review",
+  "task": "volunteer_organizer_clarification_and_drafting",
+  "model_input_file": "input.txt",
+  "visibility": "evaluator_only; never inject gold into the tested agent",
+  "initial_message": "我们想组织一次图书整理志愿活动，请同学们帮忙整理书架、核对图书位置。能帮我梳理活动安排和招募方案吗？",
+  "clock": {
+    "base_at": "2026-10-19T10:00:00+08:00",
+    "mode": "frozen_during_dialogue",
+    "timezone": "Asia/Shanghai"
+  },
+  "provenance": {
+    "material": null,
+    "source_type": "fully_synthetic_scenario",
+    "independently_verified": false,
+    "source_facts": [],
+    "synthetic_facts": "本场景中的组织方、场地、时间、名额、岗位、报名规则、服务记录均为模拟设定，不代表浙江大学图书馆或任何真实单位的活动安排。"
+  },
+  "environment": {
+    "initial_state": "独立空白实验库中的有效组织者账号，无既有活动草稿。",
+    "publish_action": "仅创建并保存待核对草稿；本样本不发布、不报名、不执行图书馆业务。"
+  },
+  "user_simulation": {
+    "mode": "human_operator_with_fixed_disclosure_cards",
+    "max_agent_responses": 8,
+    "card_policy": "根据Agent问题涵盖主题返回卡片；多卡按C1至C5排列。已披露内容可重述。未询问主题的泛问按顺序披露最靠前的未披露卡。",
+    "proposal_policy": "与底稿冲突的建议不采纳，回复：请按我提供的安排保留，其他建议可以单独列为待讨论。",
+    "unknown_reply": "目前没有确定，请保留为待确认事项，不要写成已确定规则。",
+    "finish_rule": "C1至C5均披露后发送final_user_message；最多8次Agent回复，不额外补救。",
+    "final_user_message": "这些就是目前确定的信息。请保存完整的志愿活动草稿，整理招募说明、岗位与班次、服务流程和待确认事项，留给我核对。",
+    "cards": [
+      {"id":"C1","topic":"活动名称、组织方、来源与联系人","reply":"活动名称是‘书架有序·图书整理志愿服务’。组织方为‘模拟校园阅读服务小组’，通知来源写‘模拟组织方活动通知（纯合成实验场景）’，联系渠道为平台内联系活动负责人。以上不代表真实单位或真实活动。","fact_ids":["F01","F02","F03","F04"]},
+      {"id":"C2","topic":"日期、地点、班次与是否全程","reply":"活动日期是2026年10月25日（周日），地点为‘紫金港校区模拟阅览室A’，这是虚构场地。设置两个互不重叠的班次：上午09:00—10:30，下午14:00—15:30。志愿者只需完整参加自己报名的一个班次，不要求参加两班。所有时间为北京时间。","fact_ids":["F05","F06","F07","F08"]},
+      {"id":"C3","topic":"岗位、职责、人数与参与要求","reply":"只有一个岗位‘图书整理志愿者’，上午和下午各招4人，两个班次名额分别计算。工作包括按模拟索书号整理书架、核对书脊标签并记录发现的错位书；不搬运重物、不接触读者借阅记录、不操作真实馆藏系统。面向模拟在校学生，不要求相关经验；需遵守现场说明并完成所选班次。现场负责人另计，不占志愿名额。","fact_ids":["F09","F10","F11","F12","F13"]},
+      {"id":"C4","topic":"报名方式、开放时间与截止时间","reply":"通过平台审核报名，申请时选择上午或下午一个班次并说明参与意愿，负责人审核后确认。2026年10月19日12:00开放报名，2026年10月24日18:00截止。活动规则希望每人只选一个班次，两个班次分别审核、分别计额；当前平台不强制同一人跨岗位只能报名一次，负责人需人工核对并处理重复申请。","fact_ids":["F14","F15","F16","F17"]},
+      {"id":"C5","topic":"材料、流程、服务记录与认定","reply":"模拟活动方提供标签示例、整理清单和记录表，志愿者无需自带材料。流程为现场说明与安全提醒、分区整理、复核错位记录、负责人收尾。每个班次预计90分钟；只按实际签到和签退记录参与时长，未完成班次不自动记满90分钟。学校综素或第二课堂是否认定、分值及录入方式都未对接，必须写成未知/待确认，不承诺加分。","fact_ids":["F18","F19","F20"]}
+    ],
+    "facts": [
+      {"id":"F01","field":"title","value":"书架有序·图书整理志愿服务","required":true},
+      {"id":"F02","field":"organization_name","value":"模拟校园阅读服务小组","required":true},
+      {"id":"F03","field":"information_source","value":"模拟组织方活动通知（纯合成实验场景）","required":true},
+      {"id":"F04","field":"contact","value":"平台内联系活动负责人","required":true},
+      {"id":"F05","field":"date","value":"2026-10-25","required":true},
+      {"id":"F06","field":"location","value":"紫金港校区模拟阅览室A（虚构场地）","required":true},
+      {"id":"F07","field":"shifts","value":["09:00-10:30","14:00-15:30"],"required":true},
+      {"id":"F08","field":"attendance","value":"报名并参加其中一个完整班次；不要求全日参与","required":true},
+      {"id":"F09","field":"job_name","value":"图书整理志愿者","required":true},
+      {"id":"F10","field":"tasks","value":["按模拟索书号整理书架","核对书脊标签","记录发现的错位书"],"required":true},
+      {"id":"F11","field":"capacity_by_shift","value":{"morning":4,"afternoon":4},"required":true},
+      {"id":"F12","field":"requirements","value":"模拟在校学生；无需经验；按现场说明完成所选班次","required":true},
+      {"id":"F13","field":"safety_privacy_boundaries","value":["不搬运重物","不接触读者借阅记录","不操作真实馆藏系统"],"required":true},
+      {"id":"F14","field":"registration_mode","value":"review","required":true},
+      {"id":"F15","field":"registration_open","value":"2026-10-19T12:00:00+08:00","required":true},
+      {"id":"F16","field":"registration_deadline","value":"2026-10-24T18:00:00+08:00","required":true},
+      {"id":"F17","field":"registration_constraint","value":"活动规则要求每人只选一个班次，平台不强制跨岗位互斥；需负责人人工核对重复申请。两个岗位分别审核、分别计额","required":true},
+      {"id":"F18","field":"materials_and_process","value":"组织方提供模拟标签、清单、记录表；说明、安全提醒、分区整理、复核、收尾","required":true},
+      {"id":"F19","field":"duration_and_record","value":"每班90分钟；按实际签到签退记录；未完成不自动记满","required":true},
+      {"id":"F20","field":"recognition","value":"学校综素、第二课堂认定、分值和录入方式均未知，不作承诺","required":true}
+    ],
+    "unknowns": ["是否取得任何真实图书馆或场地授权（本模拟不表示已取得）","学校综素/第二课堂认定和分值","真实场地联系人与安全规范"],
+    "prohibited_inventions": ["把模拟组织方写成真实图书馆或校级单位","承诺综素或第二课堂加分","声称操作真实馆藏或读者数据","把参加两个班次写成要求","把两个班次名额合并","声称平台强制同一人只能报名一个班次","将预计90分钟写成无条件认定时长","擅自增加搬运重物、读者服务或系统操作职责"],
+    "expected_terminal_state": "完整待人工核对的志愿活动草稿；所有必填事实忠实；认定未知明确保留；不发布。",
+    "scoring": {
+      "critical_errors": ["捏造真实主办方/授权","承诺学校加分","错写双班次为全程或合并名额","对外发布或虚构已发布"],
+      "dimensions": {"fact_fidelity":40,"clarification_and_unknown_handling":20,"persisted_draft":20,"shift_capacity_consistency":10,"privacy_safety_and_recognition_boundaries":10},
+      "pass_rule": "总分至少85/100且无关键错误；后端拒绝保存时记录为保存失败，不用文本草稿替代。"
+    }
+  }
+}

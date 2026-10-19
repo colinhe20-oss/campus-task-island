@@ -1,0 +1,55 @@
+{
+  "sample_id": "EXP-V04",
+  "version": "0.1.0-candidate",
+  "status": "static_candidate_ready",
+  "checks": [
+    {
+      "name": "规则来源是2024年10月官方试行细则",
+      "passed": true
+    },
+    {
+      "name": "来源区分活动审批与观众角色",
+      "passed": true
+    },
+    {
+      "name": "内部成员职责有独立边界",
+      "passed": true
+    },
+    {
+      "name": "模拟审批未伪造编号并设核验要求",
+      "passed": true
+    },
+    {
+      "name": "两个服务岗位时间、人数、工作职责完整",
+      "passed": true
+    },
+    {
+      "name": "观演和内部岗位不在志愿岗位列表",
+      "passed": true
+    },
+    {
+      "name": "活动和岗位时间字段符合当前模型",
+      "passed": true
+    },
+    {
+      "name": "参与者样本覆盖8人16对",
+      "passed": true
+    },
+    {
+      "name": "观演兴趣者排除，真实服务兴趣者保留",
+      "passed": true
+    },
+    {
+      "name": "已有报名、提醒关闭与未知时间覆盖",
+      "passed": true
+    },
+    {
+      "name": "全部新增活动事实明确为模拟",
+      "passed": true
+    },
+    {
+      "name": "所有人物偏好通过当前业务模型",
+      "passed": true
+    }
+  ]
+}

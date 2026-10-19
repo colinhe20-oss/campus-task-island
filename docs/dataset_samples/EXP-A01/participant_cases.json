@@ -1,0 +1,192 @@
+{
+  "sample_id": "EXP-A01",
+  "status": "draft_for_user_review",
+  "opportunity_id": "EXP-A01",
+  "profiles": [
+    {
+      "id": "P01",
+      "preference_summary": "摄影、视觉艺术；12-17有空",
+      "availability": "12-17",
+      "expected": "recommend",
+      "rationale": "主题与开放时段均匹配。"
+    },
+    {
+      "id": "P02",
+      "preference_summary": "摄影；14-15有空",
+      "availability": "14-15",
+      "expected": "conditional",
+      "rationale": "自由到场可参加；不能保证签到或认定条件。"
+    },
+    {
+      "id": "P03",
+      "preference_summary": "摄影；整个开放时段不可用",
+      "availability": "12-17 unavailable",
+      "expected": "exclude",
+      "rationale": "明确时段冲突。"
+    },
+    {
+      "id": "P04",
+      "preference_summary": "音乐；13-16有空",
+      "availability": "13-16",
+      "expected": "exclude",
+      "rationale": "仅有音乐兴趣，与摄影展主题无关；时间地点匹配不足以构成个性化推荐。"
+    },
+    {
+      "id": "P05",
+      "preference_summary": "摄影；可用时间未设置",
+      "availability": "unknown",
+      "expected": "conditional",
+      "rationale": "可展示开放时段并询问能否到场。"
+    },
+    {
+      "id": "P06",
+      "preference_summary": "摄影；12-17有空；名额已满",
+      "availability": "12-17",
+      "expected": "exclude",
+      "rationale": "已满应从可报名推荐中排除或清楚标注候补（本活动无候补规则时不得称可报名）。"
+    },
+    {
+      "id": "P07",
+      "preference_summary": "摄影；提醒关闭",
+      "availability": "12-17",
+      "expected": "recommend",
+      "rationale": "推荐列表可展示，提醒关闭时消息数为0。"
+    },
+    {
+      "id": "P08",
+      "preference_summary": "摄影；已直接报名",
+      "availability": "12-17",
+      "expected": "exclude",
+      "rationale": "已经报名，避免重复招募。"
+    }
+  ],
+  "label_definitions": {
+    "recommend": "符合已知兴趣和时间规则，可展示但不保证名额或认定。",
+    "conditional": "条件不足或需澄清，明确限制后可展示候选。",
+    "exclude": "时间冲突、满额、已参与或明显不相关时不作为匹配候选。"
+  },
+  "outcome_dimensions": [
+    "候选展示",
+    "条件解释",
+    "提醒触达"
+  ],
+  "limitations": [
+    "人物为合成边界条件，不代表真实用户比例。",
+    "标签以独立活动规则人工制定，不由匹配实现生成。"
+  ],
+  "native_matrix": {
+    "kind": "activity",
+    "title": "光影观察·校园摄影展自主参观（匹配测试副本）",
+    "description": "合成摄影作品自主参观；自由到场；无需全程；观展感受自愿。",
+    "location": "紫金港校区模拟展厅C（虚构地点）",
+    "date": "2026-11-14",
+    "start": "12:00",
+    "end": "17:00",
+    "opens_at": "2026-10-19T12:00:00+08:00",
+    "closes_at": "2026-11-13T18:00:00+08:00",
+    "capacity": 40,
+    "mode": "direct",
+    "org": "模拟校园美育小组（匹配测试副本）",
+    "source": "合成匹配测试fixture",
+    "contact": "不对外联系",
+    "requirements": "仅供隔离实验库测匹配，不发布、不代表真实活动。",
+    "credited_tag_fixture": "aesthetic",
+    "full_state_profile": "P06",
+    "registered_profile": "P08",
+    "reminders_off_profile": "P07",
+    "profiles": {
+      "P01": {
+        "interests": [
+          "摄影",
+          "视觉艺术"
+        ],
+        "available": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      },
+      "P02": {
+        "interests": [
+          "摄影"
+        ],
+        "available": [
+          [
+            "14:00",
+            "15:00"
+          ]
+        ]
+      },
+      "P03": {
+        "interests": [
+          "摄影"
+        ],
+        "available": [],
+        "unavailable": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      },
+      "P04": {
+        "interests": [
+          "音乐"
+        ],
+        "available": [
+          [
+            "13:00",
+            "16:00"
+          ]
+        ]
+      },
+      "P05": {
+        "interests": [
+          "摄影"
+        ],
+        "available": []
+      },
+      "P06": {
+        "interests": [
+          "摄影"
+        ],
+        "available": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      },
+      "P07": {
+        "interests": [
+          "摄影"
+        ],
+        "available": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "notifications": false
+      },
+      "P08": {
+        "interests": [
+          "摄影"
+        ],
+        "available": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    }
+  },
+  "natural_dialogues": [
+    {
+      "profile": "P02",
+      "message": "我喜欢摄影，优先紫金港。我在2026年11月14日14:00到15:00有空，只是这一次，不是每周。只关注综素活动。核对后我希望收到站内新机会提醒。请先整理成待确认偏好，不要替我报名。"
+    }
+  ]
+}

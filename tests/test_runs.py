@@ -104,6 +104,19 @@ class RunTests(unittest.TestCase):
         self.assertEqual(self.client.post('/api/guide/runs/'+run_id+'/cancel').json()['status'],'succeeded')
         self.assertEqual(result['result']['answer'],'完成')
 
+    def test_timeout_type_is_recorded_without_raw_remote_error(self):
+        self.login()
+        class Broken:
+            def chat(self, *args, **kwargs):
+                raise httpx.ReadTimeout('sk-secret-private-url')
+        self.app.state.guide_service.backend_factory = Broken
+        failed = self.wait(self.start())
+        self.assertEqual(failed['status'], 'failed')
+        self.assertEqual([e['error_type'] for e in failed['events'] if e['kind'] == 'model_timeout'], ['ReadTimeout'])
+        self.assertNotIn('sk-secret', json.dumps(failed))
+        with self.service.database.connect() as conn:
+            self.assertEqual(conn.execute('SELECT COUNT(*) FROM guide_conversations').fetchone()[0], 0)
+
     def test_sync_and_action_routes_are_logged_and_restart_marks_interrupted(self):
         self.login()
         reply=self.client.post('/api/guide/chat',json={'message':'你好'}).json()

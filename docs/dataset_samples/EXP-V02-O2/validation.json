@@ -1,0 +1,23 @@
+{
+  "sample_id": "EXP-V02-O2",
+  "version": "1.0.0-candidate",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Only contact is missing",
+      "passed": true
+    },
+    {
+      "name": "Disclosure withholds original contact",
+      "passed": true
+    },
+    {
+      "name": "Known capacities unchanged",
+      "passed": true
+    },
+    {
+      "name": "Parent source binding retained",
+      "passed": true
+    }
+  ]
+}

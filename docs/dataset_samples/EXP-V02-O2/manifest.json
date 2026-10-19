@@ -1,0 +1,11 @@
+{
+  "sample_id": "EXP-V02-O2",
+  "version": "1.0.0-candidate",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "637d5059eb25cda0b040103110e5e4b36382e0905652d17596c8e328ff04eeed",
+    "gold.json": "c3ad35c10095750fa7dc6bb37cf26b85c7fc7ebfedd002ed53586c5b1b4ea77f",
+    "REVIEW.md": "ef4167517827afba1baa3256982e7d6855207ac1b2d4587128cd13360a06733b",
+    "validation.json": "4624fbce70d34cf98a0d1a7d1febfed5bb66b143e874f3690c58658585b21e41"
+  }
+}

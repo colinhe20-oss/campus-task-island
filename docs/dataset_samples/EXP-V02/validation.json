@@ -1,0 +1,39 @@
+{
+  "sample_id": "EXP-V02",
+  "version": "0.1.1-review",
+  "status": "static_checks_passed",
+  "checks": [
+    {
+      "name": "Eight schema-valid preferences",
+      "passed": true
+    },
+    {
+      "name": "Structured interests appear in the narrative source",
+      "passed": true
+    },
+    {
+      "name": "Expected labels unchanged before rerun",
+      "passed": true
+    },
+    {
+      "name": "Organizer disclosure cards unchanged",
+      "passed": true
+    },
+    {
+      "name": "Two independent three-person pools",
+      "passed": true
+    },
+    {
+      "name": "Both shifts are 120 minutes",
+      "passed": true
+    },
+    {
+      "name": "Unknown-time profile remains unknown",
+      "passed": true
+    },
+    {
+      "name": "Muted profile remains muted",
+      "passed": true
+    }
+  ]
+}

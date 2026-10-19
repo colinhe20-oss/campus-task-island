@@ -1,0 +1,323 @@
+{
+  "sample_id": "EXP-V02",
+  "status": "draft_for_user_review",
+  "opportunity_id": {
+    "V-M": "上午班",
+    "V-A": "下午班"
+  },
+  "profiles": [
+    {
+      "id": "P01",
+      "preference_summary": "路线信息、公益；上午完整有空",
+      "availability": "09-11",
+      "expected": {
+        "V-M": "recommend",
+        "V-A": "exclude"
+      },
+      "rationale": "兴趣与班次均匹配。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "路线信息",
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P02",
+      "preference_summary": "信息核对；下午完整有空",
+      "availability": "14-16",
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "recommend"
+      },
+      "rationale": "兴趣与班次均匹配。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "路线信息核验"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T14:00:00+08:00",
+            "ends_at": "2026-11-08T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P03",
+      "preference_summary": "无障碍出行；上午仅09-10有空",
+      "availability": "09-10",
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "必须完整参加两小时。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "无障碍路线"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T10:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P04",
+      "preference_summary": "公益；全天有空",
+      "availability": "09-11,14-16",
+      "expected": {
+        "V-M": "conditional",
+        "V-A": "conditional"
+      },
+      "rationale": "可展示两班但需说明仅能选一个，且人工核对跨岗位重复申请。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "公益"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          },
+          {
+            "starts_at": "2026-11-08T14:00:00+08:00",
+            "ends_at": "2026-11-08T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P05",
+      "preference_summary": "数字绘画；上午有空",
+      "availability": "09-11",
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "时间地点匹配但主题兴趣无关。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "数字绘画"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P06",
+      "preference_summary": "路线核验；可用时段未知",
+      "availability": "unknown",
+      "expected": {
+        "V-M": "conditional",
+        "V-A": "conditional"
+      },
+      "rationale": "先确认班次与完整时段。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "路线核验"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P07",
+      "preference_summary": "路线核验；上午有空；上午已有待审申请",
+      "availability": "09-11",
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "exclude"
+      },
+      "rationale": "避免同班重复推荐；勿推另一班已冲突时间。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "路线核验"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T09:00:00+08:00",
+            "ends_at": "2026-11-08T11:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": true,
+        "semantic_exclusions": []
+      }
+    },
+    {
+      "id": "P08",
+      "preference_summary": "路线核验；下午有空；提醒关闭",
+      "availability": "14-16",
+      "expected": {
+        "V-M": "exclude",
+        "V-A": "recommend"
+      },
+      "rationale": "可展示，禁止发新机会提醒。",
+      "native_preferences": {
+        "skills": [],
+        "interests": [
+          "路线核验"
+        ],
+        "locations": [
+          "紫金港"
+        ],
+        "available_slots": [
+          {
+            "starts_at": "2026-11-08T14:00:00+08:00",
+            "ends_at": "2026-11-08T16:00:00+08:00"
+          }
+        ],
+        "weekly_slots": [],
+        "unavailable_slots": [],
+        "valid_until": null,
+        "content_types": [
+          "volunteer"
+        ],
+        "notifications_enabled": false,
+        "semantic_exclusions": []
+      }
+    }
+  ],
+  "label_definitions": {
+    "recommend": "符合已知兴趣和时间规则，可展示但不保证名额或认定。",
+    "conditional": "条件不足或需澄清，明确限制后可展示候选。",
+    "exclude": "时间冲突、满额、已参与或明显不相关时不作为匹配候选。"
+  },
+  "outcome_dimensions": [
+    "候选展示",
+    "条件解释",
+    "提醒触达"
+  ],
+  "limitations": [
+    "人物为合成边界条件，不代表真实用户比例。",
+    "标签以独立活动规则人工制定，不由匹配实现生成。"
+  ],
+  "native_opportunity": {
+    "title": "路线清晰·无障碍信息核验志愿服务",
+    "description": "核对合成路线卡片文字与模拟标识图片，记录差异；不实测真实通道、不接触个人信息、不判断安全。纯合成活动。",
+    "organization_name": "模拟校园信息服务小组",
+    "information_source": "纯合成实验通知",
+    "contact": "平台内联系负责人",
+    "recognition_conditions": "综素和第二课堂认定未知，不承诺加分；仅登记实际签到签退时长。",
+    "location": "紫金港校区模拟研习室B（虚构地点）",
+    "date": "2026-11-08",
+    "opens_at": "2026-10-19T12:00:00+08:00",
+    "closes_at": "2026-11-07T18:00:00+08:00",
+    "registration_mode": "review",
+    "jobs": [
+      {
+        "key": "V-M",
+        "name": "路线信息核验志愿者（上午班）",
+        "starts_at": "09:00",
+        "ends_at": "11:00",
+        "capacity": 3,
+        "minutes": 120
+      },
+      {
+        "key": "V-A",
+        "name": "路线信息核验志愿者（下午班）",
+        "starts_at": "14:00",
+        "ends_at": "16:00",
+        "capacity": 3,
+        "minutes": 120
+      }
+    ]
+  },
+  "pending_registration": {
+    "profile": "P07",
+    "opportunity": "V-M"
+  }
+}

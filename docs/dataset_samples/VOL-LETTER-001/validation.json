@@ -1,0 +1,56 @@
+{
+  "sample_id": "VOL-LETTER-001",
+  "version": "1.0.0",
+  "validation_type": "static_specification_validation",
+  "passed": true,
+  "checks": [
+    {
+      "check": "首句文件与结构化底稿一致",
+      "passed": true
+    },
+    {
+      "check": "正式字段通过现有VolunteerCreate模型",
+      "passed": true
+    },
+    {
+      "check": "金标准草稿后端就绪且无阻塞问题",
+      "passed": true
+    },
+    {
+      "check": "初始不完整需求不会误判为就绪",
+      "passed": true
+    },
+    {
+      "check": "20个事实唯一且全部由卡片覆盖",
+      "passed": true
+    },
+    {
+      "check": "全部评分事实路径可解析",
+      "passed": true
+    },
+    {
+      "check": "评分权重合计100",
+      "passed": true
+    },
+    {
+      "check": "可选参考日程连续且合计120分钟",
+      "passed": true
+    },
+    {
+      "check": "未运行模型记录保持为空",
+      "passed": true
+    },
+    {
+      "check": "正式字段未写入未确认的分时建议",
+      "passed": true
+    }
+  ],
+  "llm_evaluation": "not_run",
+  "business_database_modified": false,
+  "approval_recheck": {
+    "content_unchanged": true,
+    "input_consistent": true,
+    "model_valid": true,
+    "gold_plan_ready": true
+  }
+}

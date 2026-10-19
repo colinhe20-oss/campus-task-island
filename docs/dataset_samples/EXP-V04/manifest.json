@@ -1,0 +1,13 @@
+{
+  "sample_id": "EXP-V04",
+  "version": "0.1.0-candidate",
+  "status": "frozen_candidate_pending_user_review",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "1adde271e11d391fa521662d6b97e6687fba0ed5ecb03f2ffe1c52a278319744",
+    "gold.json": "57998cf500382adc62404ba239b81a6f2c92734021cac8072f2e97414764bb59",
+    "participant_cases.json": "c557c6e5c961c86ba7f585e3ff99080f04f9764e11fc62bb85e4644338a5501f",
+    "REVIEW.md": "93b2fd06894f2b5345330e1e944aedc176e82e681120055c257b5dbbf3de9391",
+    "validation.json": "78f79460b6438fd6b906e57631c7beebf3e3e48adf2738c85300471030899c62"
+  }
+}

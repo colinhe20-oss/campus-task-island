@@ -1,0 +1,13 @@
+{
+  "sample_id": "VOL-LEAP-001",
+  "version": "0.1.0-review",
+  "status": "draft_for_user_review",
+  "hash_algorithm": "sha256",
+  "files": {
+    "input.txt": "645d1aa0fc39c8bc2feec84d312201182e3baeea70d40fd21a434bbcc8713fc0",
+    "gold.json": "9786b3d614f33a01c3005d68240fe255aef5b29ea69a1c2934b1c0ba32b1c650",
+    "participant_cases.json": "12d342e01cb74e9ac1480d882520ee26b359e4f343952b7cf72a5460fc1b0512",
+    "REVIEW.md": "be3fd9ede304622b028a7560e9ab06ca35c02f5c05a8853fa98945730b44304f",
+    "validation.json": "4c8ac8f5027ce78f92e0eb3fc554e28f6fa5495fb66c53c3feca001835e8b0b7"
+  }
+}

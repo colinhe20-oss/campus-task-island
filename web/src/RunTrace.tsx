@@ -21,8 +21,9 @@ export function RunTrace({events,status,names}:{events:TraceEvent[];status:strin
   const visible=rows.filter(r=>(r.label+' '+r.start.tool).toLowerCase().includes(filter.toLowerCase()));
   const selected=rows.find(r=>r.start.seq===chosen);
   const rounds=[...new Set(rows.map(r=>r.start.step||0))];
-  return <section className="trace" aria-label="工具调用轨迹">
-    <div className="trace-head"><strong>调用轨迹</strong><span>{rounds.length} 轮 · {rows.filter(r=>r.start.tool).length} 次工具调用</span>
+  return <details className="trace" aria-label="工具调用轨迹">
+    <summary className="trace-toggle"><strong>调用轨迹</strong><span>{rounds.length} 轮 · {rows.filter(r=>r.start.tool).length} 次工具调用</span><span className="trace-chevron" aria-hidden="true"/></summary>
+    <div className="trace-content"><div className="trace-head"><span className="trace-head-label">调用详情</span>
       <button type="button" aria-pressed={view==='time'} onClick={()=>setView('time')}>时长</button><button type="button" aria-pressed={view==='round'} onClick={()=>setView('round')}>轮次</button>
       <input aria-label="搜索调用轨迹" placeholder="搜索工具…" value={filter} onChange={e=>setFilter(e.target.value)}/></div>
     {!rows.length?<p className="trace-empty">发送问题后显示模型与工具的真实调用过程。</p>:<>
@@ -44,5 +45,6 @@ export function RunTrace({events,status,names}:{events:TraceEvent[];status:strin
     {selected&&<div className="trace-selected"><strong>{selected.label}</strong><p>{selected.start.summary||'模型根据当前对话选择下一步操作'}</p><p>{selected.finish?.summary||selected.state}</p><small>开始：{selected.start.at?new Date(selected.start.at).toLocaleTimeString('zh-CN'):'—'} · 耗时 {selected.duration} ms</small></div>}
     </>}
     <p className="trace-foot">模型响应与工具执行使用真实运行事件；不展示模型内部推理。</p>
-  </section>;
+    </div>
+  </details>;
 }
