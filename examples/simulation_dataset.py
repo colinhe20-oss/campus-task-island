@@ -762,7 +762,10 @@ def current_directory():
     pointer = SIMULATION_ROOT / 'current.json'
     if not pointer.exists():
         raise ValueError('尚未生成演示库，请先运行 generate 或一键启动脚本')
-    directory = Path(json.loads(pointer.read_text(encoding='utf-8'))['directory']).resolve()
+    directory = Path(json.loads(pointer.read_text(encoding='utf-8'))['directory'])
+    if not directory.is_absolute():
+        directory = SIMULATION_ROOT / directory
+    directory = directory.resolve()
     if not directory.is_relative_to(SIMULATION_ROOT.resolve()):
         raise ValueError('演示库指针必须位于 .runtime/simulation 内')
     return directory

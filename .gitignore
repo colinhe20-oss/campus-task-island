@@ -11,7 +11,7 @@ htmlcov/
 !.env.example
 workspace/
 traces/
-.runtime/
+.runtime/*
 web/node_modules/
 web/dist/
 
@@ -24,4 +24,13 @@ web/dist/
 *.accounts.json
 **/discovery-media/
 *.log
+
+# 模拟数据集：提交固定版本 v2run11，供他人 clone 后开箱即用
+!.runtime/simulation/
+.runtime/simulation/*
+!.runtime/simulation/current.json
+!.runtime/simulation/v2run11/
+!.runtime/simulation/v2run11/**
+!.runtime/simulation/v2run11/demo.sqlite3
+!.runtime/simulation/v2run11/demo.accounts.json
 

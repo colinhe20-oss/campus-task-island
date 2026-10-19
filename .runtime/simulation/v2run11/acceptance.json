@@ -1,0 +1,1110 @@
+{
+  "passed": true,
+  "observation": "2026-10-19T18:00:00+08:00",
+  "seed": 20261017,
+  "spec_sha256": "f75ee29dd42f04cab9f4cececf9ba3bb1b575f62304fca985498d324278daa49",
+  "simulated_users": 50,
+  "builtin_users": 3,
+  "events": 1038,
+  "counts": {
+    "users": 53,
+    "tasks": 12,
+    "activities": 48,
+    "volunteer_activities": 48,
+    "volunteer_jobs": 104,
+    "discoveries": 12,
+    "task_stage_plans": 2,
+    "task_stages": 4,
+    "applications": 15,
+    "submissions": 3,
+    "activity_registrations": 357,
+    "volunteer_registrations": 163,
+    "volunteer_participation": 28,
+    "discovery_comments": 16,
+    "notifications": 1211
+  },
+  "checks": [
+    {
+      "name": "设计文档版本一致",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "SQLite完整性与外键",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "users数量",
+      "passed": true,
+      "detail": "53"
+    },
+    {
+      "name": "tasks数量",
+      "passed": true,
+      "detail": "12"
+    },
+    {
+      "name": "activities数量",
+      "passed": true,
+      "detail": "48"
+    },
+    {
+      "name": "volunteer_activities数量",
+      "passed": true,
+      "detail": "48"
+    },
+    {
+      "name": "volunteer_jobs数量",
+      "passed": true,
+      "detail": "104"
+    },
+    {
+      "name": "discoveries数量",
+      "passed": true,
+      "detail": "12"
+    },
+    {
+      "name": "task_stage_plans数量",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "task_stages数量",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "50个模拟用户均有效",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "任务category分布",
+      "passed": true,
+      "detail": "{'daily': 5, 'learning': 4, 'creative': 2, 'music': 1}"
+    },
+    {
+      "name": "任务status分布",
+      "passed": true,
+      "detail": "{'completed': 2, 'cancelled': 2, 'paused': 1, 'in_progress': 3, 'pending_review': 1, 'published': 3}"
+    },
+    {
+      "name": "任务reward_type分布",
+      "passed": true,
+      "detail": "{'mutual': 10, 'paid': 2}"
+    },
+    {
+      "name": "任务acceptance_mode分布",
+      "passed": true,
+      "detail": "{'direct': 3, 'approval': 9}"
+    },
+    {
+      "name": "A展示状态分布",
+      "passed": true,
+      "detail": "{'not_open': 4, 'open': 12, 'closed': 24, 'full': 4, 'cancelled': 4}"
+    },
+    {
+      "name": "V展示状态分布",
+      "passed": true,
+      "detail": "{'not_open': 4, 'open': 12, 'closed': 23, 'full': 4, 'cancelled': 5}"
+    },
+    {
+      "name": "A009满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A027满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A037满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A045满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V009满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V016满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V022满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V038满额",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A001无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A002无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A003无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A004无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A005无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A006无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A007无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A008无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A009无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A010无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A011无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A012无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A013无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A014无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A015无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A016无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A017无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A018无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A019无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A020无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A021无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A022无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A023无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A024无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A025无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A026无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A027无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A028无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A029无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A030无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A031无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A032无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A033无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A034无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A035无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A036无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A037无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A038无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A039无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A040无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A041无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A042无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A043无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A044无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A045无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A046无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A047无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "A048无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V001无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V002无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V003无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V004无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V005无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V006无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V007无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V008无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V009无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V010无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V011无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V012无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V013无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V014无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V015无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V016无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V017无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V018无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V019无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V020无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V021无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V022无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V023无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V024无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V025无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V026无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V027无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V028无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V029无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V030无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V031无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V032无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V033无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V034无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V035无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V036无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V037无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V038无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V039无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V040无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V041无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V042无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V043无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V044无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V045无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V046无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V047无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V048无负责人自报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "个人最新确认分钟合计1660",
+      "passed": true,
+      "detail": "1660"
+    },
+    {
+      "name": "V026-J1/U009更正后confirmed为null",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V032-J2/U007更正确认90",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V048服务中取消分钟上限50",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "V008换岗保留旧记录",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "偏好档案16份",
+      "passed": true,
+      "detail": "16"
+    },
+    {
+      "name": "推荐表有记录",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "生成规格副本已保存",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "activities合理校园时段与未来窗口",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "volunteer_activities合理校园时段与未来窗口",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "实际志愿服务时间不重叠",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "U012/A008尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012/A008实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012/A008机会提醒已触发",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012/V036尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012/V036实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012/V036机会提醒已触发",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U010/A036尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U010/A036实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U013/A036尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U013/A036实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U020/V003尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U020/V003实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U009/V024尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U009/V024实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U019/V017尚未报名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U019/V017实际获得推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U010有推荐且关闭机会提醒",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U015有推荐且关闭机会提醒",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U011时间冲突或过期偏好无推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U042时间冲突或过期偏好无推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U017已报名V024不重复推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U016关键词模式不误作A008语义推荐",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "组织用户有已读历史",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "回放事件有序",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP健康检查",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "前端生产页面可访问",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U001可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U002可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U003可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U004可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U005可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U006可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U007可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U008可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U009可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U010可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U011可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U012可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U013可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U014可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U015可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U016可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U017可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U018可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U019可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U020可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U021可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U022可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U023可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U024可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U025可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U026可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U027可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U028可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U029可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U030可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U031可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U032可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U033可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U034可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U035可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U036可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U037可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U038可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U039可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U040可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U041可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U042可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U043可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U044可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U045可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U046可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U047可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U048可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U049可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "U050可登录且身份正确",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "活动名单拒绝无关用户",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "志愿名单拒绝无关用户",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "任务工作区不泄露他人材料",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP撤回正文不可见",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP旧120不计入本人小时",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP首页真实待办",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP作者保留撤回正文",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "应用重启后内容持久",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "http_checked": true,
+  "confirmed_minutes": 1660
+}
