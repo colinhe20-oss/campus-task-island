@@ -128,7 +128,7 @@ AgentLoop 负责有限轮次的模型与工具调用、运行预算、取消和�
 
 ### 在新电脑上安装
 
-Git 仓库只保存源码和依赖清单，不包含数据库、账号文件、图片、模型密钥或旧电脑的运行数据。克隆后每台主机都会创建自己的本地数据；要让多台电脑看到同一份校园数据，只启动一台主机，其他电脑用浏览器连接主机地址。
+Git 仓库保存源码、依赖清单和模拟演示数据集，但不包含日常平台的数据库、账号文件、图片、模型密钥或旧电脑的运行数据。克隆后每台主机会创建自己的日常平台数据；模拟环境则直接复用仓库附带的 v2run11 数据集。要让多台电脑看到同一份校园数据，只启动一台主机，其他电脑用浏览器连接主机地址。
 
 Windows（项目在 Windows + Python 3.13 下验证）：
 
@@ -206,7 +206,9 @@ npm.cmd --prefix web run build
 
 ### 50人独立模拟环境
 
-Windows双击项目根目录的 `start_simulation.cmd`，或运行 `.\start_simulation.ps1`。首次生成独立演示库并验收，随后在 <http://127.0.0.1:8001/> 打开；再次启动保留人工操作。使用 `.\start_simulation.ps1 -New` 生成新的演示，旧目录保留。Ubuntu使用 `bash start_simulation.sh`。
+克隆仓库已附带 v2run11 模拟数据集，装好依赖后直接启动即可看到固定时点的 50 人模拟数据，无需先生成；登录密码在同目录的 `accounts.json`（50 个 sim_u 账号）与 `demo.accounts.json`（publisher/helper/observer）。
+
+Windows双击项目根目录的 `start_simulation.cmd`，或运行 `.\start_simulation.ps1`。首次启动复用仓库附带的 v2run11 数据集，随后在 <http://127.0.0.1:8001/> 打开；再次启动保留人工操作。使用 `.\start_simulation.ps1 -New` 生成新的演示，旧目录保留。Ubuntu使用 `bash start_simulation.sh`。
 
 数据包括50个模拟用户、12个普通任务、48个志愿活动（104个岗位）、48个综素／二课活动、12条校园发现、16份参与偏好及交互历史。模拟账号凭据、数据库和验收报告保存在 `.runtime/simulation/`，当前目录由其中的 `current.json` 指向；兼容启动的3个系统内置账号另计。日常数据库不受影响。
 
